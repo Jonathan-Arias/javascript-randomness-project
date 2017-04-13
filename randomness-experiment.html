@@ -227,7 +227,7 @@ var loop_node = {
         if (jsPsych.data.key_press == -1) {
             alert('Warning: Too late!');
             jsPsych.addDataToLastTrial({
-                answer_status: missed;
+                answer_status: 'missed'
             });
             return false;
         } else {
