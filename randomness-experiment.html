@@ -155,10 +155,21 @@ var countdown_trial_practise = {
     timing_response: 1800,
     response_ends_trial: false,
     data: {
-        part_num: '1',
+        part_num: '0',
         block_task: 'practise_rand_seq_gen'
     }
 };
+
+/* Main structurs of countdown trial blocks, only parameters that change are timing_stim, timing_response, and data fields */
+// TO-DO: Use this and supplement above parameters rather than writing out three separate times
+var countdown_trial_main = {
+    type: 'multi-stim-multi-response',
+    stimuli: ['3','2','1'],
+    is_html: true,
+    choices: [],
+    prompt: 'Press "g" for Rock, "h" for Paper", or "b" for Scissors at the GO',
+    response_ends_trial: false
+}
 
 /* define countdown trial fast ver, part 1*/
 var countdown_trial_part1 = {
