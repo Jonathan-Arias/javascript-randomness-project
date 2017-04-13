@@ -226,11 +226,6 @@ var timeline = [];
 timeline.push(consent_block, welcome_block);
 timeline.push(instructions_block1);
 
-/* PRACTISE BLOCK */
-for (var i = 0; i < 5; i++) {
-    timeline.push(countdown_trial_practise,go_trial);
-};
-
 /* PART 1*/
 for (var i = 0; i < 5; i++) {
     timeline.push(countdown_trial_part1, go_trial);
@@ -259,8 +254,13 @@ for (var i = 0; i < 5; i++) {
 /* DEBRIEF */
 timeline.push(debrief_block);
 
-/* start the experiment */ jsPsych.init({ timeline: timeline, on_finish: function() { jsPsych.data.displayData('json'); }, //display data at end of exp default_iti: 100 });
+/* start the experiment */
+jsPsych.init({
+            timeline: timeline,
+            on_finish: function() {
+                jsPsych.data.displayData('json');
+            }, //display data at end of exp 
+            default_iti: 100 });
 </script>
 
 </html>
-
