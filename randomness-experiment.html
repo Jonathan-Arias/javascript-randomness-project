@@ -220,23 +220,6 @@ var go_trial = {
     }
 }; //end var go_trial
 
-/* Loop node, possible to have it loop X times for each block to get minimum number of responses? */
-var loop_node = {
-    timeline: [countdown_trial_practise, go_trial],
-    loop_function: function(data) {
-        if (jsPsych.data.key_press == -1) {
-            alert('Warning: Too late!');
-            jsPsych.addDataToLastTrial({
-                answer_status: 'missed'
-            });
-            return false;
-        } else {
-            return true;
-        }
-    }
-};
-
-
 /* create experiment definition array */
 var timeline = [];
 
