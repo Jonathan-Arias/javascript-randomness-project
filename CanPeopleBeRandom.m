@@ -22,26 +22,26 @@ rng('shuffle');
 %  rng('shuffle') above). So fix this by creating a file where all the
 %  number of conditions are kept and counter-balancing until all numbers
 %  are even.
-load('EvenOutExperimGroups.mat','nExpGroups')
-pGroups=max(nExpGroups)-nExpGroups; pGroups=pGroups./sum(pGroups);
-iInDraw=find(pGroups>0);
-if (isempty(iInDraw))
-    % All group sizes are equal, draw randomly
-    expGroup=randi(length(nExpGroups));
-elseif (length(iInDraw)==1)
-    % only one group is smaller to others, take that group
-    expGroup=iInDraw;
-else
-    % 2 groups are smaller than the third
-    pGroups=pGroups(pGroups>0);
-    if (rand<pGroups(1))
-        expGroup=iInDraw(1);
-    else
-        expGroup=iInDraw(2);
-    end
-end
-nExpGroups(expGroup)=nExpGroups(expGroup)+1;
-save('EvenOutExperimGroups.mat','nExpGroups')
+% load('EvenOutExperimGroups.mat','nExpGroups')
+% pGroups=max(nExpGroups)-nExpGroups; pGroups=pGroups./sum(pGroups);
+% iInDraw=find(pGroups>0);
+% if (isempty(iInDraw))
+%     % All group sizes are equal, draw randomly
+%     expGroup=randi(length(nExpGroups));
+% elseif (length(iInDraw)==1)
+%     % only one group is smaller to others, take that group
+%     expGroup=iInDraw;
+% else
+%     % 2 groups are smaller than the third
+%     pGroups=pGroups(pGroups>0);
+%     if (rand<pGroups(1))
+%         expGroup=iInDraw(1);
+%     else
+%         expGroup=iInDraw(2);
+%     end
+% end
+% nExpGroups(expGroup)=nExpGroups(expGroup)+1;
+% save('EvenOutExperimGroups.mat','nExpGroups')
 
 numPracticeTrials=10;     %(10)NUMBER OF PRACTICE TRIALS
 numTrialsPerBlock=100;%%%%%EVEN ONLY(100)NUMBER OF TRIALS PER BLOCK
