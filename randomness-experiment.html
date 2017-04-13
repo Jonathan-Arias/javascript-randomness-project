@@ -160,31 +160,6 @@ var countdown_trial_practise = {
     }
 };
 
-/* Main structurs of countdown trial blocks, only parameters that change are timing_stim, timing_response, and data fields */
-// TO-DO: Use this and supplement above parameters rather than writing out three separate times
-var countdown_trial_main = {
-    type: 'multi-stim-multi-response',
-    stimuli: ['3','2','1'],
-    is_html: true,
-    choices: [],
-    prompt: 'Press "g" for Rock, "h" for Paper", or "b" for Scissors at the GO',
-    response_ends_trial: false
-};
-
-/* Loop node, possible to have it loop X times for each block to get minimum number of responses? */
-var loop_node = {
-    timeline: [countdown_trial_main],
-    loop_function: function(data) {
-        if (jsPsych.data.key_press == -1)
-        {
-            alert('Warning: Too late!');
-            jsPsych.addDataToLastTrial({
-                answer_status: missed;
-            })
-        }
-    }
-};
-
 /* define countdown trial fast ver, part 1*/
 var countdown_trial_part1 = {
     type: 'multi-stim-multi-response',
@@ -242,25 +217,25 @@ var go_trial = {
     choices: ['g', 'h', 'b'], //71 = g = rock, 72 = h = paper, 66 = b = scissors 
     data: {
         answer_status: 'answered'
-    },
-    on_finish: function(data) { //if no response in trial then alert with warning and add a trial
-            if (data.key_press == -1) {
-                alert("Warning: too late!");
-                jsPsych.data.addDataToLastTrial({
-                    answer_status: 'missed'
-                });
-                // Need to figure out a way to dynamically add trial if missed, as well as adding the appropriate 
-                // trial (i.e. adding practise versus trial2) rather than adding only extra practise trials
-                // var extra_trial = {
-                //     timeline: [countdown_trial_practise, go_trial]
-                // };
-            };
-
-            timeline.push(extra_trial);
-
-        } //end anon func
-
+    }
 }; //end var go_trial
+
+/* Loop node, possible to have it loop X times for each block to get minimum number of responses? */
+var loop_node = {
+    timeline: [countdown_trial_practise, go_trial],
+    loop_function: function(data) {
+        if (jsPsych.data.key_press == -1) {
+            alert('Warning: Too late!');
+            jsPsych.addDataToLastTrial({
+                answer_status: missed;
+            });
+            return false;
+        } else {
+            return true;
+        }
+    }
+};
+
 
 /* create experiment definition array */
 var timeline = [];
@@ -270,7 +245,7 @@ timeline.push(instructions_block1);
 
 /* PRACTISE BLOCK */
 for (var i = 0; i < 5; i++) {
-    timeline.push(countdown_trial_practise, go_trial);
+    timeline.push(loop_node);
 };
 
 /* PART 1*/
