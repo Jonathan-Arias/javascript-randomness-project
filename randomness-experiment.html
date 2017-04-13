@@ -169,7 +169,21 @@ var countdown_trial_main = {
     choices: [],
     prompt: 'Press "g" for Rock, "h" for Paper", or "b" for Scissors at the GO',
     response_ends_trial: false
-}
+};
+
+/* Loop node, possible to have it loop X times for each block to get minimum number of responses? */
+var loop_node = {
+    timeline: [countdown_trial_main],
+    loop_function: function(data) {
+        if (jsPsych.data.key_press == -1)
+        {
+            alert('Warning: Too late!');
+            jsPsych.addDataToLastTrial({
+                answer_status: missed;
+            })
+        }
+    }
+};
 
 /* define countdown trial fast ver, part 1*/
 var countdown_trial_part1 = {
@@ -193,9 +207,7 @@ var countdown_trial_part2 = {
     stimuli: ['3', '2', '1'],
     is_html: true,
     timing_stim: [300, 300, 300],
-    choices: [
-        [71, 72, 66]
-    ], //71 = g = rock, 72 = h = paper, 66 = b = scissors 
+    choices: [], //71 = g = rock, 72 = h = paper, 66 = b = scissors 
     prompt: 'Press "g" for Rock, "h" for Paper or "b" for Scissors',
     timing_response: 900,
     response_ends_trial: false,
@@ -211,9 +223,7 @@ var countdown_trial_part3 = {
     stimuli: ['3', '2', '1'],
     is_html: true,
     timing_stim: [300, 300, 300],
-    choices: [
-        [71, 72, 66]
-    ], //71 = g = rock, 72 = h = paper, 66 = b = scissors 
+    choices: [], //71 = g = rock, 72 = h = paper, 66 = b = scissors 
     prompt: 'Press "g" for Rock, "h" for Paper or "b" for Scissors',
     timing_response: 900,
     response_ends_trial: false,
