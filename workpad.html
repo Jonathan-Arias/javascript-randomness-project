@@ -1,0 +1,98 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Randomness experiment</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="jspsych-5.0.3/jspsych.js"></script>
+    <script src="jspsych-5.0.3/plugins/jspsych-text.js"></script>
+    <script src="jspsych-5.0.3/plugins/jspsych-instructions.js"></script>
+    <script src="jspsych-5.0.3/plugins/jspsych-single-stim.js"></script>
+    <script src="jspsych-5.0.3/plugins/jspsych-multi-stim-multi-response.js"></script>
+    <script src="jspsych-5.0.3/plugins/jspsych-html.js"></script>
+    <link href="jspsych-5.0.3/css/jspsych.css" rel="stylesheet" type="text/css"></link>
+</head>
+
+<body>
+</body>
+<script>
+// generate a random 15-character string for subject ID
+var subject_id = jsPsych.randomization.randomID(15);
+
+//pick a random condition for the subject at the start of the experiment
+var condition = jsPsych.randomization.sample(['aware_predict', 'unaware_predict', 'unaware_no_predict'], 1);
+
+//extra data to be added to each trial
+jsPsych.data.addProperties({
+    subject: subject_id,
+    condition: condition
+});
+
+//define instructions block for Part 1
+var instructions_block1 = {
+    type: 'instructions',
+    pages: [
+        'Welcome to Part <strong>ONE</strong> of the game. ' +
+        '<br />Please generate a random sequence of 3 events "Rock", "Paper" and "Scissors". ' +
+        '<br />You are asked to press the 3 buttons (G,H, or B) as randomly as possible. ' +
+        '<br />(Note that: the "g" key represents "Rock", the "h" key represents "Paper", and the "b" key represents "Scissors". ' +
+        '<br />We will begin with a practise round. Press "next" when you are ready. ',
+
+        '<strong> PRACTISE BLOCK </strong>'
+    ],
+    show_clickable_nav: true
+};
+
+var practice_trial = {
+	type: 'multi-stim-multi-response',
+	stimuli: ['3','2','1'],
+	is_html: true,
+	choices: [],
+	timing_stim: [500,500,500],
+	prompt: '<p>Press "g" for Rock, "h" for Paper, or "b" for Scissors</p>',
+	timing_response: 1500,
+	response_ends_trial: false
+};
+
+var GO = {
+	type: 'single-stim',
+	is_html: true,
+	stimulus: '<p>Go!</p>',
+	choices: ['g','h','b'],
+	timing_response: 500,
+	response_ends_trial: true
+};
+
+var loop_node = {
+	timeline: [practice_trial,GO],
+	loop_function: function(data){
+		if (data.key_press != 72 || data.key_press != 71 || data.key_press != 66)
+		{
+			alert('Warning: too late!');
+			return true;
+		} 
+		else 
+		{
+			alert('Success: response recorded');
+			return false;
+		}
+	}
+}
+
+var timeline = [];
+
+timeline.push(instructions_block1);
+timeline.push(loop_node);
+
+/* start the experiment */
+jsPsych.init({
+    timeline: timeline,
+    on_finish: function() {
+        jsPsych.data.displayData('json');
+    }, //display data at end of exp
+    default_iti: 100
+});
+</script>
+
+</html>
+</html>
