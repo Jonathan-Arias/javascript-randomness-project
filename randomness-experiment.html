@@ -177,9 +177,9 @@ var countdown_trial_part1 = {
 };
 
 /* define countdown trial for part 2*/
-var countdowngo_trial_part2 = {
+var countdown_trial_part2 = {
     type: 'multi-stim-multi-response',
-    stimuli: ['3', '2', '1', 'GO!'],
+    stimuli: ['3', '2', '1'],
     is_html: true,
     timing_stim: [300, 300, 300],
     choices: [
@@ -195,9 +195,9 @@ var countdowngo_trial_part2 = {
 };
 
 /* define countdown trial for part 3*/
-var countdowngo_trial_part3 = {
+var countdown_trial_part3 = {
     type: 'multi-stim-multi-response',
-    stimuli: ['3', '2', '1', 'GO!'],
+    stimuli: ['3', '2', '1'],
     is_html: true,
     timing_stim: [300, 300, 300],
     choices: [
@@ -228,10 +228,11 @@ var go_trial = {
                 jsPsych.data.addDataToLastTrial({
                     answer_status: 'missed'
                 });
-
-                var extra_trial = {
-                    timeline: [countdown_trial_slow, go_trial]
-                };
+                // Need to figure out a way to dynamically add trial if missed, as well as adding the appropriate 
+                // trial (i.e. adding practise versus trial2) rather than adding only extra practise trials
+                // var extra_trial = {
+                //     timeline: [countdown_trial_practise, go_trial]
+                // };
             };
 
             timeline.push(extra_trial);
@@ -267,13 +268,13 @@ if (condition == 'aware') {
 
 /* PART 2 */
 for (var i = 0; i < 5; i++) {
-    timeline.push(countdowngo_trial_part2, go_trial);
+    timeline.push(countdown_trial_part2, go_trial);
 };
 
 /* PART 3 */
 timeline.push(instructions_block3);
 for (var i = 0; i < 5; i++) {
-    timeline.push(countdowngo_trial_part3, go_trial);
+    timeline.push(countdown_trial_part3, go_trial);
 };
 
 /* DEBRIEF */
