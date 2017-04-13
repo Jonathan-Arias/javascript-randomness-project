@@ -276,14 +276,8 @@ for (var i = 0; i < 5; i++) {
 /* DEBRIEF */
 timeline.push(debrief_block);
 
-/* start the experiment */
-jsPsych.init({
-    timeline: timeline,
-    on_finish: function() {
-        jsPsych.data.displayData('json');
-    }, //display data at end of exp
-    default_iti: 100
-});
+/* start the experiment */ jsPsych.init({ timeline: timeline, on_finish: function() { jsPsych.data.displayData('json'); }, //display data at end of exp default_iti: 100 });
 </script>
 
 </html>
+
