@@ -204,7 +204,7 @@ var go_trial = {
     timing_response: 500,
     response_ends_trial: true,
     data: {
-        block_task: 'practice_go'
+        block_task: 'go_text'
     },
     on_finish: function(data) {
         if (data.key_press == -1) {
@@ -282,7 +282,7 @@ var if_rock = {
     timeline: [show_rock_image],
     conditional_function: function() {
         var data = jsPsych.data.getLastTrialData();
-        if (data.key_press == 71 && data.block_task != 'missed_text') {
+        if (data.key_press == 71 && data.answer_status == 'answered') {
             return true;
         } else {
             return false;
@@ -295,7 +295,7 @@ var if_paper = {
     timeline: [show_paper_image],
     conditional_function: function() {
         var data = jsPsych.data.getLastTrialData();
-        if (data.key_press == 72 && data.block_task != 'missed_text') {
+        if (data.key_press == 72 && data.answer_status == 'answered') {
             return true;
         } else {
             return false;
@@ -308,7 +308,7 @@ var if_scissor = {
     timeline: [show_scissor_image],
     conditional_function: function() {
         var data = jsPsych.data.getLastTrialData();
-        if (data.key_press == 66 && data.block_task != 'missed_text') {
+        if (data.key_press == 66 && data.answer_status == 'answered') {
             return true;
         } else {
             return false;
@@ -324,6 +324,9 @@ var practice_loop = {
     loop_function: function() {
         var data = jsPsych.data.getLastTrialData();
         if (data.block_task == 'rock_image' || data.block_task == 'paper_image' || data.block_task == 'scissors_image') {
+            jsPsych.data.addDataToLastTrial({
+                block_task: 'practice_data'
+            });
             return false;
         } else if (data.block_task == 'missed_text') {
             return true;
@@ -339,6 +342,9 @@ var trial1_loop = {
     loop_function: function() {
         var data = jsPsych.data.getLastTrialData();
         if (data.block_task == 'rock_image' || data.block_task == 'paper_image' || data.block_task == 'scissors_image') {
+            jsPsych.data.addDataToLastTrial({
+                block_task: 'trial1_data'
+            });
             return false;
         } else if (data.block_task == 'missed_text') {
             return true;
@@ -354,6 +360,9 @@ var trial2_loop = {
     loop_function: function() {
         var data = jsPsych.data.getLastTrialData();
         if (data.block_task == 'rock_image' || data.block_task == 'paper_image' || data.block_task == 'scissors_image') {
+            jsPsych.data.addDataToLastTrial({
+                block_task: 'trial2_data'
+            });
             return false;
         } else if (data.block_task == 'missed_text') {
             return true;
@@ -369,6 +378,9 @@ var trial3_loop = {
     loop_function: function() {
         var data = jsPsych.data.getLastTrialData();
         if (data.block_task == 'rock_image' || data.block_task == 'paper_image' || data.block_task == 'scissors_image') {
+            jsPsych.data.addDataToLastTrial({
+                block_task: 'trial3_data'
+            });
             return false;
         } else if (data.block_task == 'missed_text') {
             return true;
@@ -424,8 +436,11 @@ timeline.push(consent_block);
 timeline.push(welcome_block);
 timeline.push(instructions_block1);
 
+// DEBUGGING PURPOSES: variable to quickly adjust how many trials for each block
+var total_trials = 3;
+
 // collects at LEAST five trials with 'answered' as their data tags
-for (var i = 0; i < 5; i++) {
+for (var i = 0; i < total_trials; i++) {
     timeline.push(practice_loop);
 }
 
@@ -438,7 +453,7 @@ var practice_over = {
 timeline.push(practice_over);
 
 // same format as previous
-for (var i = 0; i < 5; i++) {
+for (var i = 0; i < total_trials; i++) {
     timeline.push(trial1_loop);
 }
 
@@ -452,14 +467,14 @@ if (condition == 'aware') {
 }
 
 // same format as previous
-for (var i = 0; i < 5; i++) {
+for (var i = 0; i < total_trials; i++) {
     timeline.push(trial2_loop);
 }
 
 timeline.push(instructions_block3);
 
 // same format as previous
-for (var i = 0; i < 5; i++) {
+for (var i = 0; i < total_trials; i++) {
     timeline.push(trial3_loop);
 }
 
