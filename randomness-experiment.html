@@ -19,16 +19,16 @@
 // generate a random 15-character string for subject ID
 var subject_id = jsPsych.randomization.randomID(15)
 
-//pick a random condition for the subject at the start of the experiment
+// pick a random condition for the subject at the start of the experiment
 var condition = jsPsych.randomization.sample(['aware_predict', 'unaware_predict', 'unaware_no_predict'], 1)
 
-//extra data to be added to each trial
+// extra data to be added to each trial
 jsPsych.data.addProperties({
     subject: subject_id,
     condition: condition
 })
 
-//function to check for participant consent.
+// function to check for participant consent
 var check_consent = function(elem) {
     if ($('#consent_checkbox').is(':checked')) {
         return true;
@@ -39,7 +39,7 @@ var check_consent = function(elem) {
     return false;
 }
 
-// declare consent block.
+// declare consent block
 var consent_block = {
     type: 'html',
     url: "consent_page.html",
@@ -47,7 +47,7 @@ var consent_block = {
     check_fn: check_consent
 }
 
-//define welcome message block (overview of experiment)
+// define welcome message block (overview of experiment)
 var welcome_block = {
     type: 'instructions',
     pages: [
@@ -75,7 +75,7 @@ var welcome_block = {
     show_clickable_nav: true
 }
 
-//define instructions block for Part 1
+// define instructions block for Part 1
 var instructions_block1 = {
     type: 'instructions',
     pages: [
@@ -90,7 +90,7 @@ var instructions_block1 = {
     show_clickable_nav: true
 }
 
-//define instructions block for Part 2a (aware_predict)
+// define instructions block for Part 2a (aware_predict)
 var instructions_block2a = {
     type: 'instructions',
     pages: [
@@ -101,7 +101,7 @@ var instructions_block2a = {
     show_clickable_nav: true
 }
 
-//define instructions block for Part 2b (unaware_predict)
+// define instructions block for Part 2b (unaware_predict)
 var instructions_block2b = {
     type: 'instructions',
     pages: [
@@ -112,7 +112,7 @@ var instructions_block2b = {
     show_clickable_nav: true
 }
 
-//define instructions block for Part 2c (unaware_no_predict)
+// define instructions block for Part 2c (unaware_no_predict)
 var instructions_block2c = {
     type: 'instructions',
     pages: [
@@ -123,7 +123,7 @@ var instructions_block2c = {
     show_clickable_nav: true
 }
 
-//define instructions block for Part 3
+// define instructions block for Part 3
 var instructions_block3 = {
     type: 'instructions',
     pages: [
@@ -135,7 +135,7 @@ var instructions_block3 = {
     show_clickable_nav: true
 }
 
-
+// define countdown block for practice trials (600 ms)
 var countdown_slow = {
     type: 'multi-stim-multi-response',
     stimuli: ['3', '2', '1'],
@@ -150,6 +150,7 @@ var countdown_slow = {
     }
 }
 
+// define countdown block for part 1 (500 ms)
 var countdown_trial_part1 = {
     type: 'multi-stim-multi-response',
     stimuli: ['3', '2', '1'],
@@ -164,6 +165,7 @@ var countdown_trial_part1 = {
     }
 }
 
+// define countdown block for part 2 (400 ms)
 var countdown_trial_part2 = {
     type: 'multi-stim-multi-response',
     stimuli: ['3', '2', '1'],
@@ -178,6 +180,7 @@ var countdown_trial_part2 = {
     }
 }
 
+// define countdown block for part 3 (300 ms)
 var countdown_trial_part3 = {
     type: 'multi-stim-multi-response',
     stimuli: ['3', '2', '1'],
@@ -192,6 +195,7 @@ var countdown_trial_part3 = {
     }
 }
 
+// define go block, collect response from subject
 var go_trial = {
     type: 'single-stim',
     is_html: true,
@@ -215,6 +219,7 @@ var go_trial = {
     }
 }
 
+// define missed block, flashes if subject took over 500 ms to respond in go block
 var missed = {
     type: 'single-stim',
     is_html: true,
@@ -226,6 +231,7 @@ var missed = {
     }
 }
 
+// conditional block to check if subject missed response
 var if_missed = {
     timeline: [missed],
     conditional_function: function() {
@@ -238,6 +244,7 @@ var if_missed = {
     }
 }
 
+// rock block, display the rock image for 500 ms
 var show_rock_image = {
     type: 'single-stim',
     stimulus: 'img/RPSimage1.png',
@@ -248,6 +255,7 @@ var show_rock_image = {
     }
 }
 
+// paper block, display the paper image for 500 ms
 var show_paper_image = {
     type: 'single-stim',
     stimulus: 'img/RPSimage2.png',
@@ -258,6 +266,7 @@ var show_paper_image = {
     }
 }
 
+// scissor block, display the scissor image for 500 ms
 var show_scissor_image = {
     type: 'single-stim',
     stimulus: 'img/RPSimage3.png',
@@ -268,6 +277,7 @@ var show_scissor_image = {
     }
 }
 
+// conditional block, check if subject pressed 'g' for rock
 var if_rock = {
     timeline: [show_rock_image],
     conditional_function: function() {
@@ -280,6 +290,7 @@ var if_rock = {
     }
 }
 
+// conditional block, check if subject pressed 'h' for paper
 var if_paper = {
     timeline: [show_paper_image],
     conditional_function: function() {
@@ -292,6 +303,7 @@ var if_paper = {
     }
 }
 
+// conditional block, check if subject pressed 'b' for scissor
 var if_scissor = {
     timeline: [show_scissor_image],
     conditional_function: function() {
@@ -304,6 +316,7 @@ var if_scissor = {
     }
 }
 
+// practice block, loops until last trial is one of the RPS image blocks
 var practice_loop = {
     timeline: [
         countdown_slow, go_trial, if_missed, if_rock, if_paper, if_scissor
@@ -318,6 +331,7 @@ var practice_loop = {
     }
 }
 
+// trial 1 block, loops until last trial is one of the RPS image blocks
 var trial1_loop = {
     timeline: [
         countdown_trial_part1, go_trial, if_missed, if_rock, if_paper, if_scissor
@@ -332,6 +346,7 @@ var trial1_loop = {
     }
 }
 
+// trial 2 block, loops until last trial is one of the RPS image blocks
 var trial2_loop = {
     timeline: [
         countdown_trial_part2, go_trial, if_missed, if_rock, if_paper, if_scissor
@@ -346,6 +361,7 @@ var trial2_loop = {
     }
 }
 
+// trial 3 block, loops until last trial is one of the RPS image blocks
 var trial3_loop = {
     timeline: [
         countdown_trial_part3, go_trial, if_missed, if_rock, if_paper, if_scissor
@@ -360,6 +376,7 @@ var trial3_loop = {
     }
 }
 
+// collects simple data about responses and returns totals for number of answered/missed and RPS selections
 function getSubjectData() {
     var trials = jsPsych.data.getTrialsOfType('single-stim');
 
@@ -391,6 +408,7 @@ function getSubjectData() {
     }
 }
 
+// displays the subject's performance at the end of the experiment
 var debrief_block = {
     type: 'text',
     text: function() {
@@ -400,15 +418,18 @@ var debrief_block = {
     }
 }
 
+// preliminary timeline prep
 var timeline = [];
 timeline.push(consent_block);
 timeline.push(welcome_block);
 timeline.push(instructions_block1);
 
+// collects at LEAST five trials with 'answered' as their data tags
 for (var i = 0; i < 5; i++) {
     timeline.push(practice_loop);
 }
 
+// displays after practice trial is complete
 var practice_over = {
     type: 'text',
     text: 'Practice is over! Time for the real thing'
@@ -416,6 +437,7 @@ var practice_over = {
 
 timeline.push(practice_over);
 
+// same format as previous
 for (var i = 0; i < 5; i++) {
     timeline.push(trial1_loop);
 }
@@ -429,18 +451,21 @@ if (condition == 'aware') {
     timeline.push(instructions_block2c); //b= unaware+no predict
 }
 
+// same format as previous
 for (var i = 0; i < 5; i++) {
     timeline.push(trial2_loop);
 }
 
 timeline.push(instructions_block3);
 
+// same format as previous
 for (var i = 0; i < 5; i++) {
     timeline.push(trial3_loop);
 }
 
 timeline.push(debrief_block);
 
+// start the experiment
 jsPsych.init({
     timeline: timeline,
     default_iti: 100,
