@@ -17,16 +17,16 @@
 </body>
 <script>
 // generate a random 15-character string for subject ID
-var subject_id = jsPsych.randomization.randomID(15);
+var subject_id = jsPsych.randomization.randomID(15)
 
 //pick a random condition for the subject at the start of the experiment
-var condition = jsPsych.randomization.sample(['aware_predict', 'unaware_predict', 'unaware_no_predict'], 1);
+var condition = jsPsych.randomization.sample(['aware_predict', 'unaware_predict', 'unaware_no_predict'], 1)
 
 //extra data to be added to each trial
 jsPsych.data.addProperties({
     subject: subject_id,
     condition: condition
-});
+})
 
 //function to check for participant consent.
 var check_consent = function(elem) {
@@ -37,7 +37,7 @@ var check_consent = function(elem) {
         return false;
     }
     return false;
-};
+}
 
 // declare consent block.
 var consent_block = {
@@ -45,7 +45,7 @@ var consent_block = {
     url: "consent_page.html",
     cont_btn: "start",
     check_fn: check_consent
-};
+}
 
 //define welcome message block (overview of experiment)
 var welcome_block = {
@@ -73,7 +73,7 @@ var welcome_block = {
         '<p>The <strong>third</strong> part of the experiment will be exactly the same as the first part: you will again generate a sequence of Rock, Paper and Scissors that is as random and unpredictable as possible. To help you picture this once more, you can imagine that your iPod only contains three songs titled "Rock", "Paper" and "Scissors", and you hit the Shuffle button repeatedly so that the iPod chooses one of the songs at random each time. It is crucial in these two parts that you literally try to act like your iPod, or the die, or the computer algorithm and make your sequence completely random. </p>'
     ],
     show_clickable_nav: true
-};
+}
 
 //define instructions block for Part 1
 var instructions_block1 = {
@@ -88,7 +88,7 @@ var instructions_block1 = {
         '<strong> PRACTICE BLOCK </strong>'
     ],
     show_clickable_nav: true
-};
+}
 
 //define instructions block for Part 2a (aware_predict)
 var instructions_block2a = {
@@ -99,7 +99,7 @@ var instructions_block2a = {
         'GL and begin'
     ],
     show_clickable_nav: true
-};
+}
 
 //define instructions block for Part 2b (unaware_predict)
 var instructions_block2b = {
@@ -110,7 +110,7 @@ var instructions_block2b = {
         'GL and begin'
     ],
     show_clickable_nav: true
-};
+}
 
 //define instructions block for Part 2c (unaware_no_predict)
 var instructions_block2c = {
@@ -121,7 +121,7 @@ var instructions_block2c = {
         'GL and begin'
     ],
     show_clickable_nav: true
-};
+}
 
 //define instructions block for Part 3
 var instructions_block3 = {
@@ -133,7 +133,7 @@ var instructions_block3 = {
         '<br />(Note that: the "g" key represents "Rock", the "h" key represents "Paper", and the "b" key represents "Scissors". '
     ],
     show_clickable_nav: true
-};
+}
 
 
 var countdown_slow = {
@@ -272,7 +272,7 @@ var if_rock = {
     timeline: [show_rock_image],
     conditional_function: function() {
         var data = jsPsych.data.getLastTrialData();
-        if (data.key_press == 71) {
+        if (data.key_press == 71 && data.block_task != 'missed_text') {
             return true;
         } else {
             return false;
@@ -284,7 +284,7 @@ var if_paper = {
     timeline: [show_paper_image],
     conditional_function: function() {
         var data = jsPsych.data.getLastTrialData();
-        if (data.key_press == 72) {
+        if (data.key_press == 72 && data.block_task != 'missed_text') {
             return true;
         } else {
             return false;
@@ -296,7 +296,7 @@ var if_scissor = {
     timeline: [show_scissor_image],
     conditional_function: function() {
         var data = jsPsych.data.getLastTrialData();
-        if (data.key_press == 66) {
+        if (data.key_press == 66 && data.block_task != 'missed_text') {
             return true;
         } else {
             return false;
@@ -427,7 +427,7 @@ if (condition == 'aware') {
     timeline.push(instructions_block2b); //b= unaware+predict
 } else if (condition == 'unaware_no_predict') {
     timeline.push(instructions_block2c); //b= unaware+no predict
-};
+}
 
 for (var i = 0; i < 5; i++) {
     timeline.push(trial2_loop);
