@@ -16,6 +16,8 @@
 <body>
 </body>
 <script>
+var timeline = [];
+
 var test = {
     type: 'text',
     text: 'Press any key to continue'
@@ -29,27 +31,8 @@ var countdown_slow = {
     prompt: 'Press "g" for ROCK, "h" for PAPER, or "b" for SCISSORS',
     timing_stim: [700, 700, 700],
     timing_response: 2100,
-    response_ends_trial: false
-}
-
-var go_trial = {
-    type: 'single-stim',
-    is_html: true,
-    stimulus: 'GO!',
-    choices: ['g', 'h', 'b'],
-    timing_response: 500,
-    response_ends_trial: true,
-    on_finish: function(data) {
-        if (data.key_press == -1) {
-            jsPsych.data.addDataToLastTrial({
-                answer_status: 'missed'
-            });
-        } else {
-            jsPsych.data.addDataToLastTrial({
-                answer_status: 'answered'
-            });
-        }
-    }
+    response_ends_trial: false,
+    data: {block_task: 'countdown_slow_text'}
 }
 
 var missed = {
@@ -57,7 +40,8 @@ var missed = {
     is_html: true,
     stimulus: 'TOO LATE!',
     timing_response: 500,
-    response_ends_trial: false
+    response_ends_trial: false,
+    data: {stim: 'missed_text'}
 }
 
 var if_missed = {
@@ -76,21 +60,24 @@ var show_rock_image = {
     type: 'single-stim',
     stimulus: 'img/RPSimage1.png',
     timing_response: 500,
-    response_ends_trial: false
+    response_ends_trial: false,
+    data: {stim: 'rock_image'}
 }
 
 var show_paper_image = {
     type: 'single-stim',
     stimulus: 'img/RPSimage2.png',
     timing_response: 500,
-    response_ends_trial: false
+    response_ends_trial: false,
+    data: {stim: 'paper_image'}
 }
 
 var show_scissor_image = {
     type: 'single-stim',
     stimulus: 'img/RPSimage3.png',
     timing_response: 500,
-    response_ends_trial: false
+    response_ends_trial: false,
+    data: {stim: 'scissors_image'}
 }
 
 var if_rock = {
@@ -132,19 +119,19 @@ var if_scissor = {
 function getSubjectData() {
     var trials = jsPsych.data.getTrialsOfType('single-stim');
 
-    var total_answered = 0; 
+    var total_answered = 0;
     var total_missed = 0;
     var total_rock = 0;
-    var total_paper = 0; 
+    var total_paper = 0;
     var total_scissor = 0;
     for (var i = 0; i < trials.length; i++) {
-        if (trials[i].answer_status == 'answered'){
+        if (trials[i].answer_status == 'answered') {
             total_answered++;
-            if (trials[i].key_press == 71){
+            if (trials[i].key_press == 71) {
                 total_rock++;
-            } else if (trials[i].key_press == 72){
+            } else if (trials[i].key_press == 72) {
                 total_paper++;
-            } else if (trials[i].key_press == 66){
+            } else if (trials[i].key_press == 66) {
                 total_scissor++;
             }
         } else if (trials[i].answer_status == 'missed') {
@@ -160,17 +147,38 @@ function getSubjectData() {
     }
 }
 
-var debrief_block = {
-    type: 'text',
-    text: function(){
-        var subjectData = getSubjectData();
-        return "<p>You generated a total of "+subjectData.answered+" RPS events, and you missed "+subjectData.missed+" total events.</p>"+
-        "<p>Total rock: "+subjectData.rock+"</p><p>Total paper: "+subjectData.paper+"</p><p>Total Scissor: "+subjectData.scissor+"</p>";
+var go_trial = {
+    type: 'single-stim',
+    is_html: true,
+    stimulus: 'GO!',
+    choices: ['g', 'h', 'b'],
+    timing_response: 500,
+    response_ends_trial: true,
+    data: {
+        block_task: 'practice_go'
+    },
+    on_finish: function(data) {
+        if (data.key_press == -1) {
+            jsPsych.data.addDataToLastTrial({
+                answer_status: 'missed'
+            });
+        } else {
+            jsPsych.data.addDataToLastTrial({
+                answer_status: 'answered'
+            });
+        }
     }
 }
 
+var debrief_block = {
+    type: 'text',
+    text: function() {
+        var subjectData = getSubjectData();
+        return "<p>You generated a total of " + subjectData.answered + " RPS events, and you missed " + subjectData.missed + " total events.</p>" +
+            "<p>Total rock: " + subjectData.rock + "</p><p>Total paper: " + subjectData.paper + "</p><p>Total Scissor: " + subjectData.scissor + "</p>";
+    }
+}
 
-var timeline = [];
 timeline.push(test);
 
 for (var i = 0; i < 5; i++) {
