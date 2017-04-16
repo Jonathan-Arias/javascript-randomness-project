@@ -16,12 +16,125 @@
 <body>
 </body>
 <script>
-var timeline = [];
+// generate a random 15-character string for subject ID
+var subject_id = jsPsych.randomization.randomID(15);
 
-var test = {
-    type: 'text',
-    text: 'Press any key to continue'
-}
+//pick a random condition for the subject at the start of the experiment
+var condition = jsPsych.randomization.sample(['aware_predict', 'unaware_predict', 'unaware_no_predict'], 1);
+
+//extra data to be added to each trial
+jsPsych.data.addProperties({
+    subject: subject_id,
+    condition: condition
+});
+
+//function to check for participant consent.
+var check_consent = function(elem) {
+    if ($('#consent_checkbox').is(':checked')) {
+        return true;
+    } else {
+        alert("If you wish to participate, you must check the box next to the statement 'I agree to participate in this study.'");
+        return false;
+    }
+    return false;
+};
+
+// declare consent block.
+var consent_block = {
+    type: 'html',
+    url: "consent_page.html",
+    cont_btn: "start",
+    check_fn: check_consent
+};
+
+//define welcome message block (overview of experiment)
+var welcome_block = {
+    type: 'instructions',
+    pages: [
+        '<strong>Welcome to the experiment</strong> ' +
+        '<br />In the <strong>first</strong> part of the experiment, you are asked to create a sequence of Rock, Paper, Scissors that is as random as possible.' +
+        '<ul><li>   For Rock: press the letter "g" on the keyboard.' +
+        '<li>       For Paper: press the letter "h" on the keyboard. ' +
+        '<li>       For Scissors: press the letter "b" on the keyboard. </ul>' +
+        'Please take a moment to locate these keys on your keyboard now and to remember the mapping of letters to rock, paper, and scissors. ' +
+        '<p>At the beginning of each trial, you will see a 3-2-1 countdown on the screen, followed by a red "GO!" signal. ' +
+        'You must press "g", "h", or "b" as soon as you see the go signal. You will only have half a second to enter your response. ' +
+        'Most importantly, <em>please make a conscious effort to create a series of Rock, Paper and Scissors that is as random as possible. </em>' +
+        'It might help you to visualize this task as casting a 3-faced die. You can also try to imagine a computer program that spits out "Rock!", "Paper!" or "Scissors!" at random, in an unpredictable fashion.' +
+        'The 10 first trials will serve as practice, for you to get accustomed to the experimental environment. Then you will begin your random sequence generation. </p>' +
+        '<p>In the <strong>second</strong> part of the experiment, you will play rounds of Rock-Paper-Scissors against the computer. Your goal is to win as many rounds as possible. Once again, you will have the three natural options "Rock", "Paper" and "Scissors" to choose from, which you will select by pressing the same keys as in part 1. </p>' +
+        'Reminder: Rock beats Scissors, Scissors beat Paper, and Paper beats Rock. ' +
+        'The winner of the game will be determined by the amount of points you end up with. Both yourself and the computer will be allotted 100 points before starting the game. You will both obtain or lose points in the following manner:' +
+        '<ul><li>You win: you receive 1 point, and the computer loses 1 point.' +
+        '<li>You tie: both scores remain the same' +
+        '<li>You lose: you lose 1 point, and the computer receives 1 point. </ul>' +
+        'This means that if you lose a round (example: you play Paper and the computer plays Scissors), not only will you lose a point but the computer will gain one. ' +
+        'Again, you will see the 3-2-1 countdown and the red "GO!" appear on the screen. If you do not press one of the keys (G, H or B) within a half second of the red "GO!" appearing, you will lose one point but the computer will not gain a point. ' +
+        '<p>The <strong>third</strong> part of the experiment will be exactly the same as the first part: you will again generate a sequence of Rock, Paper and Scissors that is as random and unpredictable as possible. To help you picture this once more, you can imagine that your iPod only contains three songs titled "Rock", "Paper" and "Scissors", and you hit the Shuffle button repeatedly so that the iPod chooses one of the songs at random each time. It is crucial in these two parts that you literally try to act like your iPod, or the die, or the computer algorithm and make your sequence completely random. </p>'
+    ],
+    show_clickable_nav: true
+};
+
+//define instructions block for Part 1
+var instructions_block1 = {
+    type: 'instructions',
+    pages: [
+        'Welcome to Part <strong>ONE</strong> of the game. ' +
+        '<br />Please generate a random sequence of 3 events "Rock", "Paper" and "Scissors". ' +
+        '<br />You are asked to press the 3 buttons (G,H, or B) as randomly as possible. ' +
+        '<br />(Note that: the "g" key represents "Rock", the "h" key represents "Paper", and the "b" key represents "Scissors". ' +
+        '<br />We will begin with a practise round. Press "next" when you are ready. ',
+
+        '<strong> PRACTICE BLOCK </strong>'
+    ],
+    show_clickable_nav: true
+};
+
+//define instructions block for Part 2a (aware_predict)
+var instructions_block2a = {
+    type: 'instructions',
+    pages: [
+        'This is now part <strong>TWO</strong> of the experiment',
+        'You will be predicted...this is condition 2a',
+        'GL and begin'
+    ],
+    show_clickable_nav: true
+};
+
+//define instructions block for Part 2b (unaware_predict)
+var instructions_block2b = {
+    type: 'instructions',
+    pages: [
+        'This is now part <strong>TWO</strong> of the experiment',
+        'You will be predicted (but not told)...this is condition 2b',
+        'GL and begin'
+    ],
+    show_clickable_nav: true
+};
+
+//define instructions block for Part 2c (unaware_no_predict)
+var instructions_block2c = {
+    type: 'instructions',
+    pages: [
+        'This is now part <strong>TWO</strong> of the experiment',
+        'You will NOT be predicted...this is condition 2c',
+        'GL and begin'
+    ],
+    show_clickable_nav: true
+};
+
+//define instructions block for Part 3
+var instructions_block3 = {
+    type: 'instructions',
+    pages: [
+        'Welcome to Part <strong>THREE</strong> of the game. ' +
+        '<br />Please generate a random sequence of 3 events "Rock", "Paper" and "Scissors". ' +
+        '<br />You are asked to press the 3 buttons (G,H, or B) as randomly as possible. ' +
+        '<br />(Note that: the "g" key represents "Rock", the "h" key represents "Paper", and the "b" key represents "Scissors". '
+    ],
+    show_clickable_nav: true
+};
+
 
 var countdown_slow = {
     type: 'multi-stim-multi-response',
@@ -29,11 +142,53 @@ var countdown_slow = {
     is_html: true,
     choices: [],
     prompt: 'Press "g" for ROCK, "h" for PAPER, or "b" for SCISSORS',
-    timing_stim: [700, 700, 700],
-    timing_response: 2100,
+    timing_stim: [600, 600, 600],
+    timing_response: 1800,
     response_ends_trial: false,
     data: {
         block_task: 'countdown_slow_text'
+    }
+}
+
+var countdown_trial_part1 = {
+    type: 'multi-stim-multi-response',
+    stimuli: ['3', '2', '1'],
+    is_html: true,
+    choices: [],
+    prompt: 'Press "g" for ROCK, "h" for PAPER, or "b" for SCISSORS',
+    timing_stim: [500, 500, 500],
+    timing_response: 1500,
+    response_ends_trial: false,
+    data: {
+        block_task: 'countdown_trial_part1'
+    }
+}
+
+var countdown_trial_part2 = {
+    type: 'multi-stim-multi-response',
+    stimuli: ['3', '2', '1'],
+    is_html: true,
+    choices: [],
+    prompt: 'Press "g" for ROCK, "h" for PAPER, or "b" for SCISSORS',
+    timing_stim: [400, 400, 400],
+    timing_response: 1200,
+    response_ends_trial: false,
+    data: {
+        block_task: 'countdown_trial_part2'
+    }
+}
+
+var countdown_trial_part3 = {
+    type: 'multi-stim-multi-response',
+    stimuli: ['3', '2', '1'],
+    is_html: true,
+    choices: [],
+    prompt: 'Press "g" for ROCK, "h" for PAPER, or "b" for SCISSORS',
+    timing_stim: [300, 300, 300],
+    timing_response: 900,
+    response_ends_trial: false,
+    data: {
+        block_task: 'countdown_trial_part3'
     }
 }
 
@@ -155,9 +310,51 @@ var practice_loop = {
     ],
     loop_function: function() {
         var data = jsPsych.data.getLastTrialData();
-        if (data.block_task == 'rock_image' || data.block_task == 'paper_image' || data.block_task == 'scissors_image'){
+        if (data.block_task == 'rock_image' || data.block_task == 'paper_image' || data.block_task == 'scissors_image') {
             return false;
-        } else if (data.block_task == 'missed_text'){
+        } else if (data.block_task == 'missed_text') {
+            return true;
+        }
+    }
+}
+
+var trial1_loop = {
+    timeline: [
+        countdown_trial_part1, go_trial, if_missed, if_rock, if_paper, if_scissor
+    ],
+    loop_function: function() {
+        var data = jsPsych.data.getLastTrialData();
+        if (data.block_task == 'rock_image' || data.block_task == 'paper_image' || data.block_task == 'scissors_image') {
+            return false;
+        } else if (data.block_task == 'missed_text') {
+            return true;
+        }
+    }
+}
+
+var trial2_loop = {
+    timeline: [
+        countdown_trial_part2, go_trial, if_missed, if_rock, if_paper, if_scissor
+    ],
+    loop_function: function() {
+        var data = jsPsych.data.getLastTrialData();
+        if (data.block_task == 'rock_image' || data.block_task == 'paper_image' || data.block_task == 'scissors_image') {
+            return false;
+        } else if (data.block_task == 'missed_text') {
+            return true;
+        }
+    }
+}
+
+var trial3_loop = {
+    timeline: [
+        countdown_trial_part3, go_trial, if_missed, if_rock, if_paper, if_scissor
+    ],
+    loop_function: function() {
+        var data = jsPsych.data.getLastTrialData();
+        if (data.block_task == 'rock_image' || data.block_task == 'paper_image' || data.block_task == 'scissors_image') {
+            return false;
+        } else if (data.block_task == 'missed_text') {
             return true;
         }
     }
@@ -203,10 +400,43 @@ var debrief_block = {
     }
 }
 
-timeline.push(test);
+var timeline = [];
+timeline.push(consent_block);
+timeline.push(welcome_block);
+timeline.push(instructions_block1);
 
 for (var i = 0; i < 5; i++) {
     timeline.push(practice_loop);
+}
+
+var practice_over = {
+    type: 'text',
+    text: 'Practice is over! Time for the real thing'
+}
+
+timeline.push(practice_over);
+
+for (var i = 0; i < 5; i++) {
+    timeline.push(trial1_loop);
+}
+
+/*Part 2 */
+if (condition == 'aware') {
+    timeline.push(instructions_block2a); //a= aware+predict 
+} else if (condition == 'unaware_predict') {
+    timeline.push(instructions_block2b); //b= unaware+predict
+} else if (condition == 'unaware_no_predict') {
+    timeline.push(instructions_block2c); //b= unaware+no predict
+};
+
+for (var i = 0; i < 5; i++) {
+    timeline.push(trial2_loop);
+}
+
+timeline.push(instructions_block3);
+
+for (var i = 0; i < 5; i++) {
+    timeline.push(trial3_loop);
 }
 
 timeline.push(debrief_block);
