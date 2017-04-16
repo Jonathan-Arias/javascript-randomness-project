@@ -32,7 +32,32 @@ var countdown_slow = {
     timing_stim: [700, 700, 700],
     timing_response: 2100,
     response_ends_trial: false,
-    data: {block_task: 'countdown_slow_text'}
+    data: {
+        block_task: 'countdown_slow_text'
+    }
+}
+
+var go_trial = {
+    type: 'single-stim',
+    is_html: true,
+    stimulus: 'GO!',
+    choices: ['g', 'h', 'b'],
+    timing_response: 500,
+    response_ends_trial: true,
+    data: {
+        block_task: 'practice_go'
+    },
+    on_finish: function(data) {
+        if (data.key_press == -1) {
+            jsPsych.data.addDataToLastTrial({
+                answer_status: 'missed'
+            });
+        } else {
+            jsPsych.data.addDataToLastTrial({
+                answer_status: 'answered'
+            });
+        }
+    }
 }
 
 var missed = {
@@ -41,7 +66,9 @@ var missed = {
     stimulus: 'TOO LATE!',
     timing_response: 500,
     response_ends_trial: false,
-    data: {stim: 'missed_text'}
+    data: {
+        block_task: 'missed_text'
+    }
 }
 
 var if_missed = {
@@ -61,7 +88,9 @@ var show_rock_image = {
     stimulus: 'img/RPSimage1.png',
     timing_response: 500,
     response_ends_trial: false,
-    data: {stim: 'rock_image'}
+    data: {
+        block_task: 'rock_image'
+    }
 }
 
 var show_paper_image = {
@@ -69,7 +98,9 @@ var show_paper_image = {
     stimulus: 'img/RPSimage2.png',
     timing_response: 500,
     response_ends_trial: false,
-    data: {stim: 'paper_image'}
+    data: {
+        block_task: 'paper_image'
+    }
 }
 
 var show_scissor_image = {
@@ -77,7 +108,9 @@ var show_scissor_image = {
     stimulus: 'img/RPSimage3.png',
     timing_response: 500,
     response_ends_trial: false,
-    data: {stim: 'scissors_image'}
+    data: {
+        block_task: 'scissors_image'
+    }
 }
 
 var if_rock = {
@@ -116,6 +149,20 @@ var if_scissor = {
     }
 }
 
+var practice_loop = {
+    timeline: [
+        countdown_slow, go_trial, if_missed, if_rock, if_paper, if_scissor
+    ],
+    loop_function: function() {
+        var data = jsPsych.data.getLastTrialData();
+        if (data.block_task == 'rock_image' || data.block_task == 'paper_image' || data.block_task == 'scissors_image'){
+            return false;
+        } else if (data.block_task == 'missed_text'){
+            return true;
+        }
+    }
+}
+
 function getSubjectData() {
     var trials = jsPsych.data.getTrialsOfType('single-stim');
 
@@ -147,29 +194,6 @@ function getSubjectData() {
     }
 }
 
-var go_trial = {
-    type: 'single-stim',
-    is_html: true,
-    stimulus: 'GO!',
-    choices: ['g', 'h', 'b'],
-    timing_response: 500,
-    response_ends_trial: true,
-    data: {
-        block_task: 'practice_go'
-    },
-    on_finish: function(data) {
-        if (data.key_press == -1) {
-            jsPsych.data.addDataToLastTrial({
-                answer_status: 'missed'
-            });
-        } else {
-            jsPsych.data.addDataToLastTrial({
-                answer_status: 'answered'
-            });
-        }
-    }
-}
-
 var debrief_block = {
     type: 'text',
     text: function() {
@@ -182,12 +206,7 @@ var debrief_block = {
 timeline.push(test);
 
 for (var i = 0; i < 5; i++) {
-    timeline.push(countdown_slow);
-    timeline.push(go_trial);
-    timeline.push(if_missed);
-    timeline.push(if_rock);
-    timeline.push(if_paper);
-    timeline.push(if_scissor);
+    timeline.push(practice_loop);
 }
 
 timeline.push(debrief_block);
