@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Randomness experiment</title>
+    <title>Workpad</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="jspsych-5.0.3/jspsych.js"></script>
     <script src="jspsych-5.0.3/plugins/jspsych-text.js"></script>
@@ -85,7 +85,7 @@ var instructions_block1 = {
         '<br />(Note that: the "g" key represents "Rock", the "h" key represents "Paper", and the "b" key represents "Scissors". ' +
         '<br />We will begin with a practise round. Press "next" when you are ready. ',
 
-        '<strong> PRACTISE BLOCK </strong>'
+        '<strong> PRACTICE BLOCK </strong>'
     ],
     show_clickable_nav: true
 };
@@ -123,7 +123,6 @@ var instructions_block2c = {
     show_clickable_nav: true
 };
 
-
 //define instructions block for Part 3
 var instructions_block3 = {
     type: 'instructions',
@@ -136,102 +135,292 @@ var instructions_block3 = {
     show_clickable_nav: true
 };
 
-var debrief_block = {
-    type: "text",
-    text: function() {
-        var subject_data = getSubjectData();
-        return "<p>DEBRIEF TEXT GOES HERE</p>";
-    }
-};
 
-/* define countdown trial slow ver for practise*/
-var countdown_trial_practise = {
+var countdown_slow = {
     type: 'multi-stim-multi-response',
     stimuli: ['3', '2', '1'],
     is_html: true,
+    choices: [],
+    prompt: 'Press "g" for ROCK, "h" for PAPER, or "b" for SCISSORS',
     timing_stim: [600, 600, 600],
-    choices: [], //71 = g = rock, 72 = h = paper, 66 = b = scissors 
-    prompt: 'Press "g" for Rock, "h" for Paper or "b" for Scissors at the GO',
     timing_response: 1800,
     response_ends_trial: false,
     data: {
-        part_num: '0',
-        block_task: 'practise_rand_seq_gen'
+        block_task: 'countdown_slow_text'
     }
-};
+}
 
-/* define countdown trial fast ver, part 1*/
 var countdown_trial_part1 = {
     type: 'multi-stim-multi-response',
     stimuli: ['3', '2', '1'],
     is_html: true,
+    choices: [],
+    prompt: 'Press "g" for ROCK, "h" for PAPER, or "b" for SCISSORS',
     timing_stim: [500, 500, 500],
-    choices: [], //71 = g = rock, 72 = h = paper, 66 = b = scissors 
-    prompt: 'Press "g" for Rock, "h" for Paper or "b" for Scissors at the GO',
     timing_response: 1500,
     response_ends_trial: false,
     data: {
-        part_num: '1',
-        block_task: 'rand_seq_gen'
+        block_task: 'countdown_trial_part1'
     }
-};
+}
 
-/* define countdown trial for part 2*/
 var countdown_trial_part2 = {
     type: 'multi-stim-multi-response',
     stimuli: ['3', '2', '1'],
     is_html: true,
-    timing_stim: [300, 300, 300],
-    choices: [], //71 = g = rock, 72 = h = paper, 66 = b = scissors 
-    prompt: 'Press "g" for Rock, "h" for Paper or "b" for Scissors',
-    timing_response: 900,
+    choices: [],
+    prompt: 'Press "g" for ROCK, "h" for PAPER, or "b" for SCISSORS',
+    timing_stim: [400, 400, 400],
+    timing_response: 1200,
     response_ends_trial: false,
     data: {
-        part_num: '2',
-        block_task: 'game_rand_seq'
+        block_task: 'countdown_trial_part2'
     }
-};
+}
 
-/* define countdown trial for part 3*/
 var countdown_trial_part3 = {
     type: 'multi-stim-multi-response',
     stimuli: ['3', '2', '1'],
     is_html: true,
+    choices: [],
+    prompt: 'Press "g" for ROCK, "h" for PAPER, or "b" for SCISSORS',
     timing_stim: [300, 300, 300],
-    choices: [], //71 = g = rock, 72 = h = paper, 66 = b = scissors 
-    prompt: 'Press "g" for Rock, "h" for Paper or "b" for Scissors',
     timing_response: 900,
     response_ends_trial: false,
     data: {
-        part_num: '3',
-        block_task: 'rand_seq_gen'
+        block_task: 'countdown_trial_part3'
     }
-};
+}
 
 var go_trial = {
     type: 'single-stim',
     is_html: true,
-    stimulus: '<p>Go!</p>',
+    stimulus: 'GO!',
+    choices: ['g', 'h', 'b'],
     timing_response: 500,
     response_ends_trial: true,
-    choices: ['g', 'h', 'b'], //71 = g = rock, 72 = h = paper, 66 = b = scissors 
     data: {
-        answer_status: 'answered'
+        block_task: 'practice_go'
+    },
+    on_finish: function(data) {
+        if (data.key_press == -1) {
+            jsPsych.data.addDataToLastTrial({
+                answer_status: 'missed'
+            });
+        } else {
+            jsPsych.data.addDataToLastTrial({
+                answer_status: 'answered'
+            });
+        }
     }
-}; //end var go_trial
+}
 
-/* create experiment definition array */
+var missed = {
+    type: 'single-stim',
+    is_html: true,
+    stimulus: 'TOO LATE!',
+    timing_response: 500,
+    response_ends_trial: false,
+    data: {
+        block_task: 'missed_text'
+    }
+}
+
+var if_missed = {
+    timeline: [missed],
+    conditional_function: function() {
+        var data = jsPsych.data.getLastTrialData();
+        if (data.key_press == -1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+var show_rock_image = {
+    type: 'single-stim',
+    stimulus: 'img/RPSimage1.png',
+    timing_response: 500,
+    response_ends_trial: false,
+    data: {
+        block_task: 'rock_image'
+    }
+}
+
+var show_paper_image = {
+    type: 'single-stim',
+    stimulus: 'img/RPSimage2.png',
+    timing_response: 500,
+    response_ends_trial: false,
+    data: {
+        block_task: 'paper_image'
+    }
+}
+
+var show_scissor_image = {
+    type: 'single-stim',
+    stimulus: 'img/RPSimage3.png',
+    timing_response: 500,
+    response_ends_trial: false,
+    data: {
+        block_task: 'scissors_image'
+    }
+}
+
+var if_rock = {
+    timeline: [show_rock_image],
+    conditional_function: function() {
+        var data = jsPsych.data.getLastTrialData();
+        if (data.key_press == 71) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+var if_paper = {
+    timeline: [show_paper_image],
+    conditional_function: function() {
+        var data = jsPsych.data.getLastTrialData();
+        if (data.key_press == 72) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+var if_scissor = {
+    timeline: [show_scissor_image],
+    conditional_function: function() {
+        var data = jsPsych.data.getLastTrialData();
+        if (data.key_press == 66) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+var practice_loop = {
+    timeline: [
+        countdown_slow, go_trial, if_missed, if_rock, if_paper, if_scissor
+    ],
+    loop_function: function() {
+        var data = jsPsych.data.getLastTrialData();
+        if (data.block_task == 'rock_image' || data.block_task == 'paper_image' || data.block_task == 'scissors_image') {
+            return false;
+        } else if (data.block_task == 'missed_text') {
+            return true;
+        }
+    }
+}
+
+var trial1_loop = {
+    timeline: [
+        countdown_trial_part1, go_trial, if_missed, if_rock, if_paper, if_scissor
+    ],
+    loop_function: function() {
+        var data = jsPsych.data.getLastTrialData();
+        if (data.block_task == 'rock_image' || data.block_task == 'paper_image' || data.block_task == 'scissors_image') {
+            return false;
+        } else if (data.block_task == 'missed_text') {
+            return true;
+        }
+    }
+}
+
+var trial2_loop = {
+    timeline: [
+        countdown_trial_part2, go_trial, if_missed, if_rock, if_paper, if_scissor
+    ],
+    loop_function: function() {
+        var data = jsPsych.data.getLastTrialData();
+        if (data.block_task == 'rock_image' || data.block_task == 'paper_image' || data.block_task == 'scissors_image') {
+            return false;
+        } else if (data.block_task == 'missed_text') {
+            return true;
+        }
+    }
+}
+
+var trial3_loop = {
+    timeline: [
+        countdown_trial_part3, go_trial, if_missed, if_rock, if_paper, if_scissor
+    ],
+    loop_function: function() {
+        var data = jsPsych.data.getLastTrialData();
+        if (data.block_task == 'rock_image' || data.block_task == 'paper_image' || data.block_task == 'scissors_image') {
+            return false;
+        } else if (data.block_task == 'missed_text') {
+            return true;
+        }
+    }
+}
+
+function getSubjectData() {
+    var trials = jsPsych.data.getTrialsOfType('single-stim');
+
+    var total_answered = 0;
+    var total_missed = 0;
+    var total_rock = 0;
+    var total_paper = 0;
+    var total_scissor = 0;
+    for (var i = 0; i < trials.length; i++) {
+        if (trials[i].answer_status == 'answered') {
+            total_answered++;
+            if (trials[i].key_press == 71) {
+                total_rock++;
+            } else if (trials[i].key_press == 72) {
+                total_paper++;
+            } else if (trials[i].key_press == 66) {
+                total_scissor++;
+            }
+        } else if (trials[i].answer_status == 'missed') {
+            total_missed++;
+        }
+    }
+    return {
+        rock: total_rock,
+        paper: total_paper,
+        scissor: total_scissor,
+        answered: total_answered,
+        missed: total_missed
+    }
+}
+
+var debrief_block = {
+    type: 'text',
+    text: function() {
+        var subjectData = getSubjectData();
+        return "<p>You generated a total of " + subjectData.answered + " RPS events, and you missed " + subjectData.missed + " total events.</p>" +
+            "<p>Total rock: " + subjectData.rock + "</p><p>Total paper: " + subjectData.paper + "</p><p>Total Scissor: " + subjectData.scissor + "</p>";
+    }
+}
+
 var timeline = [];
-
-timeline.push(consent_block, welcome_block);
+timeline.push(consent_block);
+timeline.push(welcome_block);
 timeline.push(instructions_block1);
 
-/* PART 1*/
 for (var i = 0; i < 5; i++) {
-    timeline.push(countdown_trial_part1, go_trial);
-};
+    timeline.push(practice_loop);
+}
 
-/* Display appropriate instructions */
+var practice_over = {
+    type: 'text',
+    text: 'Practice is over! Time for the real thing'
+}
+
+timeline.push(practice_over);
+
+for (var i = 0; i < 5; i++) {
+    timeline.push(trial1_loop);
+}
+
+/*Part 2 */
 if (condition == 'aware') {
     timeline.push(instructions_block2a); //a= aware+predict 
 } else if (condition == 'unaware_predict') {
@@ -240,27 +429,25 @@ if (condition == 'aware') {
     timeline.push(instructions_block2c); //b= unaware+no predict
 };
 
-/* PART 2 */
 for (var i = 0; i < 5; i++) {
-    timeline.push(countdown_trial_part2, go_trial);
-};
+    timeline.push(trial2_loop);
+}
 
-/* PART 3 */
 timeline.push(instructions_block3);
-for (var i = 0; i < 5; i++) {
-    timeline.push(countdown_trial_part3, go_trial);
-};
 
-/* DEBRIEF */
+for (var i = 0; i < 5; i++) {
+    timeline.push(trial3_loop);
+}
+
 timeline.push(debrief_block);
 
-/* start the experiment */
 jsPsych.init({
-            timeline: timeline,
-            on_finish: function() {
-                jsPsych.data.displayData('json');
-            }, //display data at end of exp 
-            default_iti: 100 });
+    timeline: timeline,
+    default_iti: 100,
+    on_finish: function() {
+        jsPsych.data.displayData('csv');
+    }
+});
 </script>
 
 </html>
