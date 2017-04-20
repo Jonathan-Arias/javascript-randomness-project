@@ -444,8 +444,6 @@ var timeline = [];
 timeline.push(consent_block);
 timeline.push(welcome_block);
 
-timeline.push(survey_block);
-
 timeline.push(instructions_block1);
 
 // DEBUGGING PURPOSES: variable to quickly adjust how many trials for each block
@@ -489,6 +487,8 @@ timeline.push(instructions_block3);
 for (var i = 0; i < total_trials; i++) {
     timeline.push(trial3_loop);
 }
+
+timeline.push(survey_block);
 
 timeline.push(debrief_block);
 
