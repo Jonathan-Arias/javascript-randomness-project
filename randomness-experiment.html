@@ -214,7 +214,85 @@ var break_one = {
     timing_response: 60000, // wait 1 minute before continuing
     response_ends_trial: true, // end trial whenever participant presses a key
     data: {
-        block_task: 'break_one'
+        block_task: 'break'
+    }
+}
+
+var break_two = {
+    type: 'single-stim',
+    stimulus: 'img/Breakim2.png',
+    choices: [],
+    prompt: '<strong>BREAK</strong>' + '<p>Please enjoy a one minute break.</p>'+
+    '<p>Press any key when you are ready to continue</p>',
+    timing_response: 60000, // wait 1 minute before continuing
+    response_ends_trial: true, // end trial whenever participant presses a key
+    data: {
+        block_task: 'break'
+    }
+}
+
+var break_three = {
+    type: 'single-stim',
+    stimulus: 'img/Breakim3.png',
+    choices: [],
+    prompt: '<strong>BREAK</strong>' + '<p>Please enjoy a one minute break.</p>'+
+    '<p>Press any key when you are ready to continue</p>',
+    timing_response: 60000, // wait 1 minute before continuing
+    response_ends_trial: true, // end trial whenever participant presses a key
+    data: {
+        block_task: 'break'
+    }
+}
+
+var break_four = {
+    type: 'single-stim',
+    stimulus: 'img/Breakim4.png',
+    choices: [],
+    prompt: '<strong>BREAK</strong>' + '<p>Please enjoy a one minute break.</p>'+
+    '<p>Press any key when you are ready to continue</p>',
+    timing_response: 60000, // wait 1 minute before continuing
+    response_ends_trial: true, // end trial whenever participant presses a key
+    data: {
+        block_task: 'break'
+    }
+}
+
+var break_five = {
+    type: 'single-stim',
+    stimulus: 'img/Breakim5.png',
+    choices: [],
+    prompt: '<strong>BREAK</strong>' + '<p>Please enjoy a one minute break.</p>'+
+    '<p>Press any key when you are ready to continue</p>',
+    timing_response: 60000, // wait 1 minute before continuing
+    response_ends_trial: true, // end trial whenever participant presses a key
+    data: {
+        block_task: 'break'
+    }
+}
+
+var break_six = {
+    type: 'single-stim',
+    stimulus: 'img/Breakim6.png',
+    choices: [],
+    prompt: '<strong>BREAK</strong>' + '<p>Please enjoy a one minute break.</p>'+
+    '<p>Press any key when you are ready to continue</p>',
+    timing_response: 60000, // wait 1 minute before continuing
+    response_ends_trial: true, // end trial whenever participant presses a key
+    data: {
+        block_task: 'break'
+    }
+}
+
+var break_seven = {
+    type: 'single-stim',
+    stimulus: 'img/Breakim7.png',
+    choices: [],
+    prompt: '<strong>BREAK</strong>' + '<p>Please enjoy a one minute break.</p>'+
+    '<p>Press any key when you are ready to continue</p>',
+    timing_response: 60000, // wait 1 minute before continuing
+    response_ends_trial: true, // end trial whenever participant presses a key
+    data: {
+        block_task: 'break'
     }
 }
 
@@ -518,7 +596,10 @@ for (var i = 0; i < total_trials; i++) {
     timeline.push(trial1_loop);
 }
 
-timeline.push(break_one);
+var break_array = [break_one, break_two, break_three, break_four, break_five, break_six, break_seven];
+var shuffled_array = jsPsych.randomization.repeat(break_array,2);
+
+timeline.push(shuffled_array[0]);
 
 /*Part 2 */
 if (condition == 'aware') {
@@ -533,6 +614,8 @@ if (condition == 'aware') {
 for (var i = 0; i < total_trials; i++) {
     timeline.push(trial2_loop);
 }
+
+timeline.push(shuffled_array[1]);
 
 timeline.push(instructions_block3);
 
