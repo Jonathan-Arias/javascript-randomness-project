@@ -204,6 +204,19 @@ var countdown_trial_part3 = {
     }
 }
 
+var break_one = {
+    type: 'single-stim',
+    stimuli: 'img/Breakim1.png',
+    choices: [],
+    prompt: '<strong>BREAK</strong>' + '<p>Please enjoy a one minute break.</p>'+
+    '<p>Press any key when you are ready to continue</p>',
+    timing_response: 60000, // wait 1 minute before continuing
+    response_ends_trial: true, // end trial whenever participant presses a key
+    data: {
+        block_task: 'break_one'
+    }
+}
+
 // define go block, collect response from subject
 var go_trial = {
     type: 'single-stim',
@@ -495,6 +508,8 @@ timeline.push(practice_over);
 for (var i = 0; i < total_trials; i++) {
     timeline.push(trial1_loop);
 }
+
+timeline.push(break_one);
 
 /*Part 2 */
 if (condition == 'aware') {
