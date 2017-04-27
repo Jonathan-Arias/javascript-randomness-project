@@ -108,7 +108,10 @@ var instructions_block2a = {
         'You will be predicted...this is condition 2a',
         'GL and begin'
     ],
-    show_clickable_nav: true
+    show_clickable_nav: true,
+    data: {
+        block_task: 'instructions_block_two_a'
+    }
 }
 
 // define instructions block for Part 2b (unaware_predict)
@@ -119,7 +122,10 @@ var instructions_block2b = {
         'You will be predicted (but not told)...this is condition 2b',
         'GL and begin'
     ],
-    show_clickable_nav: true
+    show_clickable_nav: true,
+    data: {
+        block_task: 'instructions_block_two_b'
+    }
 }
 
 // define instructions block for Part 2c (unaware_no_predict)
@@ -130,7 +136,10 @@ var instructions_block2c = {
         'You will NOT be predicted...this is condition 2c',
         'GL and begin'
     ],
-    show_clickable_nav: true
+    show_clickable_nav: true,
+    data: {
+        block_task: 'instructions_block_two_c'
+    }
 }
 
 // define instructions block for Part 3
@@ -142,7 +151,19 @@ var instructions_block3 = {
         '<br />You are asked to press the 3 buttons (G,H, or B) as randomly as possible. ' +
         '<br />(Note that: the "g" key represents "Rock", the "h" key represents "Paper", and the "b" key represents "Scissors". '
     ],
-    show_clickable_nav: true
+    show_clickable_nav: true,
+    data: {
+        block_task: 'instructions_block_three'
+    }
+}
+
+// displays after practice trial is complete
+var practice_over = {
+    type: 'text',
+    text: 'Practice is over! Time for the real thing',
+    data: {
+        block_task: 'practice_over'
+    }
 }
 
 // define countdown block for practice trials (600 ms)
@@ -156,7 +177,7 @@ var countdown_slow = {
     timing_response: 1800,
     response_ends_trial: false,
     data: {
-        block_task: 'countdown_slow_text'
+        block_task: 'countdown_trial_practice'
     }
 }
 
@@ -209,12 +230,12 @@ var break_one = {
     type: 'single-stim',
     stimulus: 'img/Breakim1.png',
     choices: [],
-    prompt: '<strong>BREAK</strong>' + '<p>Please enjoy a one minute break.</p>'+
-    '<p>Press any key when you are ready to continue</p>',
+    prompt: '<strong>BREAK</strong>' + '<p>Please enjoy a one minute break.</p>' +
+        '<p>Press any key when you are ready to continue</p>',
     timing_response: 60000, // wait 1 minute before continuing
     response_ends_trial: true, // end trial whenever participant presses a key
     data: {
-        block_task: 'break'
+        block_task: 'break_one'
     }
 }
 
@@ -222,12 +243,12 @@ var break_two = {
     type: 'single-stim',
     stimulus: 'img/Breakim2.png',
     choices: [],
-    prompt: '<strong>BREAK</strong>' + '<p>Please enjoy a one minute break.</p>'+
-    '<p>Press any key when you are ready to continue</p>',
+    prompt: '<strong>BREAK</strong>' + '<p>Please enjoy a one minute break.</p>' +
+        '<p>Press any key when you are ready to continue</p>',
     timing_response: 60000, // wait 1 minute before continuing
     response_ends_trial: true, // end trial whenever participant presses a key
     data: {
-        block_task: 'break'
+        block_task: 'break_two'
     }
 }
 
@@ -235,12 +256,12 @@ var break_three = {
     type: 'single-stim',
     stimulus: 'img/Breakim3.png',
     choices: [],
-    prompt: '<strong>BREAK</strong>' + '<p>Please enjoy a one minute break.</p>'+
-    '<p>Press any key when you are ready to continue</p>',
+    prompt: '<strong>BREAK</strong>' + '<p>Please enjoy a one minute break.</p>' +
+        '<p>Press any key when you are ready to continue</p>',
     timing_response: 60000, // wait 1 minute before continuing
     response_ends_trial: true, // end trial whenever participant presses a key
     data: {
-        block_task: 'break'
+        block_task: 'break_three'
     }
 }
 
@@ -248,12 +269,12 @@ var break_four = {
     type: 'single-stim',
     stimulus: 'img/Breakim4.png',
     choices: [],
-    prompt: '<strong>BREAK</strong>' + '<p>Please enjoy a one minute break.</p>'+
-    '<p>Press any key when you are ready to continue</p>',
+    prompt: '<strong>BREAK</strong>' + '<p>Please enjoy a one minute break.</p>' +
+        '<p>Press any key when you are ready to continue</p>',
     timing_response: 60000, // wait 1 minute before continuing
     response_ends_trial: true, // end trial whenever participant presses a key
     data: {
-        block_task: 'break'
+        block_task: 'break_four'
     }
 }
 
@@ -261,12 +282,12 @@ var break_five = {
     type: 'single-stim',
     stimulus: 'img/Breakim5.png',
     choices: [],
-    prompt: '<strong>BREAK</strong>' + '<p>Please enjoy a one minute break.</p>'+
-    '<p>Press any key when you are ready to continue</p>',
+    prompt: '<strong>BREAK</strong>' + '<p>Please enjoy a one minute break.</p>' +
+        '<p>Press any key when you are ready to continue</p>',
     timing_response: 60000, // wait 1 minute before continuing
     response_ends_trial: true, // end trial whenever participant presses a key
     data: {
-        block_task: 'break'
+        block_task: 'break_five'
     }
 }
 
@@ -274,12 +295,12 @@ var break_six = {
     type: 'single-stim',
     stimulus: 'img/Breakim6.png',
     choices: [],
-    prompt: '<strong>BREAK</strong>' + '<p>Please enjoy a one minute break.</p>'+
-    '<p>Press any key when you are ready to continue</p>',
+    prompt: '<strong>BREAK</strong>' + '<p>Please enjoy a one minute break.</p>' +
+        '<p>Press any key when you are ready to continue</p>',
     timing_response: 60000, // wait 1 minute before continuing
     response_ends_trial: true, // end trial whenever participant presses a key
     data: {
-        block_task: 'break'
+        block_task: 'break_six'
     }
 }
 
@@ -287,12 +308,12 @@ var break_seven = {
     type: 'single-stim',
     stimulus: 'img/Breakim7.png',
     choices: [],
-    prompt: '<strong>BREAK</strong>' + '<p>Please enjoy a one minute break.</p>'+
-    '<p>Press any key when you are ready to continue</p>',
+    prompt: '<strong>BREAK</strong>' + '<p>Please enjoy a one minute break.</p>' +
+        '<p>Press any key when you are ready to continue</p>',
     timing_response: 60000, // wait 1 minute before continuing
     response_ends_trial: true, // end trial whenever participant presses a key
     data: {
-        block_task: 'break'
+        block_task: 'break_seven'
     }
 }
 
@@ -426,7 +447,7 @@ var practice_loop = {
         var data = jsPsych.data.getLastTrialData();
         if (data.block_task == 'rock_image' || data.block_task == 'paper_image' || data.block_task == 'scissors_image') {
             jsPsych.data.addDataToLastTrial({
-                block_data: 'practice_data'
+                trial_data: 'practice'
             });
             return false;
         } else if (data.block_task == 'missed_text') {
@@ -444,7 +465,7 @@ var trial1_loop = {
         var data = jsPsych.data.getLastTrialData();
         if (data.block_task == 'rock_image' || data.block_task == 'paper_image' || data.block_task == 'scissors_image') {
             jsPsych.data.addDataToLastTrial({
-                block_data: 'trial1_data'
+                trial_data: 'trial_one'
             });
             return false;
         } else if (data.block_task == 'missed_text') {
@@ -462,7 +483,7 @@ var trial2_loop = {
         var data = jsPsych.data.getLastTrialData();
         if (data.block_task == 'rock_image' || data.block_task == 'paper_image' || data.block_task == 'scissors_image') {
             jsPsych.data.addDataToLastTrial({
-                block_data: 'trial2_data'
+                trial_data: 'trial_two'
             });
             return false;
         } else if (data.block_task == 'missed_text') {
@@ -480,7 +501,7 @@ var trial3_loop = {
         var data = jsPsych.data.getLastTrialData();
         if (data.block_task == 'rock_image' || data.block_task == 'paper_image' || data.block_task == 'scissors_image') {
             jsPsych.data.addDataToLastTrial({
-                block_task: 'trial3_data'
+                trial_data: 'trial_three'
             });
             return false;
         } else if (data.block_task == 'missed_text') {
@@ -493,8 +514,15 @@ var scale_1 = ["1 (Strongly Agree)", "2", "3", "4 (Neutral)", "5", "6", "7 (Stro
 
 var survey_block = {
     type: 'survey-likert',
-    questions: ["I am confident that I know what a random sequence is.", "I am able to create a long, random sequence of Rock, Paper, and Scissors at will.", "I am able to recognize a random sequence of Rock, Paper, and Scissors when I see one"],
-    labels: [scale_1, scale_1, scale_1]
+    questions: [
+        "I am confident that I know what a random sequence is.",
+        "I am able to create a long, random sequence of Rock, Paper, and Scissors at will.",
+        "I am able to recognize a random sequence of Rock, Paper, and Scissors when I see one"
+    ],
+    labels: [scale_1, scale_1, scale_1],
+    data: {
+        block_task: 'likert_survey'
+    }
 }
 
 // collects simple data about responses and returns totals for number of answered/missed and RPS selections
@@ -583,12 +611,6 @@ for (var i = 0; i < total_trials; i++) {
     timeline.push(practice_loop);
 }
 
-// displays after practice trial is complete
-var practice_over = {
-    type: 'text',
-    text: 'Practice is over! Time for the real thing'
-}
-
 timeline.push(practice_over);
 
 // same format as previous
@@ -597,7 +619,7 @@ for (var i = 0; i < total_trials; i++) {
 }
 
 var break_array = [break_one, break_two, break_three, break_four, break_five, break_six, break_seven];
-var shuffled_array = jsPsych.randomization.repeat(break_array,2);
+var shuffled_array = jsPsych.randomization.repeat(break_array, 2);
 
 timeline.push(shuffled_array[0]);
 
