@@ -45,7 +45,10 @@ var consent_block = {
     type: 'html',
     url: "consent_page.html",
     cont_btn: "start",
-    check_fn: check_consent
+    check_fn: check_consent,
+    data: {
+        block_task: 'consent_block'
+    }
 }
 
 // define welcome message block (overview of experiment)
@@ -74,14 +77,6 @@ var welcome_block = {
         '<p>The <strong>third</strong> part of the experiment will be exactly the same as the first part: you will again generate a sequence of Rock, Paper and Scissors that is as random and unpredictable as possible. To help you picture this once more, you can imagine that your iPod only contains three songs titled "Rock", "Paper" and "Scissors", and you hit the Shuffle button repeatedly so that the iPod chooses one of the songs at random each time. It is crucial in these two parts that you literally try to act like your iPod, or the die, or the computer algorithm and make your sequence completely random. </p>'
     ],
     show_clickable_nav: true
-}
-
-var scale_1 = ["1 (Strongly Agree)", "2", "3", "4 (Neutral)", "5", "6", "7 (Strongly Disagree)"];
-
-var survey_block = {
-    type: 'survey-likert',
-    questions: ["I am confident that I know what a random sequence is.", "I am able to create a long, random sequence of Rock, Paper, and Scissors at will.", "I am able to recognize a random sequence of Rock, Paper, and Scissors when I see one"],
-    labels: [scale_1, scale_1, scale_1]
 }
 
 // define instructions block for Part 1
@@ -408,6 +403,14 @@ var trial3_loop = {
             return true;
         }
     }
+}
+
+var scale_1 = ["1 (Strongly Agree)", "2", "3", "4 (Neutral)", "5", "6", "7 (Strongly Disagree)"];
+
+var survey_block = {
+    type: 'survey-likert',
+    questions: ["I am confident that I know what a random sequence is.", "I am able to create a long, random sequence of Rock, Paper, and Scissors at will.", "I am able to recognize a random sequence of Rock, Paper, and Scissors when I see one"],
+    labels: [scale_1, scale_1, scale_1]
 }
 
 // collects simple data about responses and returns totals for number of answered/missed and RPS selections
