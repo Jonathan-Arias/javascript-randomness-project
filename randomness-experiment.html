@@ -229,14 +229,60 @@ var countdown_trial_part3 = {
 var rock_against_rock = {
     type: 'single-stim',
     is_html: true,
-    stimulus: "<div class='left center-content'><img src='img/RPSimage1.png'></img>" +
-        "<p class='small'>You</p></div>"+"<div class='right center-content'><img src='img/RPSimage1.png'></img>" +
-        "<p class='small'>Computer</p></div>",
+    stimulus: "<div class='left center-content'>" +
+        "<p><strong>You</strong></p>" +
+        "<img src='img/RPSimage1.png'></img>" +
+        "</div>" +
+        "<div class='right center-content'>" +
+        "<p><strong>The Computer</strong></p>" +
+        "<img src='img/RPSimage1.png'></img>" +
+        "</div>",
     choices: [],
     timing_response: 5000,
     response_ends_trial: false,
     data: {
-        block_task: 'rock_against_rock'
+        block_task: 'rock_against_rock',
+        game_status: 'tie'
+    }
+}
+
+var rock_against_paper = {
+    type: 'single-stim',
+    is_html: true,
+    stimulus: "<div class='left center-content'>" +
+        "<p><strong>You</strong></p>" +
+        "<img src='img/RPSimage1.png'></img>" +
+        "</div>" +
+        "<div class='right center-content'>" +
+        "<p><strong>The Computer</strong></p>" +
+        "<img src='img/RPSimage2.png'></img>" +
+        "</div>",
+    choices: [],
+    timing_response: 5000,
+    response_ends_trial: false,
+    data: {
+        block_task: 'rock_against_paper',
+        game_status: 'lose'
+    }
+}
+
+var rock_against_scissors = {
+    type: 'single-stim',
+    is_html: true,
+    stimulus: "<div class='left center-content'>" +
+        "<p><strong>You</strong></p>" +
+        "<img src='img/RPSimage1.png'></img>" +
+        "</div>" +
+        "<div class='right center-content'>" +
+        "<p><strong>The Computer</strong></p>" +
+        "<img src='img/RPSimage3.png'></img>" +
+        "</div>",
+    choices: [],
+    timing_response: 5000,
+    response_ends_trial: false,
+    data: {
+        block_task: 'rock_against_scissors',
+        game_status: 'win'
     }
 }
 
@@ -634,8 +680,6 @@ var debrief_block = {
 var timeline = [];
 timeline.push(consent_block);
 timeline.push(welcome_block);
-
-timeline.push(rock_against_rock);
 
 timeline.push(instructions_block1);
 
