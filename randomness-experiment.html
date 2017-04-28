@@ -386,7 +386,7 @@ var scissors_against_paper = {
     }
 }
 
-var scissors_against_rock = {
+var scissors_against_scissors = {
     type: 'single-stim',
     is_html: true,
     stimulus: "<div class='left center-content'>" +
@@ -700,12 +700,7 @@ var trial2_loop = {
     ],
     loop_function: function() {
         var data = jsPsych.data.getLastTrialData();
-        if (data.block_task == 'rock_image' || data.block_task == 'paper_image' || data.block_task == 'scissors_image') {
-            jsPsych.data.addDataToLastTrial({
-                trial_data: 'trial_two'
-            });
-            return false;
-        } else if (data.block_task == 'missed_against_computer') {
+        if (data.block_task == 'missed_against_computer') {
             return true;
         }
     }
@@ -816,6 +811,53 @@ function collectTrialOneSequence() {
     }
 }
 
+var game_array = [
+    rock_against_rock, rock_against_paper, rock_against_scissors,
+    paper_against_rock, paper_against_paper, paper_against_scissors,
+    scissors_against_rock, scissors_against_paper, scissors_against_scissors
+]
+
+function pushGameScenario() {
+    var lastTrial = jsPsych.data.getLastTrialData();
+
+    var user_move = 0;
+    var computer_move = computerRandomMove();
+
+    if (lastTrial.key_press == 71) {
+        user_move = 1;
+    } else if (lastTrial.key_press == 72) {
+        user_move = 2;
+    } else if (lastTrial.key_press == 66) {
+        user_move = 3;
+    }
+
+    if (user_move == 1) {
+        if (computer_move == 1) {
+            return game_array[0];
+        } else if (computer_move == 2) {
+            return game_array[1];
+        } else if (computer_move == 3) {
+            return game_array[2];
+        }
+    } else if (user_move == 2) {
+        if (computer_move == 1) {
+            return game_array[3];
+        } else if (computer_move == 2) {
+            return game_array[4];
+        } else if (computer_move == 3) {
+            return game_array[5];
+        }
+    } else if (user_move == 3) {
+        if (computer_move == 1) {
+            return game_array[6];
+        } else if (computer_move == 2) {
+            return game_array[7];
+        } else if (computer_move == 3) {
+            return game_array[8];
+        }
+    }
+}
+
 var debug_block1 = {
     type: 'text',
     text: function() {
@@ -874,6 +916,7 @@ if (condition == 'aware') {
 // same format as previous
 for (var i = 0; i < total_trials; i++) {
     timeline.push(trial2_loop);
+    timeline.push(pushGameScenario());
 }
 
 timeline.push(shuffled_array[1]);
