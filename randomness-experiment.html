@@ -286,6 +286,126 @@ var rock_against_scissors = {
     }
 }
 
+var paper_against_rock = {
+    type: 'single-stim',
+    is_html: true,
+    stimulus: "<div class='left center-content'>" +
+        "<p><strong>You</strong></p>" +
+        "<img src='img/RPSimage2.png'></img>" +
+        "</div>" +
+        "<div class='right center-content'>" +
+        "<p><strong>The Computer</strong></p>" +
+        "<img src='img/RPSimage1.png'></img>" +
+        "</div>",
+    choices: [],
+    timing_response: 5000,
+    response_ends_trial: false,
+    data: {
+        block_task: 'paper_against_rock',
+        game_status: 'win'
+    }
+}
+
+var paper_against_paper = {
+    type: 'single-stim',
+    is_html: true,
+    stimulus: "<div class='left center-content'>" +
+        "<p><strong>You</strong></p>" +
+        "<img src='img/RPSimage2.png'></img>" +
+        "</div>" +
+        "<div class='right center-content'>" +
+        "<p><strong>The Computer</strong></p>" +
+        "<img src='img/RPSimage2.png'></img>" +
+        "</div>",
+    choices: [],
+    timing_response: 5000,
+    response_ends_trial: false,
+    data: {
+        block_task: 'paper_against_paper',
+        game_status: 'tie'
+    }
+}
+
+var paper_against_scissors = {
+    type: 'single-stim',
+    is_html: true,
+    stimulus: "<div class='left center-content'>" +
+        "<p><strong>You</strong></p>" +
+        "<img src='img/RPSimage2.png'></img>" +
+        "</div>" +
+        "<div class='right center-content'>" +
+        "<p><strong>The Computer</strong></p>" +
+        "<img src='img/RPSimage3.png'></img>" +
+        "</div>",
+    choices: [],
+    timing_response: 5000,
+    response_ends_trial: false,
+    data: {
+        block_task: 'paper_against_scissors',
+        game_status: 'lose'
+    }
+}
+
+var scissors_against_rock = {
+    type: 'single-stim',
+    is_html: true,
+    stimulus: "<div class='left center-content'>" +
+        "<p><strong>You</strong></p>" +
+        "<img src='img/RPSimage3.png'></img>" +
+        "</div>" +
+        "<div class='right center-content'>" +
+        "<p><strong>The Computer</strong></p>" +
+        "<img src='img/RPSimage1.png'></img>" +
+        "</div>",
+    choices: [],
+    timing_response: 5000,
+    response_ends_trial: false,
+    data: {
+        block_task: 'scissors_against_rock',
+        game_status: 'lose'
+    }
+}
+
+var scissors_against_paper = {
+    type: 'single-stim',
+    is_html: true,
+    stimulus: "<div class='left center-content'>" +
+        "<p><strong>You</strong></p>" +
+        "<img src='img/RPSimage3.png'></img>" +
+        "</div>" +
+        "<div class='right center-content'>" +
+        "<p><strong>The Computer</strong></p>" +
+        "<img src='img/RPSimage2.png'></img>" +
+        "</div>",
+    choices: [],
+    timing_response: 5000,
+    response_ends_trial: false,
+    data: {
+        block_task: 'scissors_against_paper',
+        game_status: 'win'
+    }
+}
+
+var scissors_against_rock = {
+    type: 'single-stim',
+    is_html: true,
+    stimulus: "<div class='left center-content'>" +
+        "<p><strong>You</strong></p>" +
+        "<img src='img/RPSimage3.png'></img>" +
+        "</div>" +
+        "<div class='right center-content'>" +
+        "<p><strong>The Computer</strong></p>" +
+        "<img src='img/RPSimage3.png'></img>" +
+        "</div>",
+    choices: [],
+    timing_response: 5000,
+    response_ends_trial: false,
+    data: {
+        block_task: 'scissors_against_scissors',
+        game_status: 'tie'
+    }
+}
+
 function computerRandomMove() {
     // 1 == Rock, 2 == Paper, 3 == Scissors
     // Math.random() generates a random decimal, so multiplying it by 3 will get a range of 0 <= val < 3
