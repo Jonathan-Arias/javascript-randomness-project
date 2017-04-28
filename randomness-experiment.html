@@ -406,6 +406,37 @@ var scissors_against_rock = {
     }
 }
 
+var missed_against_computer = {
+    type: 'single-stim',
+    is_html: true,
+    stimulus: "<div class='left center-content'>" +
+        "<p><strong>You</strong></p>" +
+        "<p>TOO LATE!</p>" +
+        "</div>" +
+        "<div class='right center-content'>" +
+        "<p><strong>The Computer</strong></p>" +
+        "</div>",
+    choices: [],
+    timing_response: 5000,
+    response_ends_trial: false,
+    data: {
+        block_task: 'missed_against_computer',
+        game_status: 'forfeit'
+    }
+}
+
+var if_missed_against_computer = {
+    timeline: [missed_against_computer],
+    conditional_function: function() {
+        var data = jsPsych.data.getLastTrialData();
+        if (data.key_press == -1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
 function computerRandomMove() {
     // 1 == Rock, 2 == Paper, 3 == Scissors
     // Math.random() generates a random decimal, so multiplying it by 3 will get a range of 0 <= val < 3
@@ -665,7 +696,7 @@ var trial1_loop = {
 // trial 2 block, loops until last trial is one of the RPS image blocks
 var trial2_loop = {
     timeline: [
-        countdown_trial_part2, go_trial, if_missed, if_rock, if_paper, if_scissor
+        countdown_trial_part2, go_trial, if_missed_against_computer
     ],
     loop_function: function() {
         var data = jsPsych.data.getLastTrialData();
@@ -674,7 +705,7 @@ var trial2_loop = {
                 trial_data: 'trial_two'
             });
             return false;
-        } else if (data.block_task == 'missed_text') {
+        } else if (data.block_task == 'missed_against_computer') {
             return true;
         }
     }
@@ -812,7 +843,7 @@ timeline.push(welcome_block);
 timeline.push(instructions_block1);
 
 // DEBUGGING PURPOSES: variable to quickly adjust how many trials for each block
-var total_trials = 10;
+var total_trials = 2;
 
 // collects at LEAST five trials with 'answered' as their data tags
 for (var i = 0; i < total_trials; i++) {
