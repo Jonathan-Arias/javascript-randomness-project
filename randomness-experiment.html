@@ -286,6 +286,14 @@ var rock_against_scissors = {
     }
 }
 
+function computerRandomMove() {
+    // 1 == Rock, 2 == Paper, 3 == Scissors
+    // Math.random() generates a random decimal, so multiplying it by 3 will get a range of 0 <= val < 3
+    // Math.floor() rounds down the number to its nearest whole number, range now 0 <= val <= 2
+    // Adding 1 will shift the range to be 1 <= val <= 3
+    return Math.floor(Math.random() * 3) + 1;
+}
+
 var break_one = {
     type: 'single-stim',
     stimulus: 'img/Breakim1.png',
