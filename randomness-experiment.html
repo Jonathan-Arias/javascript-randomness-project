@@ -817,47 +817,6 @@ var game_array = [
     scissors_against_rock, scissors_against_paper, scissors_against_scissors
 ]
 
-function pushGameScenario() {
-    var lastTrial = jsPsych.data.getLastTrialData();
-
-    var user_move = 0;
-    var computer_move = computerRandomMove();
-
-    if (lastTrial.key_press == 71) {
-        user_move = 1;
-    } else if (lastTrial.key_press == 72) {
-        user_move = 2;
-    } else if (lastTrial.key_press == 66) {
-        user_move = 3;
-    }
-
-    if (user_move == 1) {
-        if (computer_move == 1) {
-            return game_array[0];
-        } else if (computer_move == 2) {
-            return game_array[1];
-        } else if (computer_move == 3) {
-            return game_array[2];
-        }
-    } else if (user_move == 2) {
-        if (computer_move == 1) {
-            return game_array[3];
-        } else if (computer_move == 2) {
-            return game_array[4];
-        } else if (computer_move == 3) {
-            return game_array[5];
-        }
-    } else if (user_move == 3) {
-        if (computer_move == 1) {
-            return game_array[6];
-        } else if (computer_move == 2) {
-            return game_array[7];
-        } else if (computer_move == 3) {
-            return game_array[8];
-        }
-    }
-}
-
 var debug_block1 = {
     type: 'text',
     text: function() {
@@ -916,7 +875,6 @@ if (condition == 'aware') {
 // same format as previous
 for (var i = 0; i < total_trials; i++) {
     timeline.push(trial2_loop);
-    timeline.push(pushGameScenario());
 }
 
 timeline.push(shuffled_array[1]);
