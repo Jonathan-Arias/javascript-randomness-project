@@ -696,11 +696,16 @@ var trial1_loop = {
 // trial 2 block, loops until last trial is one of the RPS image blocks
 var trial2_loop = {
     timeline: [
-        countdown_trial_part2, go_trial, if_missed_against_computer
+        countdown_trial_part2, go_trial, if_missed, if_rock, if_paper, if_scissor
     ],
     loop_function: function() {
         var data = jsPsych.data.getLastTrialData();
-        if (data.block_task == 'missed_against_computer') {
+        if (data.block_task == 'rock_image' || data.block_task == 'paper_image' || data.block_task == 'scissors_image') {
+            jsPsych.data.addDataToLastTrial({
+                trial_data: 'trial_two'
+            });
+            return false;
+        } else if (data.block_task == 'missed_text') {
             return true;
         }
     }
