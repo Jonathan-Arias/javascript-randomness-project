@@ -166,6 +166,66 @@ var practice_over = {
     }
 }
 
+function computerRandomMove() {
+    // 1 == Rock, 2 == Paper, 3 == Scissors
+    // Math.random() generates a random decimal, so multiplying it by 3 will get a range of 0 <= val < 3
+    // Math.floor() rounds down the number to its nearest whole number, range now 0 <= val <= 2
+    // Adding 1 will shift the range to be 1 <= val <= 3
+    return Math.floor(Math.random() * 3) + 1;
+}
+
+// collects simple data about responses and returns totals for number of answered/missed and RPS selections
+function getSubjectData() {
+    var trials = jsPsych.data.getTrialsOfType('single-stim');
+
+    var total_answered = 0;
+    var total_missed = 0;
+    var total_rock = 0;
+    var total_paper = 0;
+    var total_scissor = 0;
+    for (var i = 0; i < trials.length; i++) {
+        if (trials[i].answer_status == 'answered') {
+            total_answered++;
+            if (trials[i].key_press == 71) {
+                total_rock++;
+            } else if (trials[i].key_press == 72) {
+                total_paper++;
+            } else if (trials[i].key_press == 66) {
+                total_scissor++;
+            }
+        } else if (trials[i].answer_status == 'missed') {
+            total_missed++;
+        }
+    }
+    return {
+        rock: total_rock,
+        paper: total_paper,
+        scissor: total_scissor,
+        answered: total_answered,
+        missed: total_missed
+    }
+}
+
+function collectTrialOneSequence() {
+    var trials = jsPsych.data.getTrialsOfType('single-stim');
+
+    var sequence = '';
+    for (var i = 0; i < trials.length; i++) {
+        if (trials[i].trial_data == 'trial_one') {
+            if (trials[i].block_task == 'rock_image') {
+                sequence += '1';
+            } else if (trials[i].block_task == 'paper_image') {
+                sequence += '2';
+            } else if (trials[i].block_task == 'scissors_image') {
+                sequence += '3';
+            }
+        }
+    }
+    return {
+        trial_one_sequence: sequence
+    }
+}
+
 // define countdown block for practice trials (600 ms)
 var countdown_slow = {
     type: 'multi-stim-multi-response',
@@ -232,10 +292,10 @@ var game_timing = 1000;
 /* The following ten blocks represent all possible game situations that a player can encounter
  * This approach lacks finesse but it gets the job done. There are 9 possible outcomes if a player
  * submits a response, and 1 outcome if they miss a response (automatic forfeit)
- * 
+ *
  * FORMAT: PLAYERMOVE_against_COMPUTERMOVE
- * Uses HTML to bootstrap the single-stim plugin 
-*/
+ * Uses HTML to bootstrap the single-stim plugin
+ */
 var rock_against_rock = {
     type: 'single-stim',
     is_html: true,
@@ -435,6 +495,42 @@ var missed_against_computer = {
     }
 }
 
+var if_rock_against_rock = {
+  timeline: [rock_against_rock],
+  conditional_function: function() {
+    var data = jsPsych.data.getLastTrialData();
+    if (data.key_press == 71 && data.answer_status == 'answered' && data.computer_move == 1){
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
+var if_rock_against_paper = {
+  timeline: [rock_against_paper],
+  conditional_function: function() {
+    var data = jsPsych.data.getLastTrialData();
+    if (data.key_press == 71 && data.answer_status == 'answered' && data.computer_move == 2){
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
+var if_rock_against_scissors = {
+  timeline: [rock_against_scissors],
+  conditional_function: function() {
+    var data = jsPsych.data.getLastTrialData();
+    if (data.key_press == 71 && data.answer_status == 'answered' && data.computer_move == 3){
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
 var if_missed_against_computer = {
     timeline: [missed_against_computer],
     conditional_function: function() {
@@ -442,19 +538,24 @@ var if_missed_against_computer = {
         if (data.key_press == -1) {
             return true;
         } else {
+            var comp_move = computerRandomMove();
+            jsPsych.data.addDataToLastTrial({
+              computer_move: comp_move
+            })
             return false;
         }
     }
 }
 
-function computerRandomMove() {
-    // 1 == Rock, 2 == Paper, 3 == Scissors
-    // Math.random() generates a random decimal, so multiplying it by 3 will get a range of 0 <= val < 3
-    // Math.floor() rounds down the number to its nearest whole number, range now 0 <= val <= 2
-    // Adding 1 will shift the range to be 1 <= val <= 3
-    return Math.floor(Math.random() * 3) + 1;
-}
+var game_array = [
+    rock_against_rock, rock_against_paper, rock_against_scissors,
+    paper_against_rock, paper_against_paper, paper_against_scissors,
+    scissors_against_rock, scissors_against_paper, scissors_against_scissors
+]
 
+/* The following seven blocks are used to display the break images, which are small comic strips
+ * Subject is given one minute before trial moves on. Or they can press a key to advance if they are ready sooner.
+ */
 var break_one = {
     type: 'single-stim',
     stimulus: 'img/Breakim1.png',
@@ -667,6 +768,20 @@ var if_scissor = {
     }
 }
 
+var debug_loop = {
+  timeline: [
+    countdown_slow, go_trial, if_missed_against_computer, if_rock_against_rock, if_rock_against_paper, if_rock_against_scissors
+  ],
+  loop_function: function() {
+    var data = jsPsych.data.getLastTrialData();
+    if (data.block_task == 'missed_against_computer'){
+      return true;
+    } else {
+      return false;
+    }
+  }
+}
+
 // practice block, loops until last trial is one of the RPS image blocks
 var practice_loop = {
     timeline: [
@@ -754,84 +869,6 @@ var survey_block = {
     }
 }
 
-// collects simple data about responses and returns totals for number of answered/missed and RPS selections
-function getSubjectData() {
-    var trials = jsPsych.data.getTrialsOfType('single-stim');
-
-    var total_answered = 0;
-    var total_missed = 0;
-    var total_rock = 0;
-    var total_paper = 0;
-    var total_scissor = 0;
-    for (var i = 0; i < trials.length; i++) {
-        if (trials[i].answer_status == 'answered') {
-            total_answered++;
-            if (trials[i].key_press == 71) {
-                total_rock++;
-            } else if (trials[i].key_press == 72) {
-                total_paper++;
-            } else if (trials[i].key_press == 66) {
-                total_scissor++;
-            }
-        } else if (trials[i].answer_status == 'missed') {
-            total_missed++;
-        }
-    }
-    return {
-        rock: total_rock,
-        paper: total_paper,
-        scissor: total_scissor,
-        answered: total_answered,
-        missed: total_missed
-    }
-}
-
-function collectSequence() {
-    var trials = jsPsych.data.getTrialsOfType('single-stim');
-
-    var sequence = '';
-    for (var i = 0; i < trials.length; i++) {
-        if (trials[i].answer_status == 'answered') {
-            if (trials[i].key_press == 71) {
-                sequence += '1';
-            } else if (trials[i].key_press == 72) {
-                sequence += '2';
-            } else if (trials[i].key_press == 66) {
-                sequence += '3';
-            }
-        }
-    }
-    return {
-        user_sequence: sequence
-    }
-}
-
-function collectTrialOneSequence() {
-    var trials = jsPsych.data.getTrialsOfType('single-stim');
-
-    var sequence = '';
-    for (var i = 0; i < trials.length; i++) {
-        if (trials[i].trial_data == 'trial_one') {
-            if (trials[i].block_task == 'rock_image') {
-                sequence += '1';
-            } else if (trials[i].block_task == 'paper_image') {
-                sequence += '2';
-            } else if (trials[i].block_task == 'scissors_image') {
-                sequence += '3';
-            }
-        }
-    }
-    return {
-        trial_one_sequence: sequence
-    }
-}
-
-var game_array = [
-    rock_against_rock, rock_against_paper, rock_against_scissors,
-    paper_against_rock, paper_against_paper, paper_against_scissors,
-    scissors_against_rock, scissors_against_paper, scissors_against_scissors
-]
-
 var debug_block1 = {
     type: 'text',
     text: function() {
@@ -860,6 +897,11 @@ timeline.push(instructions_block1);
 
 // DEBUGGING PURPOSES: variable to quickly adjust how many trials for each block
 var total_trials = 2;
+var debug_trials = 10;
+
+for (var i = 0; i < debug_trials; i++) {
+  timeline.push(debug_loop);
+}
 
 // collects at LEAST five trials with 'answered' as their data tags
 for (var i = 0; i < total_trials; i++) {
@@ -880,7 +922,7 @@ timeline.push(shuffled_array[0]);
 
 /*Part 2 */
 if (condition == 'aware') {
-    timeline.push(instructions_block2a); //a= aware+predict 
+    timeline.push(instructions_block2a); //a= aware+predict
 } else if (condition == 'unaware_predict') {
     timeline.push(instructions_block2b); //b= unaware+predict
 } else if (condition == 'unaware_no_predict') {
