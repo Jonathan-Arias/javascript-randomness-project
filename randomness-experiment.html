@@ -848,13 +848,11 @@ var debug_loop = {
         if_paper_against_rock, if_paper_against_paper, if_paper_against_scissors,
         if_scissors_against_rock, if_scissors_against_paper, if_scissors_against_scissors
     ],
-    loop_function: function() {
+    on_finish: function() {
         var data = jsPsych.data.getLastTrialData();
-        if (data.block_task == 'missed_against_computer') {
-            return true;
-        } else {
-            return false;
-        }
+        jsPsych.data.addDataToLastTrial({
+            trial_data: 'trial_two'
+        });
     }
 }
 
@@ -897,18 +895,17 @@ var trial1_loop = {
 // trial 2 block, loops until last trial is one of the RPS image blocks
 var trial2_loop = {
     timeline: [
-        countdown_trial_part2, go_trial, if_missed, if_rock, if_paper, if_scissor
+        countdown_slow, go_trial,
+        if_missed_against_computer,
+        if_rock_against_rock, if_rock_against_paper, if_rock_against_scissors,
+        if_paper_against_rock, if_paper_against_paper, if_paper_against_scissors,
+        if_scissors_against_rock, if_scissors_against_paper, if_scissors_against_scissors
     ],
-    loop_function: function() {
+    on_finish: function() {
         var data = jsPsych.data.getLastTrialData();
-        if (data.block_task == 'rock_image' || data.block_task == 'paper_image' || data.block_task == 'scissors_image') {
-            jsPsych.data.addDataToLastTrial({
-                trial_data: 'trial_two'
-            });
-            return false;
-        } else if (data.block_task == 'missed_text') {
-            return true;
-        }
+        jsPsych.data.addDataToLastTrial({
+            trial_data: 'trial_two'
+        });
     }
 }
 
