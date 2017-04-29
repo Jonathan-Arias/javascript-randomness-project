@@ -551,22 +551,6 @@ var if_scissor = {
     }
 }
 
-var debug_loop = {
-    timeline: [
-        countdown_slow, go_trial,
-        if_missed_against_computer,
-        if_rock_against_rock, if_rock_against_paper, if_rock_against_scissors,
-        if_paper_against_rock, if_paper_against_paper, if_paper_against_scissors,
-        if_scissors_against_rock, if_scissors_against_paper, if_scissors_against_scissors
-    ],
-    on_finish: function() {
-        var data = jsPsych.data.getLastTrialData();
-        jsPsych.data.addDataToLastTrial({
-            trial_data: 'trial_two'
-        });
-    }
-}
-
 // practice block, loops until last trial is one of the RPS image blocks
 var practice_loop = {
     timeline: [
@@ -658,7 +642,7 @@ var debug_block1 = {
     text: function() {
         var subjectB1Data = collectTrialOneSequence();
         return "<p>1 == Rock, 2 == Paper, 3 == Scissors </p>" +
-            "<p>" + subjectB1Data.trial_one_sequence + "</p>";
+            "<p>TRIAL ONE SEQUENCE: " + subjectB1Data.trial_one_sequence + "</p>";
     }
 }
 
@@ -680,12 +664,7 @@ timeline.push(welcome_block);
 timeline.push(instructions_block1);
 
 // DEBUGGING PURPOSES: variables to quickly adjust how many trials for each block
-var total_trials = 2;
-var debug_trials = 10;
-
-for (var i = 0; i < debug_trials; i++) {
-    timeline.push(debug_loop);
-}
+var total_trials = 4;
 
 // collects at LEAST five trials with 'answered' as their data tags
 for (var i = 0; i < total_trials; i++) {
