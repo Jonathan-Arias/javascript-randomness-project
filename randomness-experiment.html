@@ -226,6 +226,16 @@ var countdown_trial_part3 = {
     }
 }
 
+// debugging, adjusts timing for all game status blocks
+var game_timing = 1000;
+
+/* The following ten blocks represent all possible game situations that a player can encounter
+ * This approach lacks finesse but it gets the job done. There are 9 possible outcomes if a player
+ * submits a response, and 1 outcome if they miss a response (automatic forfeit)
+ * 
+ * FORMAT: PLAYERMOVE_against_COMPUTERMOVE
+ * Uses HTML to bootstrap the single-stim plugin 
+*/
 var rock_against_rock = {
     type: 'single-stim',
     is_html: true,
@@ -238,7 +248,7 @@ var rock_against_rock = {
         "<img src='img/RPSimage1.png'></img>" +
         "</div>",
     choices: [],
-    timing_response: 5000,
+    timing_response: game_timing,
     response_ends_trial: false,
     data: {
         block_task: 'rock_against_rock',
@@ -258,7 +268,7 @@ var rock_against_paper = {
         "<img src='img/RPSimage2.png'></img>" +
         "</div>",
     choices: [],
-    timing_response: 5000,
+    timing_response: game_timing,
     response_ends_trial: false,
     data: {
         block_task: 'rock_against_paper',
@@ -278,7 +288,7 @@ var rock_against_scissors = {
         "<img src='img/RPSimage3.png'></img>" +
         "</div>",
     choices: [],
-    timing_response: 5000,
+    timing_response: game_timing,
     response_ends_trial: false,
     data: {
         block_task: 'rock_against_scissors',
@@ -298,7 +308,7 @@ var paper_against_rock = {
         "<img src='img/RPSimage1.png'></img>" +
         "</div>",
     choices: [],
-    timing_response: 5000,
+    timing_response: game_timing,
     response_ends_trial: false,
     data: {
         block_task: 'paper_against_rock',
@@ -318,7 +328,7 @@ var paper_against_paper = {
         "<img src='img/RPSimage2.png'></img>" +
         "</div>",
     choices: [],
-    timing_response: 5000,
+    timing_response: game_timing,
     response_ends_trial: false,
     data: {
         block_task: 'paper_against_paper',
@@ -338,7 +348,7 @@ var paper_against_scissors = {
         "<img src='img/RPSimage3.png'></img>" +
         "</div>",
     choices: [],
-    timing_response: 5000,
+    timing_response: game_timing,
     response_ends_trial: false,
     data: {
         block_task: 'paper_against_scissors',
@@ -358,7 +368,7 @@ var scissors_against_rock = {
         "<img src='img/RPSimage1.png'></img>" +
         "</div>",
     choices: [],
-    timing_response: 5000,
+    timing_response: game_timing,
     response_ends_trial: false,
     data: {
         block_task: 'scissors_against_rock',
@@ -378,7 +388,7 @@ var scissors_against_paper = {
         "<img src='img/RPSimage2.png'></img>" +
         "</div>",
     choices: [],
-    timing_response: 5000,
+    timing_response: game_timing,
     response_ends_trial: false,
     data: {
         block_task: 'scissors_against_paper',
@@ -398,7 +408,7 @@ var scissors_against_scissors = {
         "<img src='img/RPSimage3.png'></img>" +
         "</div>",
     choices: [],
-    timing_response: 5000,
+    timing_response: game_timing,
     response_ends_trial: false,
     data: {
         block_task: 'scissors_against_scissors',
@@ -417,7 +427,7 @@ var missed_against_computer = {
         "<p><strong>The Computer</strong></p>" +
         "</div>",
     choices: [],
-    timing_response: 5000,
+    timing_response: game_timing,
     response_ends_trial: false,
     data: {
         block_task: 'missed_against_computer',
