@@ -496,39 +496,111 @@ var missed_against_computer = {
 }
 
 var if_rock_against_rock = {
-  timeline: [rock_against_rock],
-  conditional_function: function() {
-    var data = jsPsych.data.getLastTrialData();
-    if (data.key_press == 71 && data.answer_status == 'answered' && data.computer_move == 1){
-      return true;
-    } else {
-      return false;
+    timeline: [rock_against_rock],
+    conditional_function: function() {
+        var data = jsPsych.data.getLastTrialData();
+        if (data.key_press == 71 && data.answer_status == 'answered' && data.computer_move == 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
-  }
 }
 
 var if_rock_against_paper = {
-  timeline: [rock_against_paper],
-  conditional_function: function() {
-    var data = jsPsych.data.getLastTrialData();
-    if (data.key_press == 71 && data.answer_status == 'answered' && data.computer_move == 2){
-      return true;
-    } else {
-      return false;
+    timeline: [rock_against_paper],
+    conditional_function: function() {
+        var data = jsPsych.data.getLastTrialData();
+        if (data.key_press == 71 && data.answer_status == 'answered' && data.computer_move == 2) {
+            return true;
+        } else {
+            return false;
+        }
     }
-  }
 }
 
 var if_rock_against_scissors = {
-  timeline: [rock_against_scissors],
-  conditional_function: function() {
-    var data = jsPsych.data.getLastTrialData();
-    if (data.key_press == 71 && data.answer_status == 'answered' && data.computer_move == 3){
-      return true;
-    } else {
-      return false;
+    timeline: [rock_against_scissors],
+    conditional_function: function() {
+        var data = jsPsych.data.getLastTrialData();
+        if (data.key_press == 71 && data.answer_status == 'answered' && data.computer_move == 3) {
+            return true;
+        } else {
+            return false;
+        }
     }
-  }
+}
+
+var if_paper_against_rock = {
+    timeline: [paper_against_rock],
+    conditional_function: function() {
+        var data = jsPsych.data.getLastTrialData();
+        if (data.key_press == 72 && data.answer_status == 'answered' && data.computer_move == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+var if_paper_against_paper = {
+    timeline: [paper_against_paper],
+    conditional_function: function() {
+        var data = jsPsych.data.getLastTrialData();
+        if (data.key_press == 72 && data.answer_status == 'answered' && data.computer_move == 2) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+var if_paper_against_scissors = {
+    timeline: [paper_against_scissors],
+    conditional_function: function() {
+        var data = jsPsych.data.getLastTrialData();
+        if (data.key_press == 72 && data.answer_status == 'answered' && data.computer_move == 3) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+var if_scissors_against_rock = {
+    timeline: [scissors_against_rock],
+    conditional_function: function() {
+        var data = jsPsych.data.getLastTrialData();
+        if (data.key_press == 66 && data.answer_status == 'answered' && data.computer_move == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+var if_scissors_against_paper = {
+    timeline: [scissors_against_paper],
+    conditional_function: function() {
+        var data = jsPsych.data.getLastTrialData();
+        if (data.key_press == 66 && data.answer_status == 'answered' && data.computer_move == 2) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
+var if_scissors_against_scissors = {
+    timeline: [scissors_against_scissors],
+    conditional_function: function() {
+        var data = jsPsych.data.getLastTrialData();
+        if (data.key_press == 66 && data.answer_status == 'answered' && data.computer_move == 3) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
 var if_missed_against_computer = {
@@ -540,7 +612,7 @@ var if_missed_against_computer = {
         } else {
             var comp_move = computerRandomMove();
             jsPsych.data.addDataToLastTrial({
-              computer_move: comp_move
+                computer_move: comp_move
             })
             return false;
         }
@@ -769,17 +841,21 @@ var if_scissor = {
 }
 
 var debug_loop = {
-  timeline: [
-    countdown_slow, go_trial, if_missed_against_computer, if_rock_against_rock, if_rock_against_paper, if_rock_against_scissors
-  ],
-  loop_function: function() {
-    var data = jsPsych.data.getLastTrialData();
-    if (data.block_task == 'missed_against_computer'){
-      return true;
-    } else {
-      return false;
+    timeline: [
+        countdown_slow, go_trial,
+        if_missed_against_computer,
+        if_rock_against_rock, if_rock_against_paper, if_rock_against_scissors,
+        if_paper_against_rock, if_paper_against_paper, if_paper_against_scissors,
+        if_scissors_against_rock, if_scissors_against_paper, if_scissors_against_scissors
+    ],
+    loop_function: function() {
+        var data = jsPsych.data.getLastTrialData();
+        if (data.block_task == 'missed_against_computer') {
+            return true;
+        } else {
+            return false;
+        }
     }
-  }
 }
 
 // practice block, loops until last trial is one of the RPS image blocks
@@ -900,7 +976,7 @@ var total_trials = 2;
 var debug_trials = 10;
 
 for (var i = 0; i < debug_trials; i++) {
-  timeline.push(debug_loop);
+    timeline.push(debug_loop);
 }
 
 // collects at LEAST five trials with 'answered' as their data tags
