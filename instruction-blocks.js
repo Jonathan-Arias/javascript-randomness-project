@@ -124,7 +124,6 @@ var practice_over = {
     }
 }
 
-
 /* The following seven blocks are used to display the break images, which are small comic strips
  * Subject is given one minute before trial moves on. Or they can press a key to advance if they are ready sooner.
  */
@@ -218,3 +217,6 @@ var break_seven = {
         block_task: 'break_seven'
     }
 }
+
+var break_array = [break_one, break_two, break_three, break_four, break_five, break_six, break_seven];
+var shuffled_array = jsPsych.randomization.repeat(break_array, 2);
