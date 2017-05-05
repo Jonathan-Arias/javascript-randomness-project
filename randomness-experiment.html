@@ -284,8 +284,11 @@ var trial3_loop = {
     }
 }
 
+// Scale for likert survey at end of experiment
 var scale_1 = ["1 (Strongly Agree)", "2", "3", "4 (Neutral)", "5", "6", "7 (Strongly Disagree)"];
 
+// Likert survey that presents three statements 
+// Bug: subject can press enter without selecting any/all responses
 var survey_block = {
     type: 'survey-likert',
     questions: [
@@ -299,6 +302,7 @@ var survey_block = {
     }
 }
 
+// Debugging purposes, display the sequences collected 
 var debug_block = {
     type: 'text',
     text: function() {
