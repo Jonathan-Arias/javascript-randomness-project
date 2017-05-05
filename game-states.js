@@ -1,3 +1,7 @@
+// initial points for player and computer
+var player_points = 100;
+var computer_points = 100;
+
 // debugging, adjusts timing for all game status blocks
 var game_timing = 1000;
 
@@ -12,10 +16,12 @@ var rock_against_rock = {
     type: 'single-stim',
     is_html: true,
     stimulus: "<div class='left center-content'>" +
+        "<p><strong>Points: " + player_points + "</strong></p>" +
         "<p><strong>You</strong></p>" +
         "<img src='img/RPSimage1.png'></img>" +
         "</div>" +
         "<div class='right center-content'>" +
+        "<p><strong>Points: " + computer_points + "</strong></p>" +
         "<p><strong>The Computer</strong></p>" +
         "<img src='img/RPSimage1.png'></img>" +
         "</div>",
@@ -32,10 +38,12 @@ var rock_against_paper = {
     type: 'single-stim',
     is_html: true,
     stimulus: "<div class='left center-content'>" +
+        "<p><strong>Points: " + player_points + "</strong></p>" +
         "<p><strong>You</strong></p>" +
         "<img src='img/RPSimage1.png'></img>" +
         "</div>" +
         "<div class='right center-content'>" +
+        "<p><strong>Points: " + computer_points + "</strong></p>" +
         "<p><strong>The Computer</strong></p>" +
         "<img src='img/RPSimage2.png'></img>" +
         "</div>",
@@ -52,10 +60,12 @@ var rock_against_scissors = {
     type: 'single-stim',
     is_html: true,
     stimulus: "<div class='left center-content'>" +
+        "<p><strong>Points: " + player_points + "</strong></p>" +
         "<p><strong>You</strong></p>" +
         "<img src='img/RPSimage1.png'></img>" +
         "</div>" +
         "<div class='right center-content'>" +
+        "<p><strong>Points: " + computer_points + "</strong></p>" +
         "<p><strong>The Computer</strong></p>" +
         "<img src='img/RPSimage3.png'></img>" +
         "</div>",
@@ -72,10 +82,12 @@ var paper_against_rock = {
     type: 'single-stim',
     is_html: true,
     stimulus: "<div class='left center-content'>" +
+        "<p><strong>Points: " + player_points + "</strong></p>" +
         "<p><strong>You</strong></p>" +
         "<img src='img/RPSimage2.png'></img>" +
         "</div>" +
         "<div class='right center-content'>" +
+        "<p><strong>Points: " + computer_points + "</strong></p>" +
         "<p><strong>The Computer</strong></p>" +
         "<img src='img/RPSimage1.png'></img>" +
         "</div>",
@@ -92,10 +104,12 @@ var paper_against_paper = {
     type: 'single-stim',
     is_html: true,
     stimulus: "<div class='left center-content'>" +
+        "<p><strong>Points: " + player_points + "</strong></p>" +
         "<p><strong>You</strong></p>" +
         "<img src='img/RPSimage2.png'></img>" +
         "</div>" +
         "<div class='right center-content'>" +
+        "<p><strong>Points: " + computer_points + "</strong></p>" +
         "<p><strong>The Computer</strong></p>" +
         "<img src='img/RPSimage2.png'></img>" +
         "</div>",
@@ -112,10 +126,12 @@ var paper_against_scissors = {
     type: 'single-stim',
     is_html: true,
     stimulus: "<div class='left center-content'>" +
+        "<p><strong>Points: " + player_points + "</strong></p>" +
         "<p><strong>You</strong></p>" +
         "<img src='img/RPSimage2.png'></img>" +
         "</div>" +
         "<div class='right center-content'>" +
+        "<p><strong>Points: " + computer_points + "</strong></p>" +
         "<p><strong>The Computer</strong></p>" +
         "<img src='img/RPSimage3.png'></img>" +
         "</div>",
@@ -132,10 +148,12 @@ var scissors_against_rock = {
     type: 'single-stim',
     is_html: true,
     stimulus: "<div class='left center-content'>" +
+        "<p><strong>Points: " + player_points + "</strong></p>" +
         "<p><strong>You</strong></p>" +
         "<img src='img/RPSimage3.png'></img>" +
         "</div>" +
         "<div class='right center-content'>" +
+        "<p><strong>Points: " + computer_points + "</strong></p>" +
         "<p><strong>The Computer</strong></p>" +
         "<img src='img/RPSimage1.png'></img>" +
         "</div>",
@@ -152,10 +170,12 @@ var scissors_against_paper = {
     type: 'single-stim',
     is_html: true,
     stimulus: "<div class='left center-content'>" +
+        "<p><strong>Points: " + player_points + "</strong></p>" +
         "<p><strong>You</strong></p>" +
         "<img src='img/RPSimage3.png'></img>" +
         "</div>" +
         "<div class='right center-content'>" +
+        "<p><strong>Points: " + computer_points + "</strong></p>" +
         "<p><strong>The Computer</strong></p>" +
         "<img src='img/RPSimage2.png'></img>" +
         "</div>",
@@ -172,10 +192,12 @@ var scissors_against_scissors = {
     type: 'single-stim',
     is_html: true,
     stimulus: "<div class='left center-content'>" +
+        "<p><strong>Points: " + player_points + "</strong></p>" +
         "<p><strong>You</strong></p>" +
         "<img src='img/RPSimage3.png'></img>" +
         "</div>" +
         "<div class='right center-content'>" +
+        "<p><strong>Points: " + computer_points + "</strong></p>" +
         "<p><strong>The Computer</strong></p>" +
         "<img src='img/RPSimage3.png'></img>" +
         "</div>",
@@ -192,10 +214,12 @@ var missed_against_computer = {
     type: 'single-stim',
     is_html: true,
     stimulus: "<div class='left center-content'>" +
+        "<p><strong>Points: " + player_points + "</strong></p>" +
         "<p><strong>You</strong></p>" +
         "<p>TOO LATE!</p>" +
         "</div>" +
         "<div class='right center-content'>" +
+        "<p><strong>Points: " + computer_points + "</strong></p>" +
         "<p><strong>The Computer</strong></p>" +
         "</div>",
     choices: [],
