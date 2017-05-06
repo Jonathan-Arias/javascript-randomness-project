@@ -302,16 +302,6 @@ var survey_block = {
     }
 }
 
-// Debugging purposes, display the sequences collected 
-var debug_block = {
-    type: 'text',
-    text: function() {
-        var subjectB1Data = collectTrialOneSequence();
-        return "<p>1 == Rock, 2 == Paper, 3 == Scissors </p>" +
-            "<p>TRIAL ONE SEQUENCE: " + subjectB1Data.trial_one_sequence + "</p>";
-    }
-}
-
 // displays the subject's performance at the end of the experiment
 var debrief_block = {
     type: 'text',
@@ -322,8 +312,8 @@ var debrief_block = {
         return "<p>You generated a total of " + subjectData.answered + " RPS events, and you missed " + subjectData.missed + " total events.</p>" +
             "<p>Total rock: " + subjectData.rock + "</p><p>Total paper: " + subjectData.paper + "</p><p>Total Scissor: " + subjectData.scissor + "</p>" +
             "<p>Complete sequence: " + all.complete_sequence + "</p>" +
-            "<p>Total wins: " + finalscore.wins + ", Total losses: " + finalscore.losses + ", Total ties: " +
-            finalscore.ties + ", Total forfeits: " + finalscore.forfeits + "</p>";
+            "<p>Total wins: " + finalscore.wins + "</p><p> Total losses: " + finalscore.losses + "</p><p>Total ties: " +
+            finalscore.ties + "</p><p> Total forfeits: " + finalscore.forfeits + "</p>";
     }
 }
 
@@ -401,9 +391,6 @@ timeline.push(survey_block);
 
 // Show subject data 
 timeline.push(debrief_block);
-
-// Debugging, show sequence
-timeline.push(debug_block);
 
 // start the experiment
 jsPsych.init({
