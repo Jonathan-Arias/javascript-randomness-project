@@ -395,7 +395,7 @@ var if_missed_against_computer = {
         var data = jsPsych.data.getLastTrialData();
         if (data.key_press == -1) {
             forfeits += 1;
-            player_points -= 1;
+            computer_points += 1;
             return true;
         } else {
             var comp_move = computerRandomMove();
