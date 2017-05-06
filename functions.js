@@ -54,7 +54,7 @@ function collectTrialOneSequence() {
 
     var sequence = '';
     for (var i = 0; i < trials.length; i++) {
-        if (trials[i].trial_data == 'trial_one') {
+        if (trials[i].trial_data == 1) {
             if (trials[i].block_task == 'rock_image') {
                 sequence += '1';
             } else if (trials[i].block_task == 'paper_image') {

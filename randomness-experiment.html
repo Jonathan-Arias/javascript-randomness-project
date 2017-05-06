@@ -240,7 +240,7 @@ var trial1_loop = {
         var data = jsPsych.data.getLastTrialData();
         if (data.block_task == 'rock_image' || data.block_task == 'paper_image' || data.block_task == 'scissors_image') {
             jsPsych.data.addDataToLastTrial({
-                trial_data: 'trial_one'
+                trial_data: 1
             });
             return false;
         } else if (data.block_task == 'missed_text') {
@@ -261,7 +261,7 @@ var trial2_loop = {
     on_finish: function() {
         var data = jsPsych.data.getLastTrialData();
         jsPsych.data.addDataToLastTrial({
-            trial_data: 'trial_two'
+            trial_data: 2
         });
     }
 }
@@ -275,7 +275,7 @@ var trial3_loop = {
         var data = jsPsych.data.getLastTrialData();
         if (data.block_task == 'rock_image' || data.block_task == 'paper_image' || data.block_task == 'scissors_image') {
             jsPsych.data.addDataToLastTrial({
-                trial_data: 'trial_three'
+                trial_data: 3
             });
             return false;
         } else if (data.block_task == 'missed_text') {
