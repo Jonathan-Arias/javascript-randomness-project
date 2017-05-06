@@ -222,7 +222,7 @@ var practice_loop = {
         var data = jsPsych.data.getLastTrialData();
         if (data.block_task == 'rock_image' || data.block_task == 'paper_image' || data.block_task == 'scissors_image') {
             jsPsych.data.addDataToLastTrial({
-                trial_data: 'practice'
+                trial_data: 0
             });
             return false;
         } else if (data.block_task == 'missed_text') {
@@ -318,9 +318,12 @@ var debrief_block = {
     text: function() {
         var subjectData = getSubjectData();
         var all = collectAllSequences();
+        var finalscore = collectWinLossTieProportion();
         return "<p>You generated a total of " + subjectData.answered + " RPS events, and you missed " + subjectData.missed + " total events.</p>" +
-            "<p>Total rock: " + subjectData.rock + "</p><p>Total paper: " + subjectData.paper + "</p><p>Total Scissor: " + subjectData.scissor + "</p>" + 
-            "<p>Complete sequence: " + all.complete_sequence + "</p>";
+            "<p>Total rock: " + subjectData.rock + "</p><p>Total paper: " + subjectData.paper + "</p><p>Total Scissor: " + subjectData.scissor + "</p>" +
+            "<p>Complete sequence: " + all.complete_sequence + "</p>" +
+            "<p>Total wins: " + finalscore.wins + ", Total losses: " + finalscore.losses + ", Total ties: " +
+            finalscore.ties + ", Total forfeits: " + finalscore.forfeits + "</p>";
     }
 }
 
