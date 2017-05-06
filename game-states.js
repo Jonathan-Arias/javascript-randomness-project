@@ -15,16 +15,18 @@ var game_timing = 1000;
 var rock_against_rock = {
     type: 'single-stim',
     is_html: true,
-    stimulus: "<div class='left center-content'>" +
-        "<p><strong>Points: " + player_points + "</strong></p>" +
-        "<p><strong>You</strong></p>" +
-        "<img src='img/RPSimage1.png'></img>" +
-        "</div>" +
-        "<div class='right center-content'>" +
-        "<p><strong>Points: " + computer_points + "</strong></p>" +
-        "<p><strong>The Computer</strong></p>" +
-        "<img src='img/RPSimage1.png'></img>" +
-        "</div>",
+    stimulus: function() {
+        return "<div class='left center-content'>" +
+            "<p><strong>Points: " + player_points + "</strong></p>" +
+            "<p><strong>You</strong></p>" +
+            "<img src='img/RPSimage1.png'></img>" +
+            "</div>" +
+            "<div class='right center-content'>" +
+            "<p><strong>Points: " + computer_points + "</strong></p>" +
+            "<p><strong>The Computer</strong></p>" +
+            "<img src='img/RPSimage1.png'></img>" +
+            "</div>";
+    },
     choices: [],
     timing_response: game_timing,
     response_ends_trial: false,
@@ -37,16 +39,18 @@ var rock_against_rock = {
 var rock_against_paper = {
     type: 'single-stim',
     is_html: true,
-    stimulus: "<div class='left center-content'>" +
-        "<p><strong>Points: " + player_points + "</strong></p>" +
-        "<p><strong>You</strong></p>" +
-        "<img src='img/RPSimage1.png'></img>" +
-        "</div>" +
-        "<div class='right center-content'>" +
-        "<p><strong>Points: " + computer_points + "</strong></p>" +
-        "<p><strong>The Computer</strong></p>" +
-        "<img src='img/RPSimage2.png'></img>" +
-        "</div>",
+    stimulus: function() {
+        return "<div class='left center-content'>" +
+            "<p><strong>Points: " + player_points + "</strong></p>" +
+            "<p><strong>You</strong></p>" +
+            "<img src='img/RPSimage1.png'></img>" +
+            "</div>" +
+            "<div class='right center-content'>" +
+            "<p><strong>Points: " + computer_points + "</strong></p>" +
+            "<p><strong>The Computer</strong></p>" +
+            "<img src='img/RPSimage2.png'></img>" +
+            "</div>";
+    },
     choices: [],
     timing_response: game_timing,
     response_ends_trial: false,
@@ -59,16 +63,18 @@ var rock_against_paper = {
 var rock_against_scissors = {
     type: 'single-stim',
     is_html: true,
-    stimulus: "<div class='left center-content'>" +
-        "<p><strong>Points: " + player_points + "</strong></p>" +
-        "<p><strong>You</strong></p>" +
-        "<img src='img/RPSimage1.png'></img>" +
-        "</div>" +
-        "<div class='right center-content'>" +
-        "<p><strong>Points: " + computer_points + "</strong></p>" +
-        "<p><strong>The Computer</strong></p>" +
-        "<img src='img/RPSimage3.png'></img>" +
-        "</div>",
+    stimulus: function() {
+        return "<div class='left center-content'>" +
+            "<p><strong>Points: " + player_points + "</strong></p>" +
+            "<p><strong>You</strong></p>" +
+            "<img src='img/RPSimage1.png'></img>" +
+            "</div>" +
+            "<div class='right center-content'>" +
+            "<p><strong>Points: " + computer_points + "</strong></p>" +
+            "<p><strong>The Computer</strong></p>" +
+            "<img src='img/RPSimage3.png'></img>" +
+            "</div>";
+    },
     choices: [],
     timing_response: game_timing,
     response_ends_trial: false,
@@ -81,16 +87,18 @@ var rock_against_scissors = {
 var paper_against_rock = {
     type: 'single-stim',
     is_html: true,
-    stimulus: "<div class='left center-content'>" +
-        "<p><strong>Points: " + player_points + "</strong></p>" +
-        "<p><strong>You</strong></p>" +
-        "<img src='img/RPSimage2.png'></img>" +
-        "</div>" +
-        "<div class='right center-content'>" +
-        "<p><strong>Points: " + computer_points + "</strong></p>" +
-        "<p><strong>The Computer</strong></p>" +
-        "<img src='img/RPSimage1.png'></img>" +
-        "</div>",
+    stimulus: function() {
+        return "<div class='left center-content'>" +
+            "<p><strong>Points: " + player_points + "</strong></p>" +
+            "<p><strong>You</strong></p>" +
+            "<img src='img/RPSimage2.png'></img>" +
+            "</div>" +
+            "<div class='right center-content'>" +
+            "<p><strong>Points: " + computer_points + "</strong></p>" +
+            "<p><strong>The Computer</strong></p>" +
+            "<img src='img/RPSimage1.png'></img>" +
+            "</div>";
+    },
     choices: [],
     timing_response: game_timing,
     response_ends_trial: false,
@@ -103,16 +111,18 @@ var paper_against_rock = {
 var paper_against_paper = {
     type: 'single-stim',
     is_html: true,
-    stimulus: "<div class='left center-content'>" +
-        "<p><strong>Points: " + player_points + "</strong></p>" +
-        "<p><strong>You</strong></p>" +
-        "<img src='img/RPSimage2.png'></img>" +
-        "</div>" +
-        "<div class='right center-content'>" +
-        "<p><strong>Points: " + computer_points + "</strong></p>" +
-        "<p><strong>The Computer</strong></p>" +
-        "<img src='img/RPSimage2.png'></img>" +
-        "</div>",
+    stimulus: function() {
+        return "<div class='left center-content'>" +
+            "<p><strong>Points: " + player_points + "</strong></p>" +
+            "<p><strong>You</strong></p>" +
+            "<img src='img/RPSimage2.png'></img>" +
+            "</div>" +
+            "<div class='right center-content'>" +
+            "<p><strong>Points: " + computer_points + "</strong></p>" +
+            "<p><strong>The Computer</strong></p>" +
+            "<img src='img/RPSimage2.png'></img>" +
+            "</div>";
+    },
     choices: [],
     timing_response: game_timing,
     response_ends_trial: false,
@@ -125,16 +135,18 @@ var paper_against_paper = {
 var paper_against_scissors = {
     type: 'single-stim',
     is_html: true,
-    stimulus: "<div class='left center-content'>" +
-        "<p><strong>Points: " + player_points + "</strong></p>" +
-        "<p><strong>You</strong></p>" +
-        "<img src='img/RPSimage2.png'></img>" +
-        "</div>" +
-        "<div class='right center-content'>" +
-        "<p><strong>Points: " + computer_points + "</strong></p>" +
-        "<p><strong>The Computer</strong></p>" +
-        "<img src='img/RPSimage3.png'></img>" +
-        "</div>",
+    stimulus: function() {
+        return "<div class='left center-content'>" +
+            "<p><strong>Points: " + player_points + "</strong></p>" +
+            "<p><strong>You</strong></p>" +
+            "<img src='img/RPSimage2.png'></img>" +
+            "</div>" +
+            "<div class='right center-content'>" +
+            "<p><strong>Points: " + computer_points + "</strong></p>" +
+            "<p><strong>The Computer</strong></p>" +
+            "<img src='img/RPSimage3.png'></img>" +
+            "</div>";
+    },
     choices: [],
     timing_response: game_timing,
     response_ends_trial: false,
@@ -147,16 +159,18 @@ var paper_against_scissors = {
 var scissors_against_rock = {
     type: 'single-stim',
     is_html: true,
-    stimulus: "<div class='left center-content'>" +
-        "<p><strong>Points: " + player_points + "</strong></p>" +
-        "<p><strong>You</strong></p>" +
-        "<img src='img/RPSimage3.png'></img>" +
-        "</div>" +
-        "<div class='right center-content'>" +
-        "<p><strong>Points: " + computer_points + "</strong></p>" +
-        "<p><strong>The Computer</strong></p>" +
-        "<img src='img/RPSimage1.png'></img>" +
-        "</div>",
+    stimulus: function() {
+        return "<div class='left center-content'>" +
+            "<p><strong>Points: " + player_points + "</strong></p>" +
+            "<p><strong>You</strong></p>" +
+            "<img src='img/RPSimage3.png'></img>" +
+            "</div>" +
+            "<div class='right center-content'>" +
+            "<p><strong>Points: " + computer_points + "</strong></p>" +
+            "<p><strong>The Computer</strong></p>" +
+            "<img src='img/RPSimage1.png'></img>" +
+            "</div>";
+    },
     choices: [],
     timing_response: game_timing,
     response_ends_trial: false,
@@ -169,16 +183,18 @@ var scissors_against_rock = {
 var scissors_against_paper = {
     type: 'single-stim',
     is_html: true,
-    stimulus: "<div class='left center-content'>" +
-        "<p><strong>Points: " + player_points + "</strong></p>" +
-        "<p><strong>You</strong></p>" +
-        "<img src='img/RPSimage3.png'></img>" +
-        "</div>" +
-        "<div class='right center-content'>" +
-        "<p><strong>Points: " + computer_points + "</strong></p>" +
-        "<p><strong>The Computer</strong></p>" +
-        "<img src='img/RPSimage2.png'></img>" +
-        "</div>",
+    stimulus: function() {
+        return "<div class='left center-content'>" +
+            "<p><strong>Points: " + player_points + "</strong></p>" +
+            "<p><strong>You</strong></p>" +
+            "<img src='img/RPSimage3.png'></img>" +
+            "</div>" +
+            "<div class='right center-content'>" +
+            "<p><strong>Points: " + computer_points + "</strong></p>" +
+            "<p><strong>The Computer</strong></p>" +
+            "<img src='img/RPSimage2.png'></img>" +
+            "</div>";
+    },
     choices: [],
     timing_response: game_timing,
     response_ends_trial: false,
@@ -191,16 +207,18 @@ var scissors_against_paper = {
 var scissors_against_scissors = {
     type: 'single-stim',
     is_html: true,
-    stimulus: "<div class='left center-content'>" +
-        "<p><strong>Points: " + player_points + "</strong></p>" +
-        "<p><strong>You</strong></p>" +
-        "<img src='img/RPSimage3.png'></img>" +
-        "</div>" +
-        "<div class='right center-content'>" +
-        "<p><strong>Points: " + computer_points + "</strong></p>" +
-        "<p><strong>The Computer</strong></p>" +
-        "<img src='img/RPSimage3.png'></img>" +
-        "</div>",
+    stimulus: function() {
+        return "<div class='left center-content'>" +
+            "<p><strong>Points: " + player_points + "</strong></p>" +
+            "<p><strong>You</strong></p>" +
+            "<img src='img/RPSimage3.png'></img>" +
+            "</div>" +
+            "<div class='right center-content'>" +
+            "<p><strong>Points: " + computer_points + "</strong></p>" +
+            "<p><strong>The Computer</strong></p>" +
+            "<img src='img/RPSimage3.png'></img>" +
+            "</div>";
+    },
     choices: [],
     timing_response: game_timing,
     response_ends_trial: false,
@@ -213,15 +231,17 @@ var scissors_against_scissors = {
 var missed_against_computer = {
     type: 'single-stim',
     is_html: true,
-    stimulus: "<div class='left center-content'>" +
-        "<p><strong>Points: " + player_points + "</strong></p>" +
-        "<p><strong>You</strong></p>" +
-        "<p>TOO LATE!</p>" +
-        "</div>" +
-        "<div class='right center-content'>" +
-        "<p><strong>Points: " + computer_points + "</strong></p>" +
-        "<p><strong>The Computer</strong></p>" +
-        "</div>",
+    stimulus: function() {
+        return "<div class='left center-content'>" +
+            "<p><strong>Points: " + player_points + "</strong></p>" +
+            "<p><strong>You</strong></p>" +
+            "<p>TOO LATE!</p>" +
+            "</div>" +
+            "<div class='right center-content'>" +
+            "<p><strong>Points: " + computer_points + "</strong></p>" +
+            "<p><strong>The Computer</strong></p>" +
+            "</div>";
+    },
     choices: [],
     timing_response: game_timing,
     response_ends_trial: false,
@@ -253,6 +273,8 @@ var if_rock_against_paper = {
     conditional_function: function() {
         var data = jsPsych.data.getLastTrialData();
         if (data.key_press == 71 && data.answer_status == 'answered' && data.computer_move == 2) {
+            player_points -= 1;
+            computer_points += 1;
             return true;
         } else {
             return false;
@@ -265,6 +287,8 @@ var if_rock_against_scissors = {
     conditional_function: function() {
         var data = jsPsych.data.getLastTrialData();
         if (data.key_press == 71 && data.answer_status == 'answered' && data.computer_move == 3) {
+            player_points += 1;
+            computer_points -= 1;
             return true;
         } else {
             return false;
@@ -277,6 +301,8 @@ var if_paper_against_rock = {
     conditional_function: function() {
         var data = jsPsych.data.getLastTrialData();
         if (data.key_press == 72 && data.answer_status == 'answered' && data.computer_move == 1) {
+            player_points += 1;
+            computer_points -= 1;
             return true;
         } else {
             return false;
@@ -301,6 +327,8 @@ var if_paper_against_scissors = {
     conditional_function: function() {
         var data = jsPsych.data.getLastTrialData();
         if (data.key_press == 72 && data.answer_status == 'answered' && data.computer_move == 3) {
+            player_points -= 1;
+            computer_points += 1;
             return true;
         } else {
             return false;
@@ -313,6 +341,8 @@ var if_scissors_against_rock = {
     conditional_function: function() {
         var data = jsPsych.data.getLastTrialData();
         if (data.key_press == 66 && data.answer_status == 'answered' && data.computer_move == 1) {
+            player_points -= 1;
+            computer_points += 1;
             return true;
         } else {
             return false;
@@ -325,6 +355,8 @@ var if_scissors_against_paper = {
     conditional_function: function() {
         var data = jsPsych.data.getLastTrialData();
         if (data.key_press == 66 && data.answer_status == 'answered' && data.computer_move == 2) {
+            player_points += 1;
+            computer_points -= 1;
             return true;
         } else {
             return false;
@@ -349,6 +381,7 @@ var if_missed_against_computer = {
     conditional_function: function() {
         var data = jsPsych.data.getLastTrialData();
         if (data.key_press == -1) {
+            player_points -= 1;
             return true;
         } else {
             var comp_move = computerRandomMove();
