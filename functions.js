@@ -132,11 +132,11 @@ function collectWinLossTieProportion() {
 
 // See http://stackoverflow.com/questions/5667888/counting-the-occurrences-of-javascript-array-elements 
 // for more info about this function
-function condenseSequenceIntoObject(sequence){
+function condenseSequenceIntoObject(sequence) {
     let arr = [...sequence];
     result = {};
-    for (var i = 0; i < arr.length; i++){
-        if(!result[arr[i]])
+    for (var i = 0; i < arr.length; i++) {
+        if (!result[arr[i]])
             result[arr[i]] = 0;
         ++result[arr[i]];
     }
@@ -147,25 +147,75 @@ function condenseSequenceIntoObject(sequence){
 }
 
 function displayRPSCountInConsole(trialnum) {
-    if (trialnum == 1){
+    if (trialnum == 1) {
         var s1 = collectTrialOneSequence();
         var c = condenseSequenceIntoObject(s1.trial_one_sequence);
         console.log("Part 1");
         console.log(c.str);
     }
-    if (trialnum == 2){
+    if (trialnum == 2) {
         var s2 = collectTrialTwoSequence();
         var c = condenseSequenceIntoObject(s2.trial_two_sequence);
         console.log("Part 2");
         console.log(c.str);
     }
-    if (trialnum == 3){
+    if (trialnum == 3) {
         var s3 = collectTrialThreeSequence();
         var c = condenseSequenceIntoObject(s3.trial_three_sequence);
         console.log("Part 3");
         console.log(c.str);
     }
-    if (trialnum <= 0 || trialnum > 3){
+    if (trialnum <= 0 || trialnum > 3) {
         console.log("You must use a number between 1 and 3 for displayRPSCountInConsole function to work properly");
+    }
+}
+
+function computeRunLength() {
+    var a = collectAllSequences();
+    var str = a.complete_sequence;
+    var count = 0;
+    var current = -1;
+    var arr = [];
+    var buffer = "";
+    for (var i = 0; i <= str.length; i++) {
+        if (i == str.length) {
+            if (count >= 1) {
+                if (current == 1) {
+                    buffer = count + "R";
+                    arr.push(buffer);
+                } else if (current == 2) {
+                    buffer = count + "P";
+                    arr.push(buffer);
+                } else if (current == 3) {
+                    buffer = count + "S";
+                    arr.push(buffer);
+                }
+                break;
+            }
+        }
+
+        if (count == 0) {
+            current = str[i];
+            count++;
+        } else if (current == str[i]) {
+            count++;
+        } else if (current != str[i]) {
+            if (current == 1) {
+                buffer = count + "R";
+                arr.push(buffer);
+            } else if (current == 2) {
+                buffer = count + "P";
+                arr.push(buffer);
+            } else if (current == 3) {
+                buffer = count + "S";
+                arr.push(buffer);
+            }
+            count = 1;
+            current = str[i];
+        }
+    }
+
+    return {
+        runarray: arr
     }
 }

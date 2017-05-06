@@ -312,11 +312,13 @@ var debrief_block = {
         var subjectData = getSubjectData();
         var all = collectAllSequences();
         var finalscore = collectWinLossTieProportion();
+        var run = computeRunLength();
         return "<p>You generated a total of " + subjectData.answered + " RPS events, and you missed " + subjectData.missed + " total events.</p>" +
             "<p>Total rock: " + subjectData.rock + "</p><p>Total paper: " + subjectData.paper + "</p><p>Total Scissor: " + subjectData.scissor + "</p>" +
             "<p>Complete sequence: " + all.complete_sequence + "</p>" +
             "<p>Total wins: " + finalscore.wins + "</p><p> Total losses: " + finalscore.losses + "</p><p>Total ties: " +
-            finalscore.ties + "</p><p> Total forfeits: " + finalscore.forfeits + "</p>";
+            finalscore.ties + "</p><p> Total forfeits: " + finalscore.forfeits + "</p>" + 
+            "<p>Run length: " + run.runarray.toString() + "</p>";
     }
 }
 
