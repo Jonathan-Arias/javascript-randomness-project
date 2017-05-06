@@ -75,11 +75,11 @@ function collectTrialTwoSequence() {
     var sequence = '';
     for (var i = 0; i < trials.length; i++) {
         if (trials[i].trial_data == 2) {
-            if (trials[i].block_task == 'rock_image') {
+            if (trials[i].block_task == 'rock_against_rock' || trials[i].block_task == 'rock_against_paper' || trials[i].block_task == 'rock_against_scissors') {
                 sequence += '1';
-            } else if (trials[i].block_task == 'paper_image') {
+            } else if (trials[i].block_task == 'paper_against_rock' || trials[i].block_task == 'paper_against_paper' || trials[i].block_task == 'paper_against_scissors') {
                 sequence += '2';
-            } else if (trials[i].block_task == 'scissors_image') {
+            } else if (trials[i].block_task == 'scissors_against_rock' || trials[i].block_task == 'scissors_against_paper' || trials[i].block_task == 'scissors_against_scissors') {
                 sequence += '3';
             }
         }
@@ -118,5 +118,54 @@ function collectAllSequences() {
     sequence += s1.trial_one_sequence + s2.trial_two_sequence + s3.trial_three_sequence;
     return {
         complete_sequence: sequence
+    }
+}
+
+function collectWinLossTieProportion() {
+    return {
+        wins: player_wins,
+        losses: computer_wins,
+        ties: ties,
+        forfeits: forfeits
+    }
+}
+
+// See http://stackoverflow.com/questions/5667888/counting-the-occurrences-of-javascript-array-elements 
+// for more info about this function
+function condenseSequenceIntoObject(sequence){
+    let arr = [...sequence];
+    result = {};
+    for (var i = 0; i < arr.length; i++){
+        if(!result[arr[i]])
+            result[arr[i]] = 0;
+        ++result[arr[i]];
+    }
+    str = JSON.stringify(result);
+    return {
+        str: str
+    }
+}
+
+function displayRPSCountInConsole(trialnum) {
+    if (trialnum == 1){
+        var s1 = collectTrialOneSequence();
+        var c = condenseSequenceIntoObject(s1.trial_one_sequence);
+        console.log("Part 1");
+        console.log(c.str);
+    }
+    if (trialnum == 2){
+        var s2 = collectTrialTwoSequence();
+        var c = condenseSequenceIntoObject(s2.trial_two_sequence);
+        console.log("Part 2");
+        console.log(c.str);
+    }
+    if (trialnum == 3){
+        var s3 = collectTrialThreeSequence();
+        var c = condenseSequenceIntoObject(s3.trial_three_sequence);
+        console.log("Part 3");
+        console.log(c.str);
+    }
+    if (trialnum <= 0 || trialnum > 3){
+        console.log("You must use a number between 1 and 3 for displayRPSCountInConsole function to work properly");
     }
 }

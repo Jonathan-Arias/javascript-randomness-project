@@ -242,6 +242,7 @@ var trial1_loop = {
             jsPsych.data.addDataToLastTrial({
                 trial_data: 1
             });
+            displayRPSCountInConsole(1);
             return false;
         } else if (data.block_task == 'missed_text') {
             return true;
@@ -263,6 +264,7 @@ var trial2_loop = {
         jsPsych.data.addDataToLastTrial({
             trial_data: 2
         });
+        displayRPSCountInConsole(2);
     }
 }
 
@@ -277,6 +279,7 @@ var trial3_loop = {
             jsPsych.data.addDataToLastTrial({
                 trial_data: 3
             });
+            displayRPSCountInConsole(3);
             return false;
         } else if (data.block_task == 'missed_text') {
             return true;
