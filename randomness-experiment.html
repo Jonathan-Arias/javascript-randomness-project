@@ -317,8 +317,10 @@ var debrief_block = {
     type: 'text',
     text: function() {
         var subjectData = getSubjectData();
+        var all = collectAllSequences();
         return "<p>You generated a total of " + subjectData.answered + " RPS events, and you missed " + subjectData.missed + " total events.</p>" +
-            "<p>Total rock: " + subjectData.rock + "</p><p>Total paper: " + subjectData.paper + "</p><p>Total Scissor: " + subjectData.scissor + "</p>";
+            "<p>Total rock: " + subjectData.rock + "</p><p>Total paper: " + subjectData.paper + "</p><p>Total Scissor: " + subjectData.scissor + "</p>" + 
+            "<p>Complete sequence: " + all.complete_sequence + "</p>";
     }
 }
 

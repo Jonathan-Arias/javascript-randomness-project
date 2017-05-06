@@ -68,3 +68,55 @@ function collectTrialOneSequence() {
         trial_one_sequence: sequence
     }
 }
+
+function collectTrialTwoSequence() {
+    var trials = jsPsych.data.getTrialsOfType('single-stim');
+
+    var sequence = '';
+    for (var i = 0; i < trials.length; i++) {
+        if (trials[i].trial_data == 2) {
+            if (trials[i].block_task == 'rock_image') {
+                sequence += '1';
+            } else if (trials[i].block_task == 'paper_image') {
+                sequence += '2';
+            } else if (trials[i].block_task == 'scissors_image') {
+                sequence += '3';
+            }
+        }
+    }
+    return {
+        trial_two_sequence: sequence
+    }
+}
+
+function collectTrialThreeSequence() {
+    var trials = jsPsych.data.getTrialsOfType('single-stim');
+
+    var sequence = '';
+    for (var i = 0; i < trials.length; i++) {
+        if (trials[i].trial_data == 3) {
+            if (trials[i].block_task == 'rock_image') {
+                sequence += '1';
+            } else if (trials[i].block_task == 'paper_image') {
+                sequence += '2';
+            } else if (trials[i].block_task == 'scissors_image') {
+                sequence += '3';
+            }
+        }
+    }
+    return {
+        trial_three_sequence: sequence
+    }
+}
+
+function collectAllSequences() {
+    var s1 = collectTrialOneSequence();
+    var s2 = collectTrialTwoSequence();
+    var s3 = collectTrialThreeSequence();
+
+    var sequence = '';
+    sequence += s1.trial_one_sequence + s2.trial_two_sequence + s3.trial_three_sequence;
+    return {
+        complete_sequence: sequence
+    }
+}
