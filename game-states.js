@@ -1,6 +1,10 @@
 // initial points for player and computer
 var player_points = 100;
 var computer_points = 100;
+var player_wins = 0;
+var computer_wins = 0; 
+var ties = 0; 
+var forfeits = 0;
 
 // debugging, adjusts timing for all game status blocks
 var game_timing = 1000;
@@ -261,6 +265,7 @@ var if_rock_against_rock = {
     conditional_function: function() {
         var data = jsPsych.data.getLastTrialData();
         if (data.key_press == 71 && data.answer_status == 'answered' && data.computer_move == 1) {
+            ties += 1;
             return true;
         } else {
             return false;
@@ -273,6 +278,7 @@ var if_rock_against_paper = {
     conditional_function: function() {
         var data = jsPsych.data.getLastTrialData();
         if (data.key_press == 71 && data.answer_status == 'answered' && data.computer_move == 2) {
+            computer_wins += 1;
             player_points -= 1;
             computer_points += 1;
             return true;
@@ -287,6 +293,7 @@ var if_rock_against_scissors = {
     conditional_function: function() {
         var data = jsPsych.data.getLastTrialData();
         if (data.key_press == 71 && data.answer_status == 'answered' && data.computer_move == 3) {
+            player_wins += 1;
             player_points += 1;
             computer_points -= 1;
             return true;
@@ -301,6 +308,7 @@ var if_paper_against_rock = {
     conditional_function: function() {
         var data = jsPsych.data.getLastTrialData();
         if (data.key_press == 72 && data.answer_status == 'answered' && data.computer_move == 1) {
+            player_wins += 1;
             player_points += 1;
             computer_points -= 1;
             return true;
@@ -315,6 +323,7 @@ var if_paper_against_paper = {
     conditional_function: function() {
         var data = jsPsych.data.getLastTrialData();
         if (data.key_press == 72 && data.answer_status == 'answered' && data.computer_move == 2) {
+            ties += 1;
             return true;
         } else {
             return false;
@@ -327,6 +336,7 @@ var if_paper_against_scissors = {
     conditional_function: function() {
         var data = jsPsych.data.getLastTrialData();
         if (data.key_press == 72 && data.answer_status == 'answered' && data.computer_move == 3) {
+            computer_wins += 1;
             player_points -= 1;
             computer_points += 1;
             return true;
@@ -341,6 +351,7 @@ var if_scissors_against_rock = {
     conditional_function: function() {
         var data = jsPsych.data.getLastTrialData();
         if (data.key_press == 66 && data.answer_status == 'answered' && data.computer_move == 1) {
+            computer_wins += 1;
             player_points -= 1;
             computer_points += 1;
             return true;
@@ -355,6 +366,7 @@ var if_scissors_against_paper = {
     conditional_function: function() {
         var data = jsPsych.data.getLastTrialData();
         if (data.key_press == 66 && data.answer_status == 'answered' && data.computer_move == 2) {
+            player_wins += 1;
             player_points += 1;
             computer_points -= 1;
             return true;
@@ -369,6 +381,7 @@ var if_scissors_against_scissors = {
     conditional_function: function() {
         var data = jsPsych.data.getLastTrialData();
         if (data.key_press == 66 && data.answer_status == 'answered' && data.computer_move == 3) {
+            ties += 1;
             return true;
         } else {
             return false;
@@ -381,6 +394,7 @@ var if_missed_against_computer = {
     conditional_function: function() {
         var data = jsPsych.data.getLastTrialData();
         if (data.key_press == -1) {
+            forfeits += 1;
             player_points -= 1;
             return true;
         } else {
