@@ -50,7 +50,7 @@ var instructions_block1 = {
         '<br />(Note that: the "g" key represents "Rock", the "h" key represents "Paper", and the "b" key represents "Scissors". ' +
         '<br />We will begin with a practise round. Press "next" when you are ready. ',
 
-        '<strong> PRACTICE BLOCK </strong>'
+        '<strong>Part 1</strong>'
     ],
     show_clickable_nav: true,
     data: {
@@ -64,7 +64,7 @@ var instructions_block2a = {
     pages: [
         'This is now part <strong>TWO</strong> of the experiment',
         'You will be predicted...this is condition 2a',
-        'GL and begin'
+        'Good luck and begin'
     ],
     show_clickable_nav: true,
     data: {
@@ -78,7 +78,7 @@ var instructions_block2b = {
     pages: [
         'This is now part <strong>TWO</strong> of the experiment',
         'You will be predicted (but not told)...this is condition 2b',
-        'GL and begin'
+        'Good luck and begin'
     ],
     show_clickable_nav: true,
     data: {
@@ -92,7 +92,7 @@ var instructions_block2c = {
     pages: [
         'This is now part <strong>TWO</strong> of the experiment',
         'You will NOT be predicted...this is condition 2c',
-        'GL and begin'
+        'Good luck and begin'
     ],
     show_clickable_nav: true,
     data: {
