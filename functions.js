@@ -173,10 +173,12 @@ function displayRPSCountInConsole(trialnum) {
 function computeRunLength() {
     var a = collectAllSequences();
     var str = a.complete_sequence;
+
     var count = 0;
     var current = -1;
     var arr = [];
     var buffer = "";
+
     for (var i = 0; i <= str.length; i++) {
         if (i == str.length) {
             if (count >= 1) {
@@ -219,3 +221,51 @@ function computeRunLength() {
         runarray: arr
     }
 }
+
+// Used to generate predictions solely from part 1 sequence
+function predictNextPlay(sequence)
+{
+    var seq1 = collectTrialOneSequence();
+    var str = seq1.trial_one_sequence;
+
+    if (str.length == 0)
+    {
+        return computerRandomMove();
+    }
+
+
+    var max_entries = 20;
+    var n = Math.min(max_entries,str.length - 1);
+
+    var choices = [];
+    for (var i = 0; i < 3; i++)
+    {
+        choices[i] = new Array(n);
+    }
+
+    alphaLevel = 1/3; // 3 possible entries: Rock, Paper, Scissors
+    
+    for (var k = 1; k <= n; k++)
+    {
+        
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
