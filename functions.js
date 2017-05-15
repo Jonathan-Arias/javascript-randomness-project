@@ -309,38 +309,35 @@ function predictNextPlay() {
     var choices = [];
 
     var nPossibleEntries = 3;
-    var alphaLevel = 1/nPossibleEntries;
+    var alphaLevel = 1 / nPossibleEntries;
 
-    for (var k = -1; k > -20; k--)
-    {
-        var re = new RegExp(str.substr(k),'g');
+    for (var k = -1; k > -20; k--) {
+        var re = new RegExp(str.substr(k), 'g');
         var m;
         var matches = [];
 
         do {
-            m = re.exec(str.substr(0,str.length+k));
-            if (m)
-            {
+            m = re.exec(str.substr(0, str.length + k));
+            if (m) {
                 matches.push(m.index);
             } else {
                 break;
             }
         } while (m);
 
-        if (matches.length == 0)
-        {
+        if (matches.length == 0) {
             break;
         }
 
         var entry;
         var rks = ppr = scs = 0;
-        for (entry in matches){
-            x = parseInt(str.charAt(matches[entry]+1));
+        for (entry in matches) {
+            x = parseInt(str.charAt(matches[entry] + 1));
             if (x == 1) rks++;
             if (x == 2) ppr++;
             if (x == 3) scs++;
         }
-        choices.push([rks,ppr,scs]);
+        choices.push([rks, ppr, scs]);
     }
 
     var pVals = [];
@@ -348,21 +345,19 @@ function predictNextPlay() {
     var choice;
     var X, N, P;
     var bcf;
-    for (var i = 0; i < choices.length; i++){
+    for (var i = 0; i < choices.length; i++) {
         choice = choices[i];
         X = Math.max(...choice);
         N = choice[0] + choice[1] + choice[2];
-        P = 1/nPossibleEntries;
-        bcf = compute(X,N,P);
+        P = 1 / nPossibleEntries;
+        bcf = compute(X, N, P);
         pVals[i] = 1 - bcf;
     }
 
     var predictConfidence = Math.min(...pVals);
-    if (predictConfidence >= alphaLevel)
-    {
+    if (predictConfidence >= alphaLevel) {
         return computerRandomMove();
-    } else 
-    {
+    } else {
         var ind = pVals.indexOf(predictConfidence);
         var nextItem = Math.max(...choices[ind]);
     }
