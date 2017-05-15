@@ -297,6 +297,9 @@ function computeRunLength() {
 function predictNextPlay() {
     var seq1 = collectTrialOneSequence();
     var str = seq1.trial_one_sequence;
+    var seq2 = collectTrialTwoSequence();
+    var str2 = seq2.trial_two_sequence;
+    str += str2;
 
     if (str.length == 0) {
         return computerRandomMove();
@@ -364,6 +367,6 @@ function predictNextPlay() {
         var nextItem = Math.max(...choices[ind]);
     }
 
-    
+
     return nextItem;
 }
