@@ -223,49 +223,47 @@ function computeRunLength() {
 }
 
 // Used to generate predictions solely from part 1 sequence
-function predictNextPlay(sequence)
-{
+function predictNextPlay() {
     var seq1 = collectTrialOneSequence();
     var str = seq1.trial_one_sequence;
 
-    if (str.length == 0)
-    {
+    if (str.length == 0) {
         return computerRandomMove();
     }
 
-
-    var max_entries = 20;
-    var n = Math.min(max_entries,str.length - 1);
-
+    var N = 20;
     var choices = [];
-    for (var i = 0; i < 3; i++)
-    {
-        choices[i] = new Array(n);
-    }
 
-    alphaLevel = 1/3; // 3 possible entries: Rock, Paper, Scissors
-    
-    for (var k = 1; k <= n; k++)
+    for (var k = -1; k > -20; k--)
     {
-        
-    }
+        var re = new RegExp(str.substr(k),'g');
+        var m;
+        var matches = [];
 
+        do {
+            m = re.exec(str.substr(0,str.length+k));
+            if (m)
+            {
+                matches.push(m.index);
+            } else {
+                break;
+            }
+        } while (m);
+
+        if (matches.length == 0)
+        {
+            break;
+        }
+
+        var entry;
+        var rks = ppr = scs = 0;
+        for (entry in matches){
+            x = parseInt(str.charAt(matches[entry]+1));
+            if (x == 1) rks++;
+            if (x == 2) ppr++;
+            if (x == 3) scs++;
+        }
+        choices.push([rks,ppr,scs]);
+        console.log(choices);
+    }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
