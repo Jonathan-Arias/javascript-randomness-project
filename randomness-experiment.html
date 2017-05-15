@@ -14,6 +14,7 @@
     <script src="functions.js"></script>
     <script src="instruction-blocks.js"></script>
     <script src="game-states.js"></script>
+    <!-- <script src="binomialdistfunc.js"></script> -->
     <link href="jspsych-5.0.3/css/jspsych.css" rel="stylesheet" type="text/css"></link>
 </head>
 
@@ -253,7 +254,7 @@ var trial1_loop = {
 // trial 2 block, loops until last trial is one of the RPS image blocks
 var trial2_loop = {
     timeline: [
-        countdown_slow, go_trial,
+        countdown_trial_part2, go_trial,
         if_missed_against_computer,
         if_rock_against_rock, if_rock_against_paper, if_rock_against_scissors,
         if_paper_against_rock, if_paper_against_paper, if_paper_against_scissors,
@@ -317,9 +318,17 @@ var debrief_block = {
             "<p>Total rock: " + subjectData.rock + "</p><p>Total paper: " + subjectData.paper + "</p><p>Total Scissor: " + subjectData.scissor + "</p>" +
             "<p>Complete sequence: " + all.complete_sequence + "</p>" +
             "<p>Total wins: " + finalscore.wins + "</p><p> Total losses: " + finalscore.losses + "</p><p>Total ties: " +
-            finalscore.ties + "</p><p> Total forfeits: " + finalscore.forfeits + "</p>" + 
+            finalscore.ties + "</p><p> Total forfeits: " + finalscore.forfeits + "</p>" +
             "<p>Run length: " + run.runarray.toString() + "</p>";
     }
+}
+
+// Display link to Google Form for post-experiment questionnaire 
+var post_exp_questionnaire = {
+    type: 'text',
+    text: '<p>Thank you for your participation. Please click ' +
+        '<a href="https://docs.google.com/a/g.ucla.edu/forms/d/e/1FAIpQLScVkjk4ddWyKyDLIs4eeHGeS0If8Xc7oD9zrOh_M4icLpyWdQ/viewform" target="_blank">' +
+        'here</a> to complete this experiment. </p>'
 }
 
 // preliminary timeline prep
@@ -327,11 +336,14 @@ var timeline = [];
 timeline.push(consent_block);
 timeline.push(welcome_block);
 
+// LIKERT SURVEY
+timeline.push(survey_block);
+
 // PART 1 INSTRUCTIONS
 timeline.push(instructions_block1);
 
 // DEBUGGING PURPOSES: variables to quickly adjust how many trials for each block
-var total_trials = 3;
+var total_trials = 8;
 
 // PRACTICE BLOCK
 // for (var i = 0; i < total_trials; i++) {
@@ -391,8 +403,7 @@ for (var i = 0; i < total_trials; i++) {
     timeline.push(trial3_loop);
 }
 
-// LIKERTY SURVEY
-timeline.push(survey_block);
+timeline.push(post_exp_questionnaire)
 
 // Show subject data 
 timeline.push(debrief_block);

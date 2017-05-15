@@ -2,8 +2,8 @@
 var player_points = 100;
 var computer_points = 100;
 var player_wins = 0;
-var computer_wins = 0; 
-var ties = 0; 
+var computer_wins = 0;
+var ties = 0;
 var forfeits = 0;
 
 // debugging, adjusts timing for all game status blocks
@@ -398,7 +398,7 @@ var if_missed_against_computer = {
             computer_points += 1;
             return true;
         } else {
-            var comp_move = computerRandomMove();
+            var comp_move = predictNextPlay() % 3 + 1;
             jsPsych.data.addDataToLastTrial({
                 computer_move: comp_move
             })
