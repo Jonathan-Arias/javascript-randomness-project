@@ -1,12 +1,14 @@
 // initial points for player and computer
 var player_points = 100;
 var computer_points = 100;
+
+// Game data
 var player_wins = 0;
 var computer_wins = 0;
 var ties = 0;
 var forfeits = 0;
 
-// debugging, adjusts timing for all game status blocks
+// Adjust timing for all game blocks here
 var game_timing = 1000;
 
 /* The following ten blocks represent all possible game situations that a player can encounter
@@ -395,10 +397,10 @@ var if_missed_against_computer = {
         var data = jsPsych.data.getLastTrialData();
         if (data.key_press == -1) {
             forfeits += 1;
-            computer_points += 1;
+            player_points -= 1;
             return true;
         } else {
-            var comp_move = predictNextPlay() % 3 + 1;
+            var comp_move = (predictNextPlay() % 3) + 1;
             jsPsych.data.addDataToLastTrial({
                 computer_move: comp_move
             })

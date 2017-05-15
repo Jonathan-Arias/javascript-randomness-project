@@ -80,12 +80,16 @@ var check_consent = function(elem) {
     return false;
 }
 
+var globalMove = 0;
+// 85% of the time will follow R-P-S-R-P-S... 
+// 15% will generate random move
 function computerRandomMove() {
-    // 1 == Rock, 2 == Paper, 3 == Scissors
-    // Math.random() generates a random decimal, so multiplying it by 3 will get a range of 0 <= val < 3
-    // Math.floor() rounds down the number to its nearest whole number, range now 0 <= val <= 2
-    // Adding 1 will shift the range to be 1 <= val <= 3
-    return Math.floor(Math.random() * 3) + 1;
+    var x = Math.random();
+    if (x <= 0.85) {
+        return Math.floor(Math.random() * 3) + 1;
+    } else {
+        return globalMove % 3 + 1;
+    }
 }
 
 // collects simple data about responses and returns totals for number of answered/missed and RPS selections
@@ -120,76 +124,46 @@ function getSubjectData() {
     }
 }
 
-function collectTrialOneSequence() {
+function collectTrialSequence(trialnum) {
     var trials = jsPsych.data.getTrialsOfType('single-stim');
-
     var sequence = '';
-    for (var i = 0; i < trials.length; i++) {
-        if (trials[i].trial_data == 1) {
-            if (trials[i].block_task == 'rock_image') {
-                sequence += '1';
-            } else if (trials[i].block_task == 'paper_image') {
-                sequence += '2';
-            } else if (trials[i].block_task == 'scissors_image') {
-                sequence += '3';
+
+    if (trialnum == 1 || trialnum == 3) {
+        for (var i = 0; i < trials.length; i++) {
+            if (trials[i].trial_data == trialnum) {
+                if (trials[i].block_task == 'rock_image') {
+                    sequence += '1';
+                } else if (trials[i].block_task == 'paper_image') {
+                    sequence += '2';
+                } else if (trials[i].block_task == 'scissors_image') {
+                    sequence += '3';
+                }
+            }
+        }
+    } else if (trialnum == 2) {
+        for (var i = 0; i < trials.length; i++) {
+            if (trials[i].trial_data == 2) {
+                if (trials[i].block_task == 'rock_against_rock' || trials[i].block_task == 'rock_against_paper' || trials[i].block_task == 'rock_against_scissors') {
+                    sequence += '1';
+                } else if (trials[i].block_task == 'paper_against_rock' || trials[i].block_task == 'paper_against_paper' || trials[i].block_task == 'paper_against_scissors') {
+                    sequence += '2';
+                } else if (trials[i].block_task == 'scissors_against_rock' || trials[i].block_task == 'scissors_against_paper' || trials[i].block_task == 'scissors_against_scissors') {
+                    sequence += '3';
+                }
             }
         }
     }
-    return {
-        trial_one_sequence: sequence
-    }
-}
 
-function collectTrialTwoSequence() {
-    var trials = jsPsych.data.getTrialsOfType('single-stim');
-
-    var sequence = '';
-    for (var i = 0; i < trials.length; i++) {
-        if (trials[i].trial_data == 2) {
-            if (trials[i].block_task == 'rock_against_rock' || trials[i].block_task == 'rock_against_paper' || trials[i].block_task == 'rock_against_scissors') {
-                sequence += '1';
-            } else if (trials[i].block_task == 'paper_against_rock' || trials[i].block_task == 'paper_against_paper' || trials[i].block_task == 'paper_against_scissors') {
-                sequence += '2';
-            } else if (trials[i].block_task == 'scissors_against_rock' || trials[i].block_task == 'scissors_against_paper' || trials[i].block_task == 'scissors_against_scissors') {
-                sequence += '3';
-            }
-        }
-    }
-    return {
-        trial_two_sequence: sequence
-    }
-}
-
-function collectTrialThreeSequence() {
-    var trials = jsPsych.data.getTrialsOfType('single-stim');
-
-    var sequence = '';
-    for (var i = 0; i < trials.length; i++) {
-        if (trials[i].trial_data == 3) {
-            if (trials[i].block_task == 'rock_image') {
-                sequence += '1';
-            } else if (trials[i].block_task == 'paper_image') {
-                sequence += '2';
-            } else if (trials[i].block_task == 'scissors_image') {
-                sequence += '3';
-            }
-        }
-    }
-    return {
-        trial_three_sequence: sequence
-    }
+    return sequence;
 }
 
 function collectAllSequences() {
-    var s1 = collectTrialOneSequence();
-    var s2 = collectTrialTwoSequence();
-    var s3 = collectTrialThreeSequence();
+    var s1 = collectTrialSequence(1);
+    var s2 = collectTrialSequence(2);
+    var s3 = collectTrialSequence(3);
 
-    var sequence = '';
-    sequence += s1.trial_one_sequence + s2.trial_two_sequence + s3.trial_three_sequence;
-    return {
-        complete_sequence: sequence
-    }
+    var full_sequence = (s1 + s2 + s3);
+    return full_sequence;
 }
 
 function collectWinLossTieProportion() {
@@ -205,100 +179,79 @@ function collectWinLossTieProportion() {
 // for more info about this function
 function condenseSequenceIntoObject(sequence) {
     let arr = [...sequence];
-    result = {};
+    var result = {};
     for (var i = 0; i < arr.length; i++) {
         if (!result[arr[i]])
             result[arr[i]] = 0;
         ++result[arr[i]];
     }
-    str = JSON.stringify(result);
-    return {
-        str: str
-    }
+    var str = JSON.stringify(result);
+    return str;
 }
 
 function displayRPSCountInConsole(trialnum) {
-    if (trialnum == 1) {
-        var s1 = collectTrialOneSequence();
-        var c = condenseSequenceIntoObject(s1.trial_one_sequence);
-        console.log("Part 1");
-        console.log(c.str);
-    }
-    if (trialnum == 2) {
-        var s2 = collectTrialTwoSequence();
-        var c = condenseSequenceIntoObject(s2.trial_two_sequence);
-        console.log("Part 2");
-        console.log(c.str);
-    }
-    if (trialnum == 3) {
-        var s3 = collectTrialThreeSequence();
-        var c = condenseSequenceIntoObject(s3.trial_three_sequence);
-        console.log("Part 3");
-        console.log(c.str);
-    }
     if (trialnum <= 0 || trialnum > 3) {
         console.log("You must use a number between 1 and 3 for displayRPSCountInConsole function to work properly");
     }
+    var sequence = collectTrialSequence(trialnum);
+    var condensed = condenseSequenceIntoObject(sequence);
+    console.log("Part " + trialnum);
+    console.log(condensed);
+}
+
+function runLengthHelper(count, current) {
+    var buffer = "";
+    if (current == 1) {
+        buffer = count + "R";
+    } else if (current == 2) {
+        buffer = count + "P";
+    } else if (current == 3) {
+        buffer = count + "S";
+    }
+    return buffer;
 }
 
 function computeRunLength() {
-    var a = collectAllSequences();
-    var str = a.complete_sequence;
+    var str = collectAllSequences();
 
     var count = 0;
     var current = -1;
-    var arr = [];
+    var runLength = [];
     var buffer = "";
 
     for (var i = 0; i <= str.length; i++) {
+
+        // Reached end of string, add last element count
         if (i == str.length) {
             if (count >= 1) {
-                if (current == 1) {
-                    buffer = count + "R";
-                    arr.push(buffer);
-                } else if (current == 2) {
-                    buffer = count + "P";
-                    arr.push(buffer);
-                } else if (current == 3) {
-                    buffer = count + "S";
-                    arr.push(buffer);
-                }
+                buffer = runLengthHelper(count, current);
+                runLength.push(buffer);
                 break;
             }
         }
 
+        // First element in sequence
         if (count == 0) {
             current = str[i];
             count++;
         } else if (current == str[i]) {
             count++;
         } else if (current != str[i]) {
-            if (current == 1) {
-                buffer = count + "R";
-                arr.push(buffer);
-            } else if (current == 2) {
-                buffer = count + "P";
-                arr.push(buffer);
-            } else if (current == 3) {
-                buffer = count + "S";
-                arr.push(buffer);
-            }
+            buffer = runLengthHelper(count, current);
+            runLength.push(buffer);
             count = 1;
             current = str[i];
         }
     }
 
-    return {
-        runarray: arr
-    }
+    return runLength;
 }
 
-// Used to generate predictions solely from part 1 sequence
+// Predict the user's next most likely response in RPS, will output random move if confidence level
+// is below threshold
 function predictNextPlay() {
-    var seq1 = collectTrialOneSequence();
-    var str = seq1.trial_one_sequence;
-    var seq2 = collectTrialTwoSequence();
-    var str2 = seq2.trial_two_sequence;
+    var str = collectTrialSequence(1);
+    var str2 = collectTrialSequence(2);
     str += str2;
 
     if (str.length == 0) {
@@ -356,12 +309,13 @@ function predictNextPlay() {
 
     var predictConfidence = Math.min(...pVals);
     if (predictConfidence >= alphaLevel) {
-        return computerRandomMove();
+        console.log("Can't predict anything ):");
+        return (Math.floor(Math.random() * 3) + 1);
     } else {
         var ind = pVals.indexOf(predictConfidence);
         var nextItem = Math.max(...choices[ind]);
+        console.log("Next item: " + nextItem);
     }
-
 
     return nextItem;
 }

@@ -14,25 +14,36 @@ var welcome_block = {
     type: 'instructions',
     pages: [
         '<strong>Welcome to the experiment</strong> ' +
-        '<br />In the <strong>first</strong> part of the experiment, you are asked to create a sequence of Rock, Paper, Scissors that is as random as possible.' +
+        '<br />In the <strong>first</strong> part of the experiment, you are asked to create a sequence of Rock, Paper,' +
+        'Scissors that is as random as possible.' +
         '<ul><li>   For Rock: press the letter "g" on the keyboard.' +
         '<li>       For Paper: press the letter "h" on the keyboard. ' +
         '<li>       For Scissors: press the letter "b" on the keyboard. </ul>' +
-        'Please take a moment to locate these keys on your keyboard now and to remember the mapping of letters to rock, paper, and scissors. ' +
+        'Please take a moment to locate these keys on your keyboard now and to remember the mapping of letters to rock, ' +
+        'paper, and scissors. ' +
         '<p>At the beginning of each trial, you will see a 3-2-1 countdown on the screen, followed by a red "GO!" signal. ' +
         'You must press "g", "h", or "b" as soon as you see the go signal. You will only have half a second to enter your response. ' +
         'Most importantly, <em>please make a conscious effort to create a series of Rock, Paper and Scissors that is as random as possible. </em>' +
-        'It might help you to visualize this task as casting a 3-faced die. You can also try to imagine a computer program that spits out "Rock!", "Paper!" or "Scissors!" at random, in an unpredictable fashion.' +
-        'The 10 first trials will serve as practice, for you to get accustomed to the experimental environment. Then you will begin your random sequence generation. </p>' +
-        '<p>In the <strong>second</strong> part of the experiment, you will play rounds of Rock-Paper-Scissors against the computer. Your goal is to win as many rounds as possible. Once again, you will have the three natural options "Rock", "Paper" and "Scissors" to choose from, which you will select by pressing the same keys as in part 1. </p>' +
+        'It might help you to visualize this task as casting a 3-faced die. You can also try to imagine a computer program' +
+        ' that spits out "Rock!", "Paper!" or "Scissors!" at random, in an unpredictable fashion.' +
+        'The 10 first trials will serve as practice, for you to get accustomed to the experimental environment. Then you ' +
+        'will begin your random sequence generation. </p>' +
+        '<p>In the <strong>second</strong> part of the experiment, you will play rounds of Rock-Paper-Scissors against' +
+        ' the computer. Your goal is to win as many rounds as possible. Once again, you will have the three natural ' +
+        'options "Rock", "Paper" and "Scissors" to choose from, which you will select by pressing the same keys as in part 1. </p>' +
         'Reminder: Rock beats Scissors, Scissors beat Paper, and Paper beats Rock. ' +
-        'The winner of the game will be determined by the amount of points you end up with. Both yourself and the computer will be allotted 100 points before starting the game. You will both obtain or lose points in the following manner:' +
+        'The winner of the game will be determined by the amount of points you end up with. Both yourself and the ' +
+        'computer will be allotted 100 points before starting the game. You will both obtain or lose points in the following manner:' +
         '<ul><li>You win: you receive 1 point, and the computer loses 1 point.' +
         '<li>You tie: both scores remain the same' +
         '<li>You lose: you lose 1 point, and the computer receives 1 point. </ul>' +
         'This means that if you lose a round (example: you play Paper and the computer plays Scissors), not only will you lose a point but the computer will gain one. ' +
-        'Again, you will see the 3-2-1 countdown and the red "GO!" appear on the screen. If you do not press one of the keys (G, H or B) within a half second of the red "GO!" appearing, you will lose one point but the computer will not gain a point. ' +
-        '<p>The <strong>third</strong> part of the experiment will be exactly the same as the first part: you will again generate a sequence of Rock, Paper and Scissors that is as random and unpredictable as possible. To help you picture this once more, you can imagine that your iPod only contains three songs titled "Rock", "Paper" and "Scissors", and you hit the Shuffle button repeatedly so that the iPod chooses one of the songs at random each time. It is crucial in these two parts that you literally try to act like your iPod, or the die, or the computer algorithm and make your sequence completely random. </p>'
+        'Again, you will see the 3-2-1 countdown and the red "GO!" appear on the screen. If you do not press one of the keys (G, H or B) within a half second of the red "GO!" appearing,' +
+        ' you will lose one point but the computer will not gain a point. ' +
+        '<p>The <strong>third</strong> part of the experiment will be exactly the same as the first part: you will again generate a sequence of Rock, Paper and Scissors' +
+        'that is as random and unpredictable as possible. To help you picture this once more, you can imagine that your iPod only contains three songs titled "Rock", "Paper" and "Scissors", ' +
+        'and you hit the Shuffle button repeatedly so that the iPod chooses one of the songs at random each time. It is crucial in these two parts that you literally try to act like your iPod, ' +
+        'or the die, or the computer algorithm and make your sequence completely random. </p>'
     ],
     show_clickable_nav: true,
     data: {

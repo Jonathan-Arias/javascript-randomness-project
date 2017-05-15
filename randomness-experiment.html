@@ -14,7 +14,6 @@
     <script src="functions.js"></script>
     <script src="instruction-blocks.js"></script>
     <script src="game-states.js"></script>
-    <!-- <script src="binomialdistfunc.js"></script> -->
     <link href="jspsych-5.0.3/css/jspsych.css" rel="stylesheet" type="text/css"></link>
 </head>
 
@@ -311,15 +310,15 @@ var debrief_block = {
     type: 'text',
     text: function() {
         var subjectData = getSubjectData();
-        var all = collectAllSequences();
+        var full_sequence = collectAllSequences();
         var finalscore = collectWinLossTieProportion();
-        var run = computeRunLength();
+        var runLength = computeRunLength();
         return "<p>You generated a total of " + subjectData.answered + " RPS events, and you missed " + subjectData.missed + " total events.</p>" +
             "<p>Total rock: " + subjectData.rock + "</p><p>Total paper: " + subjectData.paper + "</p><p>Total Scissor: " + subjectData.scissor + "</p>" +
-            "<p>Complete sequence: " + all.complete_sequence + "</p>" +
+            "<p>Complete sequence: " + full_sequence + "</p>" +
             "<p>Total wins: " + finalscore.wins + "</p><p> Total losses: " + finalscore.losses + "</p><p>Total ties: " +
             finalscore.ties + "</p><p> Total forfeits: " + finalscore.forfeits + "</p>" +
-            "<p>Run length: " + run.runarray.toString() + "</p>";
+            "<p>Run length: " + runLength.toString() + "</p>";
     }
 }
 
@@ -342,8 +341,8 @@ timeline.push(survey_block);
 // PART 1 INSTRUCTIONS
 timeline.push(instructions_block1);
 
-// DEBUGGING PURPOSES: variables to quickly adjust how many trials for each block
-var total_trials = 8;
+// Adjust number of trials per block (multiply by 6 to get total number of trials)
+var total_trials = 3;
 
 // PRACTICE BLOCK
 // for (var i = 0; i < total_trials; i++) {
@@ -403,10 +402,11 @@ for (var i = 0; i < total_trials; i++) {
     timeline.push(trial3_loop);
 }
 
-timeline.push(post_exp_questionnaire)
-
 // Show subject data 
 timeline.push(debrief_block);
+
+// Show link to post experiment questionnaire 
+timeline.push(post_exp_questionnaire)
 
 // start the experiment
 jsPsych.init({
