@@ -28,7 +28,7 @@ var condition = jsPsych.randomization.sample(['aware_predict', 'unaware_predict'
 
 // Adjust number of trials per block (multiply by 6 to get total number of trials)
 var total_trials = 10;
-var debug = false;
+var debug = true;
 
 // extra data to be added to each trial
 jsPsych.data.addProperties({
@@ -247,6 +247,7 @@ var trial1_loop = {
                 trial_data: 1
             });
             if (debug) displayRPSCountInConsole(1);
+            displayLastFiveEvents(1);
             return false;
         } else if (data.block_task == 'missed_text') {
             return true;
@@ -317,16 +318,15 @@ var debrief_block = {
         var full_sequence = collectAllSequences();
         var finalscore = collectWinLossTieProportion();
         var runLength = computeRunLength();
-        return 
-            "<p>Total events generated: " + subjectData.answered + "</p>"+
+        return "<p>Total events generated: " + subjectData.answered + "</p>" +
             "<p>Total events missed: " + subjectData.missed + "</p>" +
             "<p>Total rock: " + subjectData.rock + "</p>" +
-            "<p>Total paper: " + subjectData.paper + "</p>" + 
+            "<p>Total paper: " + subjectData.paper + "</p>" +
             "<p>Total Scissor: " + subjectData.scissor + "</p>" +
             "<p>Complete sequence: " + full_sequence + "</p>" +
-            "<p>Total wins: " + finalscore.wins + "</p>" + 
-            "<p>Total losses: " + finalscore.losses + "</p>" + 
-            "<p>Total ties: " + finalscore.ties + "</p>" + 
+            "<p>Total wins: " + finalscore.wins + "</p>" +
+            "<p>Total losses: " + finalscore.losses + "</p>" +
+            "<p>Total ties: " + finalscore.ties + "</p>" +
             "<p> Total forfeits: " + finalscore.forfeits + "</p>" +
             "<p>Run length: " + runLength.toString() + "</p>";
     }
@@ -351,12 +351,14 @@ timeline.push(survey_block);
 // PART 1 INSTRUCTIONS
 timeline.push(instructions_block1);
 
-// PRACTICE BLOCK
-for (var i = 0; i < 10; i++) {
-     timeline.push(practice_loop);
-}
+if (!debug) {
+    // PRACTICE BLOCK
+    for (var i = 0; i < 10; i++) {
+        timeline.push(practice_loop);
+    }
 
-timeline.push(practice_over);
+    timeline.push(practice_over);
+}
 
 // PART 1 - BLOCK 1
 for (var i = 0; i < total_trials; i++) {

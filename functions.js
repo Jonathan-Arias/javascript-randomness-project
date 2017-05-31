@@ -339,3 +339,23 @@ function predictNextPlay() {
 
     return nextItem;
 }
+
+// Displays in console last five events
+// 1 == Rock
+// 2 == Paper 
+// 3 == Scissors
+function displayLastFiveEvents(trialnum) {
+    let sequence = collectTrialSequence(trialnum);
+    let lastfive = sequence.substr(-5);
+    let lastfivestr = '';
+    for (let i = 0; i < 5; i++)
+    {
+        if (lastfive.charAt(i) == 1)
+            lastfivestr += i + "-Rock-";
+        else if (lastfive.charAt(i) == 2)
+            lastfivestr += i + "-Paper-";
+        else if (lastfive.charAt(i) == 3)
+            lastfivestr += i + "-Scissors-";
+    }
+    console.log(lastfivestr);
+}
