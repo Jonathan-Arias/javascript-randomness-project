@@ -41,11 +41,12 @@ function compute(argument, samplesize, prob) {
     N = samplesize;
     P = prob;
     with(Math) {
-        if (N <= 0) {
+        /*if (N <= 0) {
             alert("sample size must be positive")
         } else if ((P < 0) || (P > 1)) {
             alert("probability must be between 0 and 1")
-        } else if (X < 0) {
+        } else*/
+        if (X < 0) {
             bincdf = 0
         } else if (X >= N) {
             bincdf = 1
@@ -81,34 +82,36 @@ var check_consent = function(elem) {
 }
 
 var globalMove = 0;
+
 // 85% of the time will follow R-P-S-R-P-S... 
 // 15% will generate random move
 function computerRandomMove() {
-    var x = Math.random();
-    if (x <= 0.85) {
+    let x = Math.random();
+    if (x <= 0.15) {
         return Math.floor(Math.random() * 3) + 1;
     } else {
         return globalMove % 3 + 1;
     }
 }
 
-// collects simple data about responses and returns totals for number of answered/missed and RPS selections
+// collects simple data about responses and returns totals for number of 
+// answered/missed and RPS selections
 function getSubjectData() {
-    var trials = jsPsych.data.getTrialsOfType('single-stim');
+    let trials = jsPsych.data.getTrialsOfType('single-stim');
 
-    var total_answered = 0;
-    var total_missed = 0;
-    var total_rock = 0;
-    var total_paper = 0;
-    var total_scissor = 0;
-    for (var i = 0; i < trials.length; i++) {
+    let total_answered = 0;
+    let total_missed = 0;
+    let total_rock = 0;
+    let total_paper = 0;
+    let total_scissor = 0;
+    for (let i = 0; i < trials.length; i++) {
         if (trials[i].answer_status == 'answered') {
             total_answered++;
-            if (trials[i].key_press == 71) {
+            if (trials[i].key_press == 71) { // 71 == 'g' == Rock 
                 total_rock++;
-            } else if (trials[i].key_press == 72) {
+            } else if (trials[i].key_press == 72) { // 72 == 'h' == Paper
                 total_paper++;
-            } else if (trials[i].key_press == 66) {
+            } else if (trials[i].key_press == 66) { // 66 == 'b' == Scissors
                 total_scissor++;
             }
         } else if (trials[i].answer_status == 'missed') {
@@ -124,12 +127,16 @@ function getSubjectData() {
     }
 }
 
+// Sequence is generated with 1 representing Rock, 2 representing Paper, 3 representing Scissors
+// e.g. Rock-Paper-Scissors-Scissors-Paper-Scissors-Paper-Rock 
+// would become 12332321
+// trialnum parameter can only be 1 2 or 3, will return empty string otherwise
 function collectTrialSequence(trialnum) {
-    var trials = jsPsych.data.getTrialsOfType('single-stim');
-    var sequence = '';
+    let trials = jsPsych.data.getTrialsOfType('single-stim');
+    let sequence = '';
 
     if (trialnum == 1 || trialnum == 3) {
-        for (var i = 0; i < trials.length; i++) {
+        for (let i = 0; i < trials.length; i++) {
             if (trials[i].trial_data == trialnum) {
                 if (trials[i].block_task == 'rock_image') {
                     sequence += '1';
@@ -141,7 +148,7 @@ function collectTrialSequence(trialnum) {
             }
         }
     } else if (trialnum == 2) {
-        for (var i = 0; i < trials.length; i++) {
+        for (let i = 0; i < trials.length; i++) {
             if (trials[i].trial_data == 2) {
                 if (trials[i].block_task == 'rock_against_rock' || trials[i].block_task == 'rock_against_paper' || trials[i].block_task == 'rock_against_scissors') {
                     sequence += '1';
@@ -157,15 +164,18 @@ function collectTrialSequence(trialnum) {
     return sequence;
 }
 
+// Using collectTrialSequence(trialnum), returns one string with entire sequence
+// Should only be used at end of experiment, otherwise results in unneccesary function calls
 function collectAllSequences() {
-    var s1 = collectTrialSequence(1);
-    var s2 = collectTrialSequence(2);
-    var s3 = collectTrialSequence(3);
+    let s1 = collectTrialSequence(1);
+    let s2 = collectTrialSequence(2);
+    let s3 = collectTrialSequence(3);
 
-    var full_sequence = (s1 + s2 + s3);
+    let full_sequence = (s1 + s2 + s3);
     return full_sequence;
 }
 
+// Returns an object with game data
 function collectWinLossTieProportion() {
     return {
         wins: player_wins,
@@ -177,6 +187,9 @@ function collectWinLossTieProportion() {
 
 // See http://stackoverflow.com/questions/5667888/counting-the-occurrences-of-javascript-array-elements 
 // for more info about this function
+// Takes a string, collects frequency of each element into object, returns object as a string
+// e.g. 11223311
+// Returns {1: 4, 2: 2, 3: 2}
 function condenseSequenceIntoObject(sequence) {
     let arr = [...sequence];
     var result = {};
@@ -189,18 +202,23 @@ function condenseSequenceIntoObject(sequence) {
     return str;
 }
 
+// Displays frequency of each event that subject has entered in console
 function displayRPSCountInConsole(trialnum) {
     if (trialnum <= 0 || trialnum > 3) {
         console.log("You must use a number between 1 and 3 for displayRPSCountInConsole function to work properly");
     }
-    var sequence = collectTrialSequence(trialnum);
-    var condensed = condenseSequenceIntoObject(sequence);
+    let sequence = collectTrialSequence(trialnum);
+    let condensed = condenseSequenceIntoObject(sequence);
     console.log("Part " + trialnum);
     console.log(condensed);
 }
 
+// Used for computerRunLength()
+// current is the event observed 
+// count is the frequency observed
+// Returns apprpropriate letter ("R" == Rock == 1, "P" == Paper == 2, "S" == Scissors == 3) appended to count
 function runLengthHelper(count, current) {
-    var buffer = "";
+    let buffer = "";
     if (current == 1) {
         buffer = count + "R";
     } else if (current == 2) {
@@ -211,15 +229,18 @@ function runLengthHelper(count, current) {
     return buffer;
 }
 
+// Given the entire sequence from experiment, processes run length for each event in string
+// e.g. 11112231231333332
+// Returns 4R2P1S1R1P1S1R5S1P
 function computeRunLength() {
-    var str = collectAllSequences();
+    let str = collectAllSequences();
 
-    var count = 0;
-    var current = -1;
-    var runLength = [];
-    var buffer = "";
+    let count = 0;
+    let current = -1;
+    let runLength = [];
+    let buffer = "";
 
-    for (var i = 0; i <= str.length; i++) {
+    for (let i = 0; i <= str.length; i++) {
 
         // Reached end of string, add last element count
         if (i == str.length) {
@@ -247,12 +268,11 @@ function computeRunLength() {
     return runLength;
 }
 
-// Predict the user's next most likely response in RPS, will output random move if confidence level
-// is below threshold
+// Predict the user's next most likely response in RPS, will output random move if confidence level is below threshold
+// This is used in the if_missed_against_computer conditional block, and will only be called if the user did not miss 
+// against the computer in trial 2
 function predictNextPlay() {
-    var str = collectTrialSequence(1);
-    var str2 = collectTrialSequence(2);
-    str += str2;
+    var str = collectTrialSequence(1) + collectTrialSequence(2);
 
     if (str.length == 0) {
         return computerRandomMove();
@@ -261,18 +281,19 @@ function predictNextPlay() {
     var N = 20;
     var choices = [];
 
+    var possibleEntries = [1, 2, 3];
     var nPossibleEntries = 3;
     var alphaLevel = 1 / nPossibleEntries;
 
-    for (var k = -1; k > -20; k--) {
-        var re = new RegExp(str.substr(k), 'g');
+    for (var k = 1; k <= 20; k++) {
+        var re = new RegExp(str.substr(-k), 'g');
         var m;
         var matches = [];
 
         do {
-            m = re.exec(str.substr(0, str.length + k));
+            m = re.exec(str.substr(0, str.length - 1));
             if (m) {
-                matches.push(m.index);
+                matches.push(m.index + 1);
             } else {
                 break;
             }
@@ -285,7 +306,7 @@ function predictNextPlay() {
         var entry;
         var rks = ppr = scs = 0;
         for (entry in matches) {
-            x = parseInt(str.charAt(matches[entry] + 1));
+            x = parseInt(str.charAt(matches[entry] + k - 1));
             if (x == 1) rks++;
             if (x == 2) ppr++;
             if (x == 3) scs++;
@@ -300,7 +321,7 @@ function predictNextPlay() {
     var bcf;
     for (var i = 0; i < choices.length; i++) {
         choice = choices[i];
-        X = Math.max(...choice);
+        X = Math.max(...choice) - 1;
         N = choice[0] + choice[1] + choice[2];
         P = 1 / nPossibleEntries;
         bcf = compute(X, N, P);
@@ -309,12 +330,11 @@ function predictNextPlay() {
 
     var predictConfidence = Math.min(...pVals);
     if (predictConfidence >= alphaLevel) {
-        console.log("Can't predict anything ):");
         return (Math.floor(Math.random() * 3) + 1);
     } else {
         var ind = pVals.indexOf(predictConfidence);
-        var nextItem = Math.max(...choices[ind]);
-        console.log("Next item: " + nextItem);
+        var i = choices[ind].indexOf(Math.max(...choices[ind]));
+        var nextItem = possibleEntries[i];
     }
 
     return nextItem;
