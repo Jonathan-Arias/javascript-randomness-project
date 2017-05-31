@@ -26,6 +26,10 @@ var subject_id = jsPsych.randomization.randomID(15)
 // pick a random condition for the subject at the start of the experiment
 var condition = jsPsych.randomization.sample(['aware_predict', 'unaware_predict', 'unaware_no_predict'], 1)
 
+// Adjust number of trials per block (multiply by 6 to get total number of trials)
+var total_trials = 10;
+var debug = false;
+
 // extra data to be added to each trial
 jsPsych.data.addProperties({
     subject: subject_id,
@@ -96,7 +100,7 @@ var countdown_trial_part3 = {
 var go_trial = {
     type: 'single-stim',
     is_html: true,
-    stimulus: 'GO!',
+    stimulus: '<p style="color:red">GO!</p>',
     choices: ['g', 'h', 'b'],
     timing_response: 500,
     response_ends_trial: true,
@@ -120,7 +124,7 @@ var go_trial = {
 var missed = {
     type: 'single-stim',
     is_html: true,
-    stimulus: 'TOO LATE!',
+    stimulus: '<p style="color:red">TOO LATE!</p>',
     timing_response: 500,
     response_ends_trial: false,
     data: {
@@ -242,7 +246,7 @@ var trial1_loop = {
             jsPsych.data.addDataToLastTrial({
                 trial_data: 1
             });
-            displayRPSCountInConsole(1);
+            if (debug) displayRPSCountInConsole(1);
             return false;
         } else if (data.block_task == 'missed_text') {
             return true;
@@ -264,7 +268,7 @@ var trial2_loop = {
         jsPsych.data.addDataToLastTrial({
             trial_data: 2
         });
-        displayRPSCountInConsole(2);
+        if (debug) displayRPSCountInConsole(2);
     }
 }
 
@@ -279,7 +283,7 @@ var trial3_loop = {
             jsPsych.data.addDataToLastTrial({
                 trial_data: 3
             });
-            displayRPSCountInConsole(3);
+            if (debug) displayRPSCountInConsole(3);
             return false;
         } else if (data.block_task == 'missed_text') {
             return true;
@@ -313,11 +317,17 @@ var debrief_block = {
         var full_sequence = collectAllSequences();
         var finalscore = collectWinLossTieProportion();
         var runLength = computeRunLength();
-        return "<p>You generated a total of " + subjectData.answered + " RPS events, and you missed " + subjectData.missed + " total events.</p>" +
-            "<p>Total rock: " + subjectData.rock + "</p><p>Total paper: " + subjectData.paper + "</p><p>Total Scissor: " + subjectData.scissor + "</p>" +
+        return 
+            "<p>Total events generated: " + subjectData.answered + "</p>"+
+            "<p>Total events missed: " + subjectData.missed + "</p>" +
+            "<p>Total rock: " + subjectData.rock + "</p>" +
+            "<p>Total paper: " + subjectData.paper + "</p>" + 
+            "<p>Total Scissor: " + subjectData.scissor + "</p>" +
             "<p>Complete sequence: " + full_sequence + "</p>" +
-            "<p>Total wins: " + finalscore.wins + "</p><p> Total losses: " + finalscore.losses + "</p><p>Total ties: " +
-            finalscore.ties + "</p><p> Total forfeits: " + finalscore.forfeits + "</p>" +
+            "<p>Total wins: " + finalscore.wins + "</p>" + 
+            "<p>Total losses: " + finalscore.losses + "</p>" + 
+            "<p>Total ties: " + finalscore.ties + "</p>" + 
+            "<p> Total forfeits: " + finalscore.forfeits + "</p>" +
             "<p>Run length: " + runLength.toString() + "</p>";
     }
 }
@@ -341,15 +351,12 @@ timeline.push(survey_block);
 // PART 1 INSTRUCTIONS
 timeline.push(instructions_block1);
 
-// Adjust number of trials per block (multiply by 6 to get total number of trials)
-var total_trials = 100;
-
 // PRACTICE BLOCK
-// for (var i = 0; i < total_trials; i++) {
-//     timeline.push(practice_loop);
-// }
+for (var i = 0; i < 10; i++) {
+     timeline.push(practice_loop);
+}
 
-// timeline.push(practice_over);
+timeline.push(practice_over);
 
 // PART 1 - BLOCK 1
 for (var i = 0; i < total_trials; i++) {
@@ -365,7 +372,7 @@ for (var i = 0; i < total_trials; i++) {
 }
 
 /* PART 2 INSTRUCTIONS */
-if (condition == 'aware') {
+if (condition == 'aware_predict') {
     timeline.push(instructions_block2a); //a= aware+predict
 } else if (condition == 'unaware_predict') {
     timeline.push(instructions_block2b); //b= unaware+predict
@@ -413,7 +420,7 @@ jsPsych.init({
     timeline: timeline,
     default_iti: 100,
     on_finish: function() {
-        jsPsych.data.displayData('json');
+        if (debug) jsPsych.data.displayData('json');
     }
 });
 </script>
