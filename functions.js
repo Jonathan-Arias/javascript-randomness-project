@@ -69,7 +69,6 @@ function compute(argument, samplesize, prob) {
     return bincdf;
 }
 
-
 // function to check for participant consent
 var check_consent = function(elem) {
     if ($('#consent_checkbox').is(':checked')) {
@@ -271,24 +270,24 @@ function computeRunLength() {
 // Predict the user's next most likely response in RPS, will output random move if confidence level is below threshold
 // This is used in the if_missed_against_computer conditional block, and will only be called if the user did not miss 
 // against the computer in trial 2
-function predictNextPlay() {
-    var str = collectTrialSequence(1) + collectTrialSequence(2);
+function predictNextPlay(trialOneSequence) {
+    var str = trialOneSequence + collectTrialSequence(2);
 
     if (str.length == 0) {
-        return computerRandomMove();
+        return computerRandomMove(); // Can't predict anything from an empty string!
     }
 
-    var N = 20;
+    var maxBack = 20; // Maximum distance we'll go when creating substring 
     var choices = [];
 
-    var possibleEntries = [1, 2, 3];
+    var possibleEntries = [1, 2, 3]; // [Rock, Paper, Scissors]
     var nPossibleEntries = 3;
     var alphaLevel = 1 / nPossibleEntries;
 
-    for (var k = 1; k <= 20; k++) {
-        var re = new RegExp(str.substr(-k), 'g');
+    for (var k = 1; k <= maxBack; k++) {
+        var re = new RegExp(str.substr(-k), 'g'); // Creates regexp to help search for substring of length k at end of string
         var m;
-        var matches = [];
+        var matches = []; 
 
         do {
             m = re.exec(str.substr(0, str.length - 1));
@@ -358,4 +357,108 @@ function displayLastFiveEvents(trialnum) {
             lastfivestr += i + "-Scissors-";
     }
     console.log(lastfivestr);
+}
+
+// https://home.ubalt.edu/ntsbarsh/Business-stat/otherapplets/Randomness.htm
+function runsTest(sequence) {
+    var E = sequence.length; //total number of input spaces
+    var N = 0;
+    var N1 = 0;
+    var N2 = 0;
+    var SUM = 0.0;
+    var R = 1;
+
+    let sequenceArray = [];
+    for (let i = 0; i < E; i++) {
+        sequenceArray[i] = parseInt(sequence.charAt(i), 10);
+    }
+
+    //calculate mean
+    for (i = 0; i < E; i++) {
+        SUM += sequenceArray[i];
+        N++;
+    }
+
+    // Do the math
+    var x = SUM / N;
+    var y = Math.round(100000 * x);
+    var z = y / 100000;
+    // run through each value and compare it with mean      
+    for (i = 0; i < E; i++) {
+        //check if a value is present and discard the ties
+        if (sequenceArray[i] != x) {
+            //check if it is greater than mean then adds one
+            if (sequenceArray[i] > x) {
+                N1++;
+                a = i;
+                while (a > 0) {
+                    a--;
+                    if (sequenceArray[a] != x) {
+                        break;
+                    }
+                }
+                if (sequenceArray[a] < x) {
+                    R++;
+                }
+            }
+            //if it is less than mean
+            else if (sequenceArray[i] < x) {
+                N2++;
+                a = i;
+                while (a > 0) {
+                    a--;
+                    if (sequenceArray[a] != x) {
+                        break;
+                    }
+                }
+                if (sequenceArray[a] > x) {
+                    R++;
+                }
+            } //closing else-if statement      
+        }
+    }
+    let scores = R; //value of x or "Scores"      
+
+    //compute the expected mean and variance of R
+    var EM = 1 + (2 * N1 * N2) / (N1 + N2); //Mean "Mu"
+    var SD1 = [2 * N1 * N2 * (2 * N1 * N2 - N1 - N2)];
+    var SD2 = Math.pow((N1 + N2), 2);
+    var SD3 = N1 + N2 - 1;
+    var SD4 = SD1 / (SD2 * SD3); //Standard deviation "Sigma"
+    var SD = Math.sqrt(SD4);
+    //calculating P value MStyle
+    var z1 = (R - EM) / SD;
+    var z2 = Math.abs(z1);
+    var z = z2;
+
+    var t = (z > 0) ? z : (-z);
+    var P1 = Math.pow((1 + t * (0.049867347 + t * (0.0211410061 + t * (0.0032776263 + t * (0.0000380036 + t * (0.0000488906 + t * (0.000005383))))))), -16);
+    var p = 1 - P1 / 2;
+    var t = 1 - ((z > 0) ? p : 1 - p); //this is P-value
+
+    let pval = ""
+        //rounding the value
+    var tt = t + ""; //forcing to be a string
+    if (tt.indexOf("e") != -1) {
+        pval = "Almost Zero";
+    } else {
+        var t1 = Math.round(100000 * t);
+        var t2 = t1 / 100000; //this is P-value too
+        pval = t2;
+    }
+
+    let conclusion = "";
+    //determine the conclusion
+    if (t2 < 0.01) {
+        conclusion = "Very strong evidence against randomness (trend or seasonality)";
+    } else if (t2 < 0.05 && t2 >= 0.01) {
+        conclusion = "Moderate evidence against randomness";
+    } else if (t2 < 0.10 && t2 >= 0.05) {
+        conclusion = "Suggestive evidence against randomness";
+    } else if (t2 >= 0.10) {
+        conclusion = "Little or no real evidences against randomness";
+    } else {
+        conclusion = "Strong evidence against randomness (trend or seasonality exists)";
+    }
+    return conclusion;
 }
