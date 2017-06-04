@@ -69,6 +69,8 @@ var instructions_block1 = {
     }
 }
 
+var trialOneSequence = ""
+
 // define instructions block for Part 2a (aware_predict)
 var instructions_block2a = {
     type: 'instructions',
@@ -80,6 +82,9 @@ var instructions_block2a = {
     show_clickable_nav: true,
     data: {
         block_task: 'instructions_block_two_a'
+    },
+    on_finish: function(trialOneSequence) {
+        trialOneSequence = collectTrialSequence(1);
     }
 }
 
@@ -94,6 +99,9 @@ var instructions_block2b = {
     show_clickable_nav: true,
     data: {
         block_task: 'instructions_block_two_b'
+    },
+    on_finish: function(trialOneSequence) {
+        trialOneSequence = collectTrialSequence(1);
     }
 }
 
@@ -108,6 +116,9 @@ var instructions_block2c = {
     show_clickable_nav: true,
     data: {
         block_task: 'instructions_block_two_c'
+    },
+    on_finish: function(trialOneSequence) {
+        trialOneSequence = collectTrialSequence(1);
     }
 }
 
