@@ -277,7 +277,7 @@ function predictNextPlay(trialOneSequence) {
         return computerRandomMove(); // Can't predict anything from an empty string!
     }
 
-    var maxBack = 20; // Maximum distance we'll go when creating substring 
+    var maxBack = 20 < str.length ? 20:str.length; // Maximum distance we'll go when creating substring 
     var choices = [];
 
     var possibleEntries = [1, 2, 3]; // [Rock, Paper, Scissors]
