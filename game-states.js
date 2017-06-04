@@ -7,6 +7,7 @@ var player_wins = 0;
 var computer_wins = 0;
 var ties = 0;
 var forfeits = 0;
+var seq2winLossTieArray = []; // 'w' = win, 'l' = loss, 't' = tie
 
 // Adjust timing for all game blocks here
 var game_timing = 1000;
@@ -268,6 +269,7 @@ var if_rock_against_rock = {
         var data = jsPsych.data.getLastTrialData();
         if (data.key_press == 71 && data.answer_status == 'answered' && data.computer_move == 1) {
             ties += 1;
+            seq2winLossTieArray.push('t');
             return true;
         } else {
             return false;
@@ -283,6 +285,7 @@ var if_rock_against_paper = {
             computer_wins += 1;
             player_points -= 1;
             computer_points += 1;
+            seq2winLossTieArray.push('l');
             return true;
         } else {
             return false;
@@ -298,6 +301,7 @@ var if_rock_against_scissors = {
             player_wins += 1;
             player_points += 1;
             computer_points -= 1;
+            seq2winLossTieArray.push('w');
             return true;
         } else {
             return false;
@@ -313,6 +317,7 @@ var if_paper_against_rock = {
             player_wins += 1;
             player_points += 1;
             computer_points -= 1;
+            seq2winLossTieArray.push('w');
             return true;
         } else {
             return false;
@@ -326,6 +331,7 @@ var if_paper_against_paper = {
         var data = jsPsych.data.getLastTrialData();
         if (data.key_press == 72 && data.answer_status == 'answered' && data.computer_move == 2) {
             ties += 1;
+            seq2winLossTieArray.push('t');
             return true;
         } else {
             return false;
@@ -341,6 +347,7 @@ var if_paper_against_scissors = {
             computer_wins += 1;
             player_points -= 1;
             computer_points += 1;
+            seq2winLossTieArray.push('l');
             return true;
         } else {
             return false;
@@ -356,6 +363,7 @@ var if_scissors_against_rock = {
             computer_wins += 1;
             player_points -= 1;
             computer_points += 1;
+            seq2winLossTieArray.push('l');
             return true;
         } else {
             return false;
@@ -371,6 +379,7 @@ var if_scissors_against_paper = {
             player_wins += 1;
             player_points += 1;
             computer_points -= 1;
+            seq2winLossTieArray.push('w');
             return true;
         } else {
             return false;
@@ -384,6 +393,7 @@ var if_scissors_against_scissors = {
         var data = jsPsych.data.getLastTrialData();
         if (data.key_press == 66 && data.answer_status == 'answered' && data.computer_move == 3) {
             ties += 1;
+            seq2winLossTieArray.push('t');
             return true;
         } else {
             return false;
@@ -403,7 +413,7 @@ var if_missed_against_computer = {
             if (data.condition == "unaware_no_predict") {
                 var comp_move = computerRandomMove();
             } else {
-                var comp_move = (predictNextPlay(trialOneSequence) % 3) + 1;
+                var comp_move = (predictNextPlay(trialOneSequence, seq2winLossTieArray) % 3) + 1;
             }
             jsPsych.data.addDataToLastTrial({
                 computer_move: comp_move

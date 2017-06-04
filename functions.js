@@ -267,17 +267,64 @@ function computeRunLength() {
     return runLength;
 }
 
+// WIN LOSS TIE 
+// 1    2    3     ROCK(1)
+// 4    5    6     PAPER(2)
+// 7    8    9     SCISSORS(3)
+function predictHelper(sequence, winLossTie) {
+    let newSequence = "";
+    for (var i = 0; i < sequence.length; i++) {
+        let c = sequence.charAt(i);
+        switch (c) {
+            case '1':
+                switch (winLossTie[i]) {
+                    case 'w':
+                        newSequence += "1";
+                    case 'l':
+                        newSequence += "2";
+                    case 't':
+                        newSequence += "3";
+                }
+            case '2':
+                switch (winLossTie[i]) {
+                    case 'w':
+                        newSequence += "4";
+                    case 'l':
+                        newSequence += "5";
+                    case 't':
+                        newSequence += "6";
+                }
+            case '3':
+                switch (winLossTie[i]) {
+                    case 'w':
+                        newSequence += "7";
+                    case 'l':
+                        newSequence += "8";
+                    case 't':
+                        newSequence += "9";
+                }
+        }
+    }
+    return newSequence;
+}
+
 // Predict the user's next most likely response in RPS, will output random move if confidence level is below threshold
 // This is used in the if_missed_against_computer conditional block, and will only be called if the user did not miss 
 // against the computer in trial 2
-function predictNextPlay(trialOneSequence) {
-    var str = trialOneSequence + collectTrialSequence(2);
+function predictNextPlay(trialOneSequence, winLossTie) {
+    var str = collectTrialSequence(2);
+    var analyzeWinLossTie = false;
+
+    if (winLossTie.length >= trialOneSequence.length / 2) {
+        str = predictHelper(str, winLossTie);
+        analyzeWinLossTie = true;
+    }
 
     if (str.length == 0) {
         return computerRandomMove(); // Can't predict anything from an empty string!
     }
 
-    var maxBack = 20 < str.length ? 20:str.length; // Maximum distance we'll go when creating substring 
+    var maxBack = 20 < str.length ? 20 : str.length; // Maximum distance we'll go when creating substring 
     var choices = [];
 
     var possibleEntries = [1, 2, 3]; // [Rock, Paper, Scissors]
@@ -287,7 +334,7 @@ function predictNextPlay(trialOneSequence) {
     for (var k = 1; k <= maxBack; k++) {
         var re = new RegExp(str.substr(-k), 'g'); // Creates regexp to help search for substring of length k at end of string
         var m;
-        var matches = []; 
+        var matches = [];
 
         do {
             m = re.exec(str.substr(0, str.length - 1));
@@ -305,10 +352,17 @@ function predictNextPlay(trialOneSequence) {
         var entry;
         var rks = ppr = scs = 0;
         for (entry in matches) {
-            x = parseInt(str.charAt(matches[entry] + k - 1));
-            if (x == 1) rks++;
-            if (x == 2) ppr++;
-            if (x == 3) scs++;
+            if (!analyzeWinLossTie) {
+                x = parseInt(str.charAt(matches[entry] + k - 1));
+                if (x == 1) rks++;
+                if (x == 2) ppr++;
+                if (x == 3) scs++;
+            } else {
+                x = parseInt(str.charAt(matches[entry] + k - 1));
+                if (x == 1 || x == 2 || x == 3) rks++;
+                if (x == 4 || x == 5 || x == 6) ppr++;
+                if (x == 7 || x == 9 || x == 9) scs++;
+            }
         }
         choices.push([rks, ppr, scs]);
     }
@@ -347,8 +401,7 @@ function displayLastFiveEvents(trialnum) {
     let sequence = collectTrialSequence(trialnum);
     let lastfive = sequence.substr(-5);
     let lastfivestr = '';
-    for (let i = 0; i < 5; i++)
-    {
+    for (let i = 0; i < 5; i++) {
         if (lastfive.charAt(i) == 1)
             lastfivestr += i + "-Rock-";
         else if (lastfive.charAt(i) == 2)
