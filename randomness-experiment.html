@@ -27,7 +27,7 @@ var subject_id = jsPsych.randomization.randomID(15)
 var condition = jsPsych.randomization.sample(['aware_predict', 'unaware_predict', 'unaware_no_predict'], 1)
 
 // Adjust number of trials per block (multiply by 6 to get total number of trials)
-var total_trials = 10;
+var total_trials = 5;
 var debug = true;
 
 // extra data to be added to each trial
@@ -318,6 +318,9 @@ var debrief_block = {
         var full_sequence = collectAllSequences();
         var finalscore = collectWinLossTieProportion();
         var runLength = computeRunLength();
+        let partOneRT = runsTest(collectTrialSequence(1));
+        let partTwoRT = runsTest(collectTrialSequence(2));
+        let partThreeRT = runsTest(collectTrialSequence(3));
         return "<p>Total events generated: " + subjectData.answered + "</p>" +
             "<p>Total events missed: " + subjectData.missed + "</p>" +
             "<p>Total rock: " + subjectData.rock + "</p>" +
@@ -328,7 +331,10 @@ var debrief_block = {
             "<p>Total losses: " + finalscore.losses + "</p>" +
             "<p>Total ties: " + finalscore.ties + "</p>" +
             "<p> Total forfeits: " + finalscore.forfeits + "</p>" +
-            "<p>Run length: " + runLength.toString() + "</p>";
+            "<p>Run length: " + runLength.toString() + "</p>" +
+            "<p>Runs test part one: " + partOneRT + "</p>" +
+            "<p>Runs test part two: " + partTwoRT + "</p>" +
+            "<p>Runs test part three: " + partThreeRT + "</p>";
     }
 }
 
