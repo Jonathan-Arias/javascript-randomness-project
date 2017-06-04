@@ -403,7 +403,7 @@ var if_missed_against_computer = {
             if (data.condition == "unaware_no_predict") {
                 var comp_move = computerRandomMove();
             } else {
-                var comp_move = (predictNextPlay() % 3) + 1;
+                var comp_move = (predictNextPlay(trialOneSequence) % 3) + 1;
             }
             jsPsych.data.addDataToLastTrial({
                 computer_move: comp_move
