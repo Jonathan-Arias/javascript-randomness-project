@@ -89,7 +89,8 @@ function computerRandomMove() {
     if (x <= 0.15) {
         return Math.floor(Math.random() * 3) + 1;
     } else {
-        return globalMove % 3 + 1;
+        globalMove = (globalMove % 3) + 1;
+        return globalMove;
     }
 }
 
